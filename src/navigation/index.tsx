@@ -1,10 +1,8 @@
 import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { BlurView } from 'expo-blur';
 import React from 'react';
-import { StyleSheet } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { LiquidGlassTabBar } from '../components/LiquidGlassTabBar';
 import { useLang } from '../i18n/LanguageContext';
 import { ui } from '../i18n/strings';
 import { ArticleDetailScreen } from '../screens/ArticleDetailScreen';
@@ -12,7 +10,7 @@ import { ConnectScreen } from '../screens/ConnectScreen';
 import { GuidesScreen } from '../screens/GuidesScreen';
 import { HomeScreen } from '../screens/HomeScreen';
 import { ProgramsScreen } from '../screens/ProgramsScreen';
-import { colors } from '../theme/colors';
+import { useTheme } from '../theme/ThemeContext';
 import type { GuidesStackParamList } from './types';
 
 const Tab = createBottomTabNavigator();
@@ -38,34 +36,15 @@ const ICONS: Record<string, { active: IconName; inactive: IconName }> = {
 
 export function RootNavigator() {
   const { t } = useLang();
-  const insets = useSafeAreaInsets();
-  const tabBottom = Math.max(insets.bottom + 6, 14);
+  const { colors } = useTheme();
 
   return (
     <Tab.Navigator
+      tabBar={(props) => <LiquidGlassTabBar {...props} />}
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: colors.textMuted,
-        tabBarBackground: () => (
-          <BlurView tint="light" intensity={72} style={StyleSheet.absoluteFill} />
-        ),
-        tabBarStyle: {
-          position: 'absolute',
-          bottom: tabBottom,
-          left: 20,
-          right: 20,
-          height: 62,
-          borderRadius: 31,
-          overflow: 'hidden',
-          backgroundColor: 'rgba(255, 255, 255, 0.82)',
-          borderWidth: 1,
-          borderColor: 'rgba(220, 235, 237, 0.9)',
-          elevation: 14,
-          paddingBottom: 6,
-          paddingTop: 4,
-        },
-        tabBarLabelStyle: { fontSize: 11, fontWeight: '700' },
         tabBarIcon: ({ focused, color, size }) => {
           const pair = ICONS[route.name] ?? ICONS.Home;
           return (

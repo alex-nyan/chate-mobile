@@ -1,6 +1,9 @@
-import React, { createContext, useCallback, useContext, useMemo, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import type { Lang, Localized } from './strings';
 import { tr } from './strings';
+
+const STORAGE_KEY = 'chate.lang';
 
 type LanguageContextValue = {
   lang: Lang;
@@ -12,19 +15,51 @@ type LanguageContextValue = {
 
 const LanguageContext = createContext<LanguageContextValue | undefined>(undefined);
 
+function persist(lang: Lang) {
+  AsyncStorage.setItem(STORAGE_KEY, lang).catch(() => {
+    /* Best-effort — a failed write just means the choice isn't remembered. */
+  });
+}
+
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [lang, setLang] = useState<Lang>('en');
+  const [lang, setLangState] = useState<Lang>('en');
+  // Wait for the stored choice before rendering, so a returning Burmese user
+  // never sees a flash of English on cold start.
+  const [hydrated, setHydrated] = useState(false);
+
+  useEffect(() => {
+    let active = true;
+    AsyncStorage.getItem(STORAGE_KEY)
+      .then((stored) => {
+        if (active && (stored === 'en' || stored === 'my')) setLangState(stored);
+      })
+      .catch(() => {})
+      .finally(() => {
+        if (active) setHydrated(true);
+      });
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const setLang = useCallback((next: Lang) => {
+    setLangState(next);
+    persist(next);
+  }, []);
 
   const toggle = useCallback(() => {
-    setLang((prev) => (prev === 'en' ? 'my' : 'en'));
+    setLangState((prev) => {
+      const next = prev === 'en' ? 'my' : 'en';
+      persist(next);
+      return next;
+    });
   }, []);
 
   const t = useCallback((value: Localized | string) => tr(value, lang), [lang]);
 
-  const value = useMemo(
-    () => ({ lang, toggle, setLang, t }),
-    [lang, toggle, t],
-  );
+  const value = useMemo(() => ({ lang, toggle, setLang, t }), [lang, toggle, setLang, t]);
+
+  if (!hydrated) return null;
 
   return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;
 }

@@ -49,4 +49,48 @@ export const ui = {
     en: 'Everything we offer is 100% free — run by volunteers and admitted students.',
     my: 'ကျွန်ုပ်တို့၏ ဝန်ဆောင်မှုအားလုံးသည် လုံးဝအခမဲ့ဖြစ်ပြီး စေတနာ့ဝန်ထမ်းများနှင့် ဝင်ခွင့်ရထားသူ ကျောင်းသားများက လုပ်ဆောင်ပေးပါသည်။',
   },
+
+  // Guides screen — segmented control + blog category filter
+  segGuides: { en: 'Guides', my: 'လမ်းညွှန်' },
+  segWebinars: { en: 'Webinars', my: 'Webinar' },
+  segBlog: { en: 'Blog', my: 'ဘလော့' },
+  blogAll: { en: 'All', my: 'အားလုံး' },
+  blogScholarships: { en: 'Scholarships', my: 'ပညာသင်ဆု' },
+  blogTesting: { en: 'Testing', my: 'စာမေးပွဲ' },
+  blogAbout: { en: 'About ချိတ်', my: 'ချိတ် အကြောင်း' },
+  blogCountNote: {
+    en: '{count} articles — tap to read on the blog',
+    my: 'ဆောင်းပါး {count} ပုဒ် — ဖတ်ရန် နှိပ်ပါ',
+  },
+
+  // Search
+  searchPlaceholder: { en: 'Search guides, webinars, blog…', my: 'လမ်းညွှန်၊ webinar၊ ဘလော့ ရှာရန်…' },
+  searchClear: { en: 'Clear search', my: 'ရှာဖွေမှု ရှင်းရန်' },
+  searchNoResults: {
+    en: 'No results for “{query}”',
+    my: '“{query}” အတွက် ရှာမတွေ့ပါ',
+  },
+  searchResultsCount: {
+    en: '{count} results',
+    my: 'ရလဒ် {count} ခု',
+  },
+
+  // Bookmarks / continue reading
+  continueReading: { en: 'Continue reading', my: 'ဆက်ဖတ်ရန်' },
+  savedHeader: { en: 'Saved', my: 'သိမ်းဆည်းထားသည်' },
+  save: { en: 'Save', my: 'သိမ်းရန်' },
+  saved: { en: 'Saved', my: 'သိမ်းပြီး' },
+  share: { en: 'Share', my: 'မျှဝေရန်' },
+
+  // Robustness — error boundary + offline state
+  errorTitle: { en: 'Something went wrong', my: 'တစ်ခုခု မှားယွင်းသွားပါသည်' },
+  errorBody: {
+    en: 'The app ran into an unexpected problem. You can try again.',
+    my: 'အက်ပ်တွင် မမျှော်လင့်သော ပြဿနာတစ်ခု ဖြစ်ပွားခဲ့ပါသည်။ ထပ်မံ ကြိုးစားနိုင်ပါသည်။',
+  },
+  errorRetry: { en: 'Try again', my: 'ထပ်စမ်းကြည့်ရန်' },
+  offline: {
+    en: "You're offline — some content may not load",
+    my: 'အင်တာနက် မရှိပါ — အချို့ အကြောင်းအရာများ ပြသနိုင်မည် မဟုတ်ပါ',
+  },
 } as const;

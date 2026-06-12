@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, ViewStyle } from 'react-native';
-import { colors, radius, shadow, spacing } from '../theme/colors';
+import { radius, shadow, spacing, type Palette } from '../theme/colors';
+import { useThemedStyles } from '../theme/ThemeContext';
 
 export function Card({
   children,
@@ -9,16 +10,18 @@ export function Card({
   children: React.ReactNode;
   style?: ViewStyle;
 }) {
+  const styles = useThemedStyles(createStyles);
   return <View style={[styles.card, style]}>{children}</View>;
 }
 
-const styles = StyleSheet.create({
-  card: {
-    backgroundColor: colors.bg,
-    borderRadius: radius.lg,
-    padding: spacing.lg,
-    borderWidth: 1,
-    borderColor: colors.border,
-    ...shadow.card,
-  },
-});
+const createStyles = (colors: Palette) =>
+  StyleSheet.create({
+    card: {
+      backgroundColor: colors.bg,
+      borderRadius: radius.lg,
+      padding: spacing.lg,
+      borderWidth: 1,
+      borderColor: colors.border,
+      ...shadow.card,
+    },
+  });

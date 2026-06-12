@@ -1,18 +1,22 @@
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AppBar } from '../components/AppBar';
 import { Card } from '../components/Card';
 import { Chip } from '../components/Chip';
 import { SectionHeader } from '../components/SectionHeader';
+import { Text } from '../components/Text';
 import { countries, programs } from '../data/content';
 import { useLang } from '../i18n/LanguageContext';
 import { ui } from '../i18n/strings';
-import { colors, radius, spacing } from '../theme/colors';
+import { radius, spacing, type Palette } from '../theme/colors';
+import { useTheme, useThemedStyles } from '../theme/ThemeContext';
 
 export function ProgramsScreen() {
   const { t } = useLang();
+  const { colors } = useTheme();
+  const styles = useThemedStyles(createStyles);
 
   return (
     <SafeAreaView style={styles.root} edges={['top']}>
@@ -54,58 +58,59 @@ export function ProgramsScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: colors.surface },
-  content: { padding: spacing.lg, paddingBottom: 100 },
-  intro: {
-    fontSize: 14,
-    color: colors.textMuted,
-    marginBottom: spacing.md,
-    fontWeight: '600',
-    textTransform: 'uppercase',
-    letterSpacing: 0.6,
-  },
-  card: { marginBottom: spacing.md },
-  cardHead: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: spacing.md,
-    marginBottom: spacing.sm,
-  },
-  iconBadge: {
-    width: 44,
-    height: 44,
-    borderRadius: radius.md,
-    backgroundColor: colors.primaryTint,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    flex: 1,
-    fontSize: 17,
-    fontWeight: '800',
-    color: colors.text,
-  },
-  summary: {
-    fontSize: 14.5,
-    lineHeight: 22,
-    color: colors.textMuted,
-  },
-  points: { marginTop: spacing.md, gap: spacing.sm },
-  pointRow: {
-    flexDirection: 'row',
-    gap: spacing.sm,
-    alignItems: 'flex-start',
-  },
-  pointText: {
-    flex: 1,
-    fontSize: 14,
-    lineHeight: 21,
-    color: colors.text,
-  },
-  chips: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: spacing.sm,
-  },
-});
+const createStyles = (colors: Palette) =>
+  StyleSheet.create({
+    root: { flex: 1, backgroundColor: colors.surface },
+    content: { padding: spacing.lg, paddingBottom: 100 },
+    intro: {
+      fontSize: 14,
+      color: colors.textMuted,
+      marginBottom: spacing.md,
+      fontWeight: '600',
+      textTransform: 'uppercase',
+      letterSpacing: 0.6,
+    },
+    card: { marginBottom: spacing.md },
+    cardHead: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: spacing.md,
+      marginBottom: spacing.sm,
+    },
+    iconBadge: {
+      width: 44,
+      height: 44,
+      borderRadius: radius.md,
+      backgroundColor: colors.primaryTint,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    title: {
+      flex: 1,
+      fontSize: 17,
+      fontWeight: '800',
+      color: colors.text,
+    },
+    summary: {
+      fontSize: 14.5,
+      lineHeight: 22,
+      color: colors.textMuted,
+    },
+    points: { marginTop: spacing.md, gap: spacing.sm },
+    pointRow: {
+      flexDirection: 'row',
+      gap: spacing.sm,
+      alignItems: 'flex-start',
+    },
+    pointText: {
+      flex: 1,
+      fontSize: 14,
+      lineHeight: 21,
+      color: colors.text,
+    },
+    chips: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      gap: spacing.sm,
+    },
+  });

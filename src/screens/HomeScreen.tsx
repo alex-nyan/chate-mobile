@@ -1,18 +1,22 @@
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AppBar } from '../components/AppBar';
 import { Card } from '../components/Card';
 import { SectionHeader } from '../components/SectionHeader';
 import { StatCard } from '../components/StatCard';
+import { Text } from '../components/Text';
 import { about } from '../data/content';
 import { useLang } from '../i18n/LanguageContext';
 import { ui } from '../i18n/strings';
-import { colors, spacing } from '../theme/colors';
+import { spacing, type Palette } from '../theme/colors';
+import { useTheme, useThemedStyles } from '../theme/ThemeContext';
 
 export function HomeScreen() {
   const { t } = useLang();
+  const { colors } = useTheme();
+  const styles = useThemedStyles(createStyles);
 
   return (
     <SafeAreaView style={styles.root} edges={['top']}>
@@ -55,35 +59,36 @@ export function HomeScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: colors.bg },
-  body: { paddingHorizontal: spacing.lg },
-  statement: {
-    fontSize: 15,
-    lineHeight: 24,
-    color: colors.text,
-  },
-  statsGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: spacing.md,
-  },
-  freeNote: {
-    flexDirection: 'row',
-    gap: spacing.sm,
-    alignItems: 'flex-start',
-    backgroundColor: '#FFF8E6',
-    borderRadius: 14,
-    borderWidth: 1,
-    borderColor: '#F4E2B0',
-    padding: spacing.md,
-    marginTop: spacing.xl,
-  },
-  freeText: {
-    flex: 1,
-    fontSize: 13.5,
-    lineHeight: 20,
-    color: '#7A5A12',
-    fontWeight: '500',
-  },
-});
+const createStyles = (colors: Palette) =>
+  StyleSheet.create({
+    root: { flex: 1, backgroundColor: colors.bg },
+    body: { paddingHorizontal: spacing.lg },
+    statement: {
+      fontSize: 15,
+      lineHeight: 24,
+      color: colors.text,
+    },
+    statsGrid: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      gap: spacing.md,
+    },
+    freeNote: {
+      flexDirection: 'row',
+      gap: spacing.sm,
+      alignItems: 'flex-start',
+      backgroundColor: colors.noteBg,
+      borderRadius: 14,
+      borderWidth: 1,
+      borderColor: colors.noteBorder,
+      padding: spacing.md,
+      marginTop: spacing.xl,
+    },
+    freeText: {
+      flex: 1,
+      fontSize: 13.5,
+      lineHeight: 20,
+      color: colors.noteText,
+      fontWeight: '500',
+    },
+  });

@@ -5,7 +5,10 @@ the peer-to-peer platform helping Myanmar students reach international higher ed
 Website: [chatethehook.com](https://chatethehook.com)
 
 Built with **Expo (React Native)** — one codebase ships to both App Store and Google Play.
-The app is a static reader: all content is bundled in, so it loads instantly and works offline.
+The reader content (mission, programs, guide articles, and UI copy) is bundled in, so the
+core app loads instantly and reads offline. Network-backed extras — webinar thumbnails &
+videos, blog posts, and contact/social links — need a connection; when offline, thumbnails
+fall back to a placeholder and an "offline" notice appears above the tab bar.
 
 ## Running it
 

@@ -1,30 +1,79 @@
 /**
  * Chate - The Hook brand palette.
- * Exact values pulled from the website source (src/style.css :root):
+ * Light values pulled from the website source (src/style.css :root):
  * teal family + orange + gold + dark slate, on the Lexend typeface.
+ *
+ * Tokens are SEMANTIC (e.g. `primaryDark` = "emphasised teal text"), so the dark
+ * palette flips values rather than hues: `primaryDark` becomes a LIGHT teal so
+ * headings stay legible on a dark background. Components read the active palette
+ * via `useTheme()` / `useThemedStyles()` — never import `colors` directly inside
+ * a component if it needs to react to the theme.
  */
-export const colors = {
+
+export const lightColors = {
   primary: '#0CB4BB', // teal — text/buttons/icons
   primaryBright: '#5CE1E6', // bright teal — accents & gradients
-  primaryDark: '#0B7177', // deep teal
-  primaryTint: '#E1F3F4', // teal wash background
+  primaryDark: '#0B7177', // deep teal — emphasised text/headings
+  primaryTint: '#E1F3F4', // teal wash background (icon badges, active chips)
   accent: '#D68321', // orange
   accentDark: '#B36C18',
   gold: '#F2DEA2',
 
-  bg: '#FFFFFF',
-  surface: '#F6F6F6',
-  surfaceAlt: '#E1F3F4',
+  bg: '#FFFFFF', // cards, app bar, raised surfaces
+  surface: '#F6F6F6', // screen background
+  surfaceAlt: '#E1F3F4', // chips / teal wash
 
   text: '#233142', // dark slate
   textMuted: '#6B7480',
-  textInverse: '#FFFFFF',
+  textInverse: '#FFFFFF', // text on a solid primary fill
 
   border: '#DCE7E8',
   shadow: '#0B3A40',
 
   success: '#1FA971',
-} as const;
+
+  // "Everything is free" note (gold).
+  noteBg: '#FFF8E6',
+  noteBorder: '#F4E2B0',
+  noteText: '#7A5A12',
+};
+
+/** Every palette has the exact same keys as the light one. */
+export type Palette = typeof lightColors;
+
+export const darkColors: Palette = {
+  primary: '#1FC2C9', // teal stays vibrant on dark
+  primaryBright: '#5CE1E6',
+  primaryDark: '#7FE6EB', // FLIPPED: light teal so headings pop on dark
+  primaryTint: '#16323A', // dark teal wash (icon badges, active chips)
+  accent: '#E0912E',
+  accentDark: '#E9A94A',
+  gold: '#F2DEA2',
+
+  bg: '#16232A', // cards, app bar — slightly raised
+  surface: '#0E1A1F', // screen background — darkest
+  surfaceAlt: '#1C3A40', // chips / teal wash
+
+  text: '#EAF2F3', // near-white
+  textMuted: '#9AB0B5',
+  textInverse: '#F4FBFB', // text on a solid primary fill (teal reads with light text)
+
+  border: '#283A40',
+  shadow: '#000000',
+
+  success: '#28B57E',
+
+  noteBg: 'rgba(242,222,162,0.10)',
+  noteBorder: 'rgba(242,222,162,0.30)',
+  noteText: '#E7CE92',
+};
+
+/**
+ * Back-compat default export = the light palette. Use this ONLY for module-scope
+ * constants that never change with the theme; anything rendered should read the
+ * active palette via `useTheme()`.
+ */
+export const colors = lightColors;
 
 export const spacing = {
   xs: 4,

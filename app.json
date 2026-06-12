@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "automatic",
     "scheme": "chate",
     "primaryColor": "#1D6FE0",
     "ios": {
@@ -25,11 +25,14 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
+    "owner": "alexnyans-team",
+    "plugins": [
+      "expo-font"
+    ],
     "extra": {
       "eas": {
-        "projectId": "252b5a61-1a82-4968-a428-7ade62bdef99"
+        "projectId": "cd9c26e0-d059-428f-a98b-258879b69a5e"
       }
-    },
-    "owner": "alex-nyans-organization"
+    }
   }
 }
