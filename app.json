@@ -1,15 +1,19 @@
 {
   "expo": {
-    "name": "chate-app",
-    "slug": "chate-app",
+    "name": "Chate — The Hook",
+    "slug": "chate-the-hook",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "scheme": "chate",
+    "primaryColor": "#1D6FE0",
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.chatethehook.app"
     },
     "android": {
+      "package": "com.chatethehook.app",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/android-icon-foreground.png",
