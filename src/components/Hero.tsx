@@ -1,33 +1,40 @@
-import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import { useLang } from '../i18n/LanguageContext';
 import { ui } from '../i18n/strings';
-import { colors, radius, spacing } from '../theme/colors';
+import { colors, spacing } from '../theme/colors';
 import { LanguageToggle } from './LanguageToggle';
+
+// The real "Chate your dreams" logo, pulled from chatethehook.com.
+const logo = require('../../assets/brand/logo.png');
 
 export function Hero({ topInset }: { topInset: number }) {
   const { t } = useLang();
 
   return (
     <LinearGradient
-      colors={[colors.primaryDark, colors.primary]}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 1 }}
-      style={[styles.hero, { paddingTop: topInset + spacing.md }]}
+      colors={[colors.primaryTint, colors.bg]}
+      start={{ x: 0.5, y: 0 }}
+      end={{ x: 0.5, y: 1 }}
+      style={[styles.hero, { paddingTop: topInset + spacing.sm }]}
     >
       <View style={styles.topRow}>
-        <View style={styles.brandMark}>
-          <Ionicons name="sparkles" size={18} color={colors.accent} />
-        </View>
-        <LanguageToggle tint="dark" />
+        <View style={styles.spacer} />
+        <LanguageToggle tint="light" />
       </View>
 
-      <Text style={styles.appName}>{t(ui.appName)}</Text>
+      <Image
+        source={logo}
+        style={styles.logo}
+        resizeMode="contain"
+        accessibilityLabel="Chate your dreams"
+      />
+
       <View style={styles.taglineRow}>
         <View style={styles.accentDot} />
         <Text style={styles.tagline}>{t(ui.tagline)}</Text>
+        <View style={styles.accentDot} />
       </View>
     </LinearGradient>
   );
@@ -36,47 +43,40 @@ export function Hero({ topInset }: { topInset: number }) {
 const styles = StyleSheet.create({
   hero: {
     paddingHorizontal: spacing.lg,
-    paddingBottom: spacing.xl,
-    borderBottomLeftRadius: radius.lg,
-    borderBottomRightRadius: radius.lg,
+    paddingBottom: spacing.lg,
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
   },
   topRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: spacing.xl,
+    alignSelf: 'stretch',
   },
-  brandMark: {
-    width: 38,
-    height: 38,
-    borderRadius: radius.sm,
-    backgroundColor: 'rgba(255,255,255,0.16)',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  appName: {
-    color: colors.textInverse,
-    fontSize: 30,
-    fontWeight: '900',
-    letterSpacing: 0.3,
+  spacer: { width: 40 },
+  logo: {
+    width: '72%',
+    aspectRatio: 1000 / 562,
+    marginTop: spacing.xs,
   },
   taglineRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: spacing.sm,
     gap: spacing.sm,
+    marginTop: spacing.xs,
   },
   accentDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
+    width: 6,
+    height: 6,
+    borderRadius: 3,
     backgroundColor: colors.accent,
   },
   tagline: {
-    flex: 1,
-    color: 'rgba(255,255,255,0.92)',
-    fontSize: 14.5,
-    lineHeight: 21,
-    fontWeight: '500',
+    color: colors.primaryDark,
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: '700',
+    textAlign: 'center',
   },
 });

@@ -10,27 +10,27 @@ import type { Localized } from '../i18n/strings';
 // ---------------------------------------------------------------------------
 
 export const about: {
-  mission: Localized[];
+  mission: Localized;
+  vision: Localized;
+  commitment: Localized;
   stats: { value: string; label: Localized }[];
 } = {
-  mission: [
-    {
-      en: 'Chate (ချိတ်) is a free, peer-to-peer education platform helping Myanmar students reach international higher education.',
-      my: 'ချိတ် သည် မြန်မာကျောင်းသားများ နိုင်ငံတကာ အဆင့်မြင့်ပညာရေးသို့ ရောက်ရှိနိုင်စေရန် ကူညီပေးသော အခမဲ့ peer-to-peer ပညာရေး ပလက်ဖောင်းတစ်ခု ဖြစ်ပါသည်။',
-    },
-    {
-      en: 'We connect Burmese students with admissions guidance, scholarships, and financial aid — delivered by volunteers and students already admitted to top universities around the world.',
-      my: 'ကျွန်ုပ်တို့သည် မြန်မာကျောင်းသားများကို ဝင်ခွင့်လမ်းညွှန်မှု၊ ပညာသင်ဆုနှင့် ငွေကြေးအထောက်အပံ့များနှင့် ချိတ်ဆက်ပေးပါသည် — ကမ္ဘာ့ထိပ်တန်းတက္ကသိုလ်များတွင် ဝင်ခွင့်ရထားသူ ကျောင်းသားများနှင့် စေတနာ့ဝန်ထမ်းများက ဆောင်ရွက်ပေးပါသည်။',
-    },
-    {
-      en: 'As one of the fastest-growing Burmese youth organizations, our mission is simple: no student should be held back from a world-class education by a lack of guidance.',
-      my: 'အမြန်ဆုံး ကြီးထွားနေသော မြန်မာလူငယ်အဖွဲ့အစည်းတစ်ခုအနေဖြင့် ကျွန်ုပ်တို့၏ ရည်မှန်းချက်မှာ ရိုးရှင်းပါသည် — လမ်းညွှန်မှု မရှိခြင်းကြောင့် မည်သည့်ကျောင်းသားမျှ ကမ္ဘာ့အဆင့်မီ ပညာရေးမှ နောက်ကျမကျန်ရစ်စေရန် ဖြစ်ပါသည်။',
-    },
-  ],
+  mission: {
+    en: 'The “ချိတ်” project connects Myanmar students with the world of international education through peer-to-peer guidance on admissions, scholarships, and financial aid.',
+    my: '“ချိတ်” ပရောဂျက်သည် မြန်မာကျောင်းသားများကို ဝင်ခွင့်၊ ပညာသင်ဆုနှင့် ငွေကြေးအထောက်အပံ့ဆိုင်ရာ peer-to-peer လမ်းညွှန်မှုဖြင့် နိုင်ငံတကာ ပညာရေးလောကနှင့် ချိတ်ဆက်ပေးရန် ရည်ရွယ်ပါသည်။',
+  },
+  vision: {
+    en: 'By offering free advising, webinars, articles, and resources, our goal is to create opportunities — helping fellow Myanmar students navigate the college admissions process.',
+    my: 'အခမဲ့ အကြံပေးမှု၊ webinar၊ ဆောင်းပါးနှင့် အရင်းအမြစ်များ ပေးအပ်ခြင်းဖြင့် မြန်မာကျောင်းသားများ တက္ကသိုလ်ဝင်ခွင့် လုပ်ငန်းစဉ်ကို ဖြတ်သန်းနိုင်ရန် ကူညီကာ အခွင့်အလမ်းများ ဖန်တီးပေးရန် ကျွန်ုပ်တို့ ရည်မှန်းပါသည်။',
+  },
+  commitment: {
+    en: '“ချိတ်” is the fastest-growing Burmese youth organization — operating under its own constitution and powered by dedicated volunteers who take pride in the platform they have built.',
+    my: '“ချိတ်” သည် မိမိကိုယ်ပိုင် ဖွဲ့စည်းပုံအခြေခံဥပဒေဖြင့် လည်ပတ်ပြီး မိမိတို့ တည်ဆောက်ထားသော ပလက်ဖောင်းကို ဂုဏ်ယူသော စေတနာ့ဝန်ထမ်းများက အားဖြည့်ထားသည့် အမြန်ဆုံးကြီးထွားနေသော မြန်မာလူငယ်အဖွဲ့အစည်း ဖြစ်ပါသည်။',
+  },
   stats: [
-    { value: '$4M+', label: { en: 'in scholarships facilitated', my: 'ပညာသင်ဆု ရရှိအောင် ကူညီ' } },
-    { value: '32K+', label: { en: 'community followers', my: 'အသိုင်းအဝိုင်း Follower' } },
-    { value: '60+', label: { en: 'active volunteers', my: 'တက်ကြွ စေတနာ့ဝန်ထမ်း' } },
+    { value: '$4M+', label: { en: 'in scholarships', my: 'ပညာသင်ဆု' } },
+    { value: '32K+', label: { en: 'followers', my: 'Follower' } },
+    { value: '60+', label: { en: 'volunteers', my: 'စေတနာ့ဝန်ထမ်း' } },
     { value: '40+', label: { en: 'webinars hosted', my: 'Webinar ကျင်းပပြီး' } },
   ],
 };
@@ -282,15 +282,20 @@ export const articles: Article[] = [
 // Webinars
 // ---------------------------------------------------------------------------
 
-export const webinars: { intro: Localized; topics: Localized[] } = {
+export const webinars: { intro: Localized; series: Localized[]; topics: Localized[] } = {
   intro: {
-    en: 'Our free webinar series brings admitted students and experts together to break down the application process — over 40 sessions hosted so far.',
+    en: 'Our free webinar series bring admitted students and experts together to break down the application process — over 40 sessions hosted so far.',
     my: 'ကျွန်ုပ်တို့၏ အခမဲ့ Webinar အစီအစဉ်များသည် ဝင်ခွင့်ရထားသူ ကျောင်းသားများနှင့် ကျွမ်းကျင်သူများကို စုစည်းကာ လျှောက်လွှာ လုပ်ငန်းစဉ်ကို ရှင်းပြပေးပါသည် — ယခုအထိ အစီအစဉ် ၄၀ ကျော် ကျင်းပပြီးပါပြီ။',
   },
+  series: [
+    { en: 'Above & Beyond', my: 'Above & Beyond' },
+    { en: 'A Stepping Stone', my: 'A Stepping Stone' },
+    { en: 'ကျောင်းလျှောက်ကြမယ်', my: 'ကျောင်းလျှောက်ကြမယ်' },
+  ],
   topics: [
     { en: 'Scholarships & financial aid', my: 'ပညာသင်ဆုနှင့် ငွေကြေးအထောက်အပံ့' },
     { en: 'Country-by-country application guides', my: 'နိုင်ငံအလိုက် လျှောက်ထားနည်း လမ်းညွှန်များ' },
-    { en: 'Standardized & English proficiency tests', my: 'စံသတ်မှတ် နှင့် အင်္ဂလိပ်စာ စာမေးပွဲများ' },
+    { en: 'Standardized & English proficiency tests', my: 'စံသတ်မှတ်နှင့် အင်္ဂလိပ်စာ စာမေးပွဲများ' },
     { en: 'Essay writing & personal statements', my: 'Essay ရေးသားခြင်းနှင့် Personal Statement' },
     { en: 'Building your extracurricular profile', my: 'သင်ရိုးပြင်ပ ကိုယ်ရေးအချက်အလက် တည်ဆောက်ခြင်း' },
   ],
@@ -303,6 +308,211 @@ export const webinars: { intro: Localized; topics: Localized[] } = {
 export const contact = {
   email: 'chatethehook@gmail.com',
   website: 'https://chatethehook.com',
-  facebook: 'https://www.facebook.com/chatethehook',
-  messenger: 'https://m.me/chatethehook',
+  applyForm: 'https://forms.gle/72JWLVBTUHxNnoDj9',
+  constitution:
+    'https://docs.google.com/document/d/1FQs_tt6eSS0R5iMg7npOsuZQhxQ49O-8eeiG9_ggiQs/edit',
+  voaVideo: 'https://www.youtube.com/watch?v=u5jjnT3j17M',
+  facebook: 'https://www.facebook.com/profile.php?id=61557409119325',
+  instagram: 'https://www.instagram.com/chate_thehook',
+  tiktok: 'https://www.tiktok.com/@chate_thehook',
+  youtube: 'https://www.youtube.com/@Chate_TheHook',
+  telegram: 'https://t.me/chatethehook',
+  linkedin: 'https://www.linkedin.com/company/chate-the-hook',
 };
+
+/** Social channels rendered as a row of icon buttons on the Connect screen. */
+export const socials: { id: string; icon: string; label: string; url: string }[] = [
+  { id: 'facebook', icon: 'logo-facebook', label: 'Facebook', url: contact.facebook },
+  { id: 'instagram', icon: 'logo-instagram', label: 'Instagram', url: contact.instagram },
+  { id: 'tiktok', icon: 'logo-tiktok', label: 'TikTok', url: contact.tiktok },
+  { id: 'youtube', icon: 'logo-youtube', label: 'YouTube', url: contact.youtube },
+  { id: 'telegram', icon: 'paper-plane', label: 'Telegram', url: contact.telegram },
+  { id: 'linkedin', icon: 'logo-linkedin', label: 'LinkedIn', url: contact.linkedin },
+];
+
+// ---------------------------------------------------------------------------
+// Blog posts  (chatethehook.blogspot.com)
+// ---------------------------------------------------------------------------
+
+export type BlogCategory = 'US' | 'UK' | 'Scholarships' | 'Testing' | 'About';
+
+export type BlogPost = {
+  id: string;
+  title: string;
+  date: string;
+  category: BlogCategory;
+  url: string;
+};
+
+const BLOG_CAT_URLS: Record<BlogCategory, string> = {
+  US: 'https://chatethehook.blogspot.com/search/label/US',
+  UK: 'https://chatethehook.blogspot.com/search/label/UK',
+  Scholarships: 'https://chatethehook.blogspot.com/search/label/Scholarships',
+  Testing: 'https://chatethehook.blogspot.com/search/label/Testing%20%26%20Curriculum',
+  About: 'https://chatethehook.blogspot.com/search/label/About%20%E1%80%85%E1%80%BB%E1%80%85%E1%80%BA%20-%20The%20Hook',
+};
+
+export const blogPosts: BlogPost[] = [
+  // 2026
+  { id: 'germany-interview', title: 'Interview with a Current Student Studying in Germany', date: 'Apr 2026', category: 'Scholarships', url: BLOG_CAT_URLS.Scholarships },
+  { id: 'germany-scholarships', title: 'Germany School-Specific Undergraduate Scholarship Opportunities', date: 'Apr 2026', category: 'Scholarships', url: BLOG_CAT_URLS.Scholarships },
+  // 2025
+  { id: 'asean-maybank', title: 'ASEAN MayBank Scholarship', date: 'Oct 2025', category: 'Scholarships', url: BLOG_CAT_URLS.Scholarships },
+  { id: 'childs-dream', title: "Child's Dream Scholarship", date: 'Oct 2025', category: 'Scholarships', url: BLOG_CAT_URLS.Scholarships },
+  { id: 'gsk-scholarship', title: 'GSK Scholarship', date: 'Oct 2025', category: 'Scholarships', url: BLOG_CAT_URLS.Scholarships },
+  { id: 'uk-undergrad-system', title: 'UK Undergraduate Education System', date: 'Sep 2025', category: 'UK', url: BLOG_CAT_URLS.UK },
+  { id: 'uk-course-choice', title: 'How to Choose the Right Course When Applying to UK Universities', date: 'Sep 2025', category: 'UK', url: BLOG_CAT_URLS.UK },
+  { id: 'transfer-scholarships', title: 'Transfer Scholarships', date: 'Sep 2025', category: 'US', url: BLOG_CAT_URLS.US },
+  { id: 'pathways-myanmar-uni', title: 'Pathways After မြန်မာတက္ကသိုလ်ဝင်တန်း', date: 'Aug 2025', category: 'Testing', url: BLOG_CAT_URLS.Testing },
+  { id: 'pathways-ossd', title: 'Pathways After OSSD', date: 'Aug 2025', category: 'Testing', url: BLOG_CAT_URLS.Testing },
+  { id: 'pathways-ibdp', title: 'Pathways After IBDP (International Baccalaureate)', date: 'Aug 2025', category: 'Testing', url: BLOG_CAT_URLS.Testing },
+  { id: 'pathways-a-levels', title: 'Pathways After International A Levels', date: 'Aug 2025', category: 'Testing', url: BLOG_CAT_URLS.Testing },
+  { id: 'top-tips-study-abroad', title: 'Top Tips Before Studying Abroad', date: 'Jul 2025', category: 'US', url: BLOG_CAT_URLS.US },
+  { id: 'student-visa', title: 'Student Visa Application Process and Tips for Visa Interview', date: 'May 2025', category: 'US', url: BLOG_CAT_URLS.US },
+  { id: 'aisl-harrow', title: 'AISL Harrow Scholarship', date: 'Apr 2025', category: 'Scholarships', url: BLOG_CAT_URLS.Scholarships },
+  { id: 'asean-moe', title: 'ASEAN MOE Scholarship', date: 'Apr 2025', category: 'Scholarships', url: BLOG_CAT_URLS.Scholarships },
+  { id: 'admissions-landscape', title: 'Navigating the 2024 College Admissions Landscape', date: 'Mar 2025', category: 'US', url: BLOG_CAT_URLS.US },
+  { id: 'intl-financial-aid', title: 'International Student Financial Aid Application', date: 'Feb 2025', category: 'US', url: BLOG_CAT_URLS.US },
+  { id: 'greek-life', title: 'Greek Life in College', date: 'Feb 2025', category: 'US', url: BLOG_CAT_URLS.US },
+  { id: 'boarding-schools', title: 'Boarding Schools for High School Students', date: 'Feb 2025', category: 'Scholarships', url: BLOG_CAT_URLS.Scholarships },
+  { id: 'merit-scholarships', title: 'Merit-based Scholarships', date: 'Jan 2025', category: 'Scholarships', url: BLOG_CAT_URLS.Scholarships },
+  // 2024
+  { id: 'college-interview', title: 'College Interview', date: 'Dec 2024', category: 'US', url: BLOG_CAT_URLS.US },
+  { id: 'essay-tone', title: 'Tone in your College Essays', date: 'Dec 2024', category: 'US', url: BLOG_CAT_URLS.US },
+  { id: 'uwc-scholarship', title: 'UWC Scholarship', date: 'Dec 2024', category: 'Scholarships', url: BLOG_CAT_URLS.Scholarships },
+  { id: 'rise-scholarship', title: 'RISE Global Scholarship', date: 'Nov 2024', category: 'Scholarships', url: BLOG_CAT_URLS.Scholarships },
+  { id: 'research-opportunities', title: 'Research Opportunities', date: 'Nov 2024', category: 'US', url: BLOG_CAT_URLS.US },
+  { id: 'yield-protection', title: 'What is Yield Protection?', date: 'Oct 2024', category: 'US', url: BLOG_CAT_URLS.US },
+  { id: 'top-public-unis', title: 'Top Public Universities in the US (Part 1)', date: 'Oct 2024', category: 'US', url: BLOG_CAT_URLS.US },
+  { id: 'essay-types', title: 'Types of College Essays', date: 'Oct 2024', category: 'US', url: BLOG_CAT_URLS.US },
+  { id: 'save-money-application', title: 'How to Save Money during College Application', date: 'Oct 2024', category: 'US', url: BLOG_CAT_URLS.US },
+  { id: 'top-tier-us-p2', title: 'Top-Tier Colleges in the US (Part 2)', date: 'Sep 2024', category: 'US', url: BLOG_CAT_URLS.US },
+  { id: 'admissions-decisions', title: 'About Admissions Decisions', date: 'Aug 2024', category: 'US', url: BLOG_CAT_URLS.US },
+  { id: 'common-app', title: 'About the Common App', date: 'Aug 2024', category: 'US', url: BLOG_CAT_URLS.US },
+  { id: 'extracurriculars-properly', title: 'How to do Extracurriculars Properly', date: 'Aug 2024', category: 'US', url: BLOG_CAT_URLS.US },
+  { id: 'css-profile', title: 'About the CSS Profile', date: 'Aug 2024', category: 'US', url: BLOG_CAT_URLS.US },
+  { id: 'demonstrated-interest', title: 'About Demonstrated Interest', date: 'Jul 2024', category: 'US', url: BLOG_CAT_URLS.US },
+  { id: 'top-tier-us-p1', title: 'Top-Tier Colleges in the US (Part 1)', date: 'Jul 2024', category: 'US', url: BLOG_CAT_URLS.US },
+  { id: 'ap-exams', title: 'What are Advanced Placement Exams?', date: 'Jun 2024', category: 'Testing', url: BLOG_CAT_URLS.Testing },
+  { id: 'why-advisors', title: 'Why Do We Need College Application Advisors?', date: 'Jun 2024', category: 'About', url: BLOG_CAT_URLS.About },
+  { id: 'ibdp-what-is', title: 'What is the IB Diploma Program?', date: 'Jun 2024', category: 'Testing', url: BLOG_CAT_URLS.Testing },
+  { id: 'uc-system', title: 'What is the University of California?', date: 'May 2024', category: 'US', url: BLOG_CAT_URLS.US },
+  { id: 'financial-aid-about', title: 'About Financial Aid', date: 'May 2024', category: 'US', url: BLOG_CAT_URLS.US },
+  { id: 'financial-aid-lacs', title: 'Financial Aid Granting Liberal Arts Colleges', date: 'Apr 2024', category: 'Scholarships', url: BLOG_CAT_URLS.Scholarships },
+  { id: 'us-institution-types', title: 'Types of Higher Academic Institutions in the US', date: 'Apr 2024', category: 'US', url: BLOG_CAT_URLS.US },
+  { id: 'college-rankings', title: 'What are College Rankings?', date: 'Apr 2024', category: 'US', url: BLOG_CAT_URLS.US },
+  { id: 'holistic-process', title: 'What does Holistic Process Mean?', date: 'Apr 2024', category: 'US', url: BLOG_CAT_URLS.US },
+  { id: 'public-vs-private', title: 'Public vs Private Universities', date: 'Apr 2024', category: 'US', url: BLOG_CAT_URLS.US },
+];
+
+// ---------------------------------------------------------------------------
+// Video series  (YouTube)
+// ---------------------------------------------------------------------------
+
+export type VideoEpisode = {
+  id: string;
+  title: string;
+  youtubeId: string;
+  date: string;
+  speaker?: string;
+};
+
+export type VideoSeries = {
+  id: string;
+  name: string;
+  description: string;
+  episodes: VideoEpisode[];
+};
+
+export const videoSeries: VideoSeries[] = [
+  {
+    id: 'above-beyond',
+    name: 'Above & Beyond',
+    description: 'Country spotlights — students share their study abroad experience from universities worldwide',
+    episodes: [
+      { id: 'ab-21', title: 'Study in France — Schiller International University', youtubeId: 'z_YtGp17-0I', date: 'Jul 2025', speaker: 'Thazin Oo' },
+      { id: 'ab-20', title: 'Study in Malaysia — INTI International University', youtubeId: 'elXtWhFaDbE', date: 'Jul 2025', speaker: 'Hein Pyae Sone & Thant Thant Myo Oo' },
+      { id: 'ab-19', title: 'Study in Belgium — Vrije Universiteit Brussels', youtubeId: 'VWOEg_zwxtQ', date: 'Jul 2025', speaker: 'Kate @ Khin Nandar Su' },
+      { id: 'ab-18', title: 'Study in Switzerland — Swiss Hotel Management School', youtubeId: 'xu14htv1jFw', date: 'Jul 2025', speaker: 'Myat Eaindray Hmoo' },
+      { id: 'ab-17', title: 'Study in Spain — IE Business School', youtubeId: 'Dv_J2Vcys-M', date: 'Jul 2025', speaker: 'Khaing Zin Lin' },
+      { id: 'ab-16', title: 'Study in New Zealand — University of Auckland', youtubeId: 'Vkncx-PdNpg', date: 'Jul 2025', speaker: 'Wunna Aung' },
+      { id: 'ab-14', title: 'Study in Canada — University of Toronto', youtubeId: '_Mug8J-VbwQ', date: 'Jul 2025', speaker: 'Soe Nyi Nyi Aung' },
+      { id: 'ab-13', title: 'Study in Hungary — Eötvös Loránd University', youtubeId: 'wuO8ICQ12fg', date: 'Jul 2025', speaker: 'Thet Naing Soe' },
+      { id: 'ab-12', title: 'Study in Czech Republic — Masaryk University', youtubeId: '6AcKNIQO4Po', date: 'Jul 2025', speaker: 'Thant Hmue Tii' },
+      { id: 'ab-11', title: 'Study in Germany — TH Nürnberg Georg Simon Ohm', youtubeId: 'OzWM44DzHlk', date: 'Jul 2025', speaker: 'Thar Lon Lin Htet' },
+      { id: 'ab-10', title: 'Study in Thailand — Chulalongkorn University', youtubeId: 'NGlLFPYE6Xs', date: 'Jun 2025', speaker: 'Win Htut Aung' },
+      { id: 'ab-9', title: 'Study in Japan — Okayama University', youtubeId: 'yyZ_fwzek6c', date: 'Jun 2025', speaker: 'Pyae Phyo Aung' },
+      { id: 'ab-8', title: 'Study in Indonesia — Universitas Pelita Harapan', youtubeId: 'mymhiff7DUQ', date: 'Jun 2025', speaker: 'Nilar Aye' },
+      { id: 'ab-7', title: 'Study in Australia — University of New South Wales', youtubeId: 'o2GQU86bjQQ', date: 'Jun 2025', speaker: 'Thoon Set Paing' },
+      { id: 'ab-6', title: 'Study in China — Zhejiang University', youtubeId: 'iJfnMv-unGI', date: 'Jun 2025', speaker: 'Thet No Htwe' },
+      { id: 'ab-5', title: 'Study in Italy — University of Parma', youtubeId: 'c9Jju6BJkMU', date: 'Jun 2025', speaker: 'Thiha Swe' },
+      { id: 'ab-3', title: 'Study in Hong Kong — University of Hong Kong', youtubeId: 'TJpuk50nJBg', date: 'Jun 2025', speaker: 'Shinn Thant Ein' },
+      { id: 'ab-2', title: 'Study in Singapore — National University of Singapore', youtubeId: 'ZiYrvpB8ERE', date: 'Jun 2025', speaker: 'Yoon Su Lin' },
+      { id: 'ab-1', title: 'Study in Korea — KAIST', youtubeId: '0Ly0gA8MJjU', date: 'May 2025', speaker: 'Naing Zaw Lu & team' },
+    ],
+  },
+  {
+    id: 'kyaung-lhaut',
+    name: 'ကျောင်းလျှောက်ကြမယ်',
+    description: 'Deep-dive webinars covering every aspect of the college application process',
+    episodes: [
+      { id: 'kl-20', title: 'Getting Ready for The Next College Application Season', youtubeId: 'SwAWNbovm9U', date: 'Jan 2025', speaker: 'Soe Thway Ko, Swan Tayza Aung' },
+      { id: 'kl-19', title: 'Guide to University Education in Singapore: NUS Pathway Focus', youtubeId: '_aZ2EyM0_xo', date: 'Dec 2024', speaker: 'Yoon Su Lin' },
+      { id: 'kl-18', title: 'How to Build a Passion Project?', youtubeId: 'p3vHgpWsyuQ', date: 'Dec 2024', speaker: 'Yoon Yati' },
+      { id: 'kl-17', title: 'Applying to Russell Group UK Universities with Chevening Scholarship', youtubeId: 'BxII9HokTxY', date: 'Oct 2024', speaker: 'Phyo Thiri' },
+      { id: 'kl-16', title: 'UCAS Walkthrough', youtubeId: 'ujOhp7wzUF4', date: 'Sep 2024', speaker: 'Julia Moe Chan Myae' },
+      { id: 'kl-15', title: 'CommonApp Walkthrough', youtubeId: 'RM1r0l_KSGw', date: 'Sep 2024', speaker: 'Aung Khant Paing' },
+      { id: 'kl-14', title: 'UWC and US Universities', youtubeId: 'GVaAJLHp62A', date: 'Aug 2024', speaker: 'Htet Htet Paing' },
+      { id: 'kl-13', title: 'Study in the UK', youtubeId: 'IIGXhLFzaxY', date: 'Aug 2024', speaker: 'Yamin Thet @ Rachel Joy' },
+      { id: 'kl-12', title: 'Stepping into UK Universities', youtubeId: 'pM91wTXkhJI', date: 'Aug 2024', speaker: 'Swan Yee Htun Wah' },
+      { id: 'kl-11', title: 'Transferring from Community College to Universities', youtubeId: 'jmHSHLbcIXc', date: 'Jul 2024', speaker: 'Thet Htoo Naung' },
+      { id: 'kl-10', title: 'Fully Funded Undergraduate Scholarship in the US with a GED', youtubeId: 'xn7rv-xiWAM', date: 'Jul 2024', speaker: 'Allei Mar' },
+      { id: 'kl-9', title: 'Doing the Best with What I Have', youtubeId: 'C60d95ecPMg', date: 'Jul 2024', speaker: 'John Ten Khant' },
+      { id: 'kl-8', title: 'Extracurricular Activities for Colleges', youtubeId: 'I-2qd55aBeA', date: 'Jul 2024', speaker: 'Yone Waddy Aung' },
+      { id: 'kl-7', title: 'Financial Aid at US Colleges', youtubeId: 'sNl1rv3X39k', date: 'Jun 2024', speaker: 'Wai Yan Win Aung' },
+      { id: 'kl-4', title: 'My Journey from Community College to Columbia University', youtubeId: 'sxHyH7kSoNU', date: 'May 2024', speaker: 'Rachel Soe' },
+      { id: 'kl-3', title: 'Misconceptions in College Applications', youtubeId: 'YOwYQ56EZaA', date: 'May 2024', speaker: 'Yin Min Thant' },
+      { id: 'kl-2', title: 'Why Liberal Arts Colleges?', youtubeId: 'HRfzWAFDMQk', date: 'Apr 2024', speaker: 'Sai Nyi Bhone Htut, Myat Nadi Kyaw' },
+    ],
+  },
+  {
+    id: 'stepping-stone',
+    name: 'A Stepping Stone',
+    description: 'High school scholarship opportunities for Myanmar students',
+    episodes: [
+      { id: 'ss-3', title: 'ASEAN Scholarship', youtubeId: 'LZntciYO-nQ', date: 'Nov 2024', speaker: 'Arnt Hmue Ti Kyi' },
+      { id: 'ss-2', title: 'United World College Scholarship', youtubeId: '1J9_feIj9J4', date: 'Nov 2024', speaker: 'Yoon Ei Ko Ko, Hema Lian Duh Kip Tial' },
+      { id: 'ss-1', title: 'AISL Harrow Scholarship', youtubeId: 'wqxR-ZU2hPY', date: 'Nov 2024', speaker: 'Swan Tayza Aung' },
+    ],
+  },
+  {
+    id: 'su-tu-pyu',
+    name: 'စုတုပြု — Accepted Essays',
+    description: 'Real accepted college essays read aloud — MIT, Brown, Duke, UCLA, and more',
+    episodes: [
+      { id: 'stp-14', title: "Child Dream Scholarship Essay", youtubeId: 'pYs7wKK-G3g', date: '2025', speaker: 'Saw Chit Tun' },
+      { id: 'stp-13', title: 'UNSW Accepted Essay', youtubeId: '2NMzGdZLfQ0', date: '2025', speaker: 'Thoon Set Naing' },
+      { id: 'stp-12', title: 'Duke Accepted Essay', youtubeId: 'v0szovCc0bA', date: '2025', speaker: 'Myat Theingi' },
+      { id: 'stp-11', title: 'MIT Accepted Essay', youtubeId: 'MiaqKwu8cm0', date: '2025', speaker: 'Soe Lin Htet' },
+      { id: 'stp-10', title: "UCLA Chancellor's Scholarship Winning Essay", youtubeId: '2u0sUV8Wzdk', date: '2025', speaker: 'May Kyi Phyu Thin' },
+      { id: 'stp-9', title: 'Tufts University Accepted Essay', youtubeId: 'yreDDP0Jp9c', date: '2024', speaker: 'Thang Dopmul' },
+      { id: 'stp-8', title: 'Brown University Accepted Essay', youtubeId: 'DQo_3gRPBu0', date: '2024', speaker: 'Swan Tayza Aung' },
+      { id: 'stp-7', title: 'Occidental College Accepted Essay', youtubeId: 'dWnR9Bos4jU', date: '2024', speaker: 'Aung Myat Htet' },
+      { id: 'stp-6', title: 'Vanderbilt University Accepted Essay', youtubeId: 'T-snQV67LdQ', date: '2024', speaker: 'Sai Nyi Bhone Htut' },
+      { id: 'stp-5', title: 'Rice University Accepted Essay', youtubeId: '4daBKoIkShM', date: '2024', speaker: 'Yin Min Thant' },
+      { id: 'stp-4', title: 'Brown University Accepted Essay', youtubeId: 'yZzQSwoaYOg', date: '2024', speaker: 'Yone Waddy Aung' },
+      { id: 'stp-3', title: 'Swarthmore Accepted Essay', youtubeId: 'BVY2fMzcBvo', date: '2024', speaker: 'Sai Nyi Bhone Htut' },
+      { id: 'stp-2', title: 'Dartmouth Accepted Essay', youtubeId: 'vbB0sdRjTQ4', date: '2024', speaker: 'Wai Yan Win Aung' },
+      { id: 'stp-1', title: 'MIT Accepted Essay', youtubeId: 'DMwt8OBGQSM', date: '2024', speaker: 'Nyan Lin Htet @ Alex' },
+    ],
+  },
+  {
+    id: 'scholars-diaries',
+    name: "Scholars' Diaries",
+    description: 'In-depth student interviews about life studying abroad',
+    episodes: [
+      { id: 'sd-2', title: 'Extracurricular Activities', youtubeId: 'T2Wu9_0DPU0', date: '2024', speaker: 'Swan Yee Htun Wah' },
+      { id: 'sd-1', title: 'The United World College (UWC) Experience', youtubeId: 'qDaJNip0cyc', date: '2024', speaker: 'Yoon Ei Ko Ko' },
+    ],
+  },
+];

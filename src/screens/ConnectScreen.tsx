@@ -1,12 +1,13 @@
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Linking, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AppBar } from '../components/AppBar';
 import { Card } from '../components/Card';
+import { Chip } from '../components/Chip';
 import { LinkButton } from '../components/LinkButton';
 import { SectionHeader } from '../components/SectionHeader';
-import { contact, webinars } from '../data/content';
+import { contact, socials, webinars } from '../data/content';
 import { useLang } from '../i18n/LanguageContext';
 import { ui } from '../i18n/strings';
 import { colors, radius, spacing } from '../theme/colors';
@@ -30,6 +31,16 @@ export function ConnectScreen() {
             </View>
             <Text style={styles.webinarIntro}>{t(webinars.intro)}</Text>
           </View>
+
+          <View style={styles.topicsLabelRow}>
+            <Text style={styles.topicsLabel}>{t(ui.ourSeries)}</Text>
+          </View>
+          <View style={styles.seriesChips}>
+            {webinars.series.map((sName, i) => (
+              <Chip key={i} label={t(sName)} />
+            ))}
+          </View>
+
           <View style={styles.topicsLabelRow}>
             <Text style={styles.topicsLabel}>{t(ui.upcomingTopics)}</Text>
           </View>
@@ -47,17 +58,11 @@ export function ConnectScreen() {
         <SectionHeader title={t(ui.getInTouch)} />
         <View style={styles.links}>
           <LinkButton
-            icon="chatbubbles-outline"
+            icon="create-outline"
             label={t(ui.applyNow)}
-            sublabel="m.me/chatethehook"
-            url={contact.messenger}
+            sublabel="forms.gle"
+            url={contact.applyForm}
             variant="solid"
-          />
-          <LinkButton
-            icon="logo-facebook"
-            label={t(ui.messageFacebook)}
-            sublabel="facebook.com/chatethehook"
-            url={contact.facebook}
           />
           <LinkButton
             icon="mail-outline"
@@ -71,9 +76,37 @@ export function ConnectScreen() {
             sublabel="chatethehook.com"
             url={contact.website}
           />
+          <LinkButton
+            icon="document-text-outline"
+            label={t(ui.readConstitution)}
+            sublabel="Google Docs"
+            url={contact.constitution}
+          />
+          <LinkButton
+            icon="logo-youtube"
+            label={t(ui.watchVoa)}
+            sublabel="YouTube"
+            url={contact.voaVideo}
+          />
         </View>
 
-        <Text style={styles.footer}>{t(ui.tagline)}</Text>
+        {/* Follow us */}
+        <SectionHeader title={t(ui.followUs)} />
+        <View style={styles.socialRow}>
+          {socials.map((s) => (
+            <Pressable
+              key={s.id}
+              onPress={() => Linking.openURL(s.url).catch(() => {})}
+              accessibilityRole="link"
+              accessibilityLabel={s.label}
+              style={({ pressed }) => [styles.socialBtn, pressed && styles.socialPressed]}
+            >
+              <Ionicons name={s.icon as any} size={23} color={colors.primaryDark} />
+            </Pressable>
+          ))}
+        </View>
+
+        <Text style={styles.footer}>{t(ui.slogan)} · {t(ui.tagline)}</Text>
       </ScrollView>
     </SafeAreaView>
   );
@@ -81,7 +114,7 @@ export function ConnectScreen() {
 
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: colors.surface },
-  content: { padding: spacing.lg, paddingBottom: spacing.xxl },
+  content: { padding: spacing.lg, paddingBottom: 100 },
   webinarHead: {
     flexDirection: 'row',
     gap: spacing.md,
@@ -109,10 +142,28 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     letterSpacing: 0.6,
   },
+  seriesChips: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm },
   topics: { gap: spacing.sm },
   topicRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
   topicText: { flex: 1, fontSize: 14.5, color: colors.text },
   links: { gap: spacing.sm },
+  socialRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: spacing.md,
+    paddingVertical: spacing.sm,
+  },
+  socialBtn: {
+    width: 48,
+    height: 48,
+    borderRadius: radius.md,
+    backgroundColor: colors.primaryTint,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  socialPressed: {
+    opacity: 0.6,
+  },
   footer: {
     textAlign: 'center',
     color: colors.textMuted,

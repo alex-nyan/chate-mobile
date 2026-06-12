@@ -1,24 +1,27 @@
 /**
  * Chate - The Hook brand palette.
- * Built around the website's blue sparkle identity with a gold accent.
+ * Exact values pulled from the website source (src/style.css :root):
+ * teal family + orange + gold + dark slate, on the Lexend typeface.
  */
 export const colors = {
-  primary: '#1D6FE0',
-  primaryDark: '#0B3D91',
-  primaryTint: '#E6F1FF',
-  accent: '#FFC83D',
-  accentDark: '#E0A416',
+  primary: '#0CB4BB', // teal — text/buttons/icons
+  primaryBright: '#5CE1E6', // bright teal — accents & gradients
+  primaryDark: '#0B7177', // deep teal
+  primaryTint: '#E1F3F4', // teal wash background
+  accent: '#D68321', // orange
+  accentDark: '#B36C18',
+  gold: '#F2DEA2',
 
   bg: '#FFFFFF',
-  surface: '#F4F8FF',
-  surfaceAlt: '#EDF3FE',
+  surface: '#F6F6F6',
+  surfaceAlt: '#E1F3F4',
 
-  text: '#0F1B2D',
-  textMuted: '#5B6B82',
+  text: '#233142', // dark slate
+  textMuted: '#6B7480',
   textInverse: '#FFFFFF',
 
-  border: '#E1E9F5',
-  shadow: '#0B2A5E',
+  border: '#DCE7E8',
+  shadow: '#0B3A40',
 
   success: '#1FA971',
 } as const;

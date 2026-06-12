@@ -10,7 +10,7 @@ export default function App() {
     <SafeAreaProvider>
       <LanguageProvider>
         <NavigationContainer>
-          <StatusBar style="light" />
+          <StatusBar style="dark" />
           <RootNavigator />
         </NavigationContainer>
       </LanguageProvider>

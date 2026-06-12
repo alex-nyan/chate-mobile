@@ -1,9 +1,9 @@
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { AppBar } from '../components/AppBar';
 import { Card } from '../components/Card';
-import { Hero } from '../components/Hero';
 import { SectionHeader } from '../components/SectionHeader';
 import { StatCard } from '../components/StatCard';
 import { about } from '../data/content';
@@ -13,24 +13,29 @@ import { colors, spacing } from '../theme/colors';
 
 export function HomeScreen() {
   const { t } = useLang();
-  const insets = useSafeAreaInsets();
 
   return (
-    <View style={styles.root}>
+    <SafeAreaView style={styles.root} edges={['top']}>
+      <AppBar title={t(ui.appName)} />
       <ScrollView
-        contentContainerStyle={{ paddingBottom: insets.bottom + spacing.xxl }}
+        contentContainerStyle={{ paddingBottom: 100 }}
         showsVerticalScrollIndicator={false}
       >
-        <Hero topInset={insets.top} />
 
         <View style={styles.body}>
           <SectionHeader title={t(ui.ourMission)} />
           <Card>
-            {about.mission.map((para, i) => (
-              <Text key={i} style={[styles.mission, i > 0 && styles.missionGap]}>
-                {t(para)}
-              </Text>
-            ))}
+            <Text style={styles.statement}>{t(about.mission)}</Text>
+          </Card>
+
+          <SectionHeader title={t(ui.ourVision)} />
+          <Card>
+            <Text style={styles.statement}>{t(about.vision)}</Text>
+          </Card>
+
+          <SectionHeader title={t(ui.ourCommitment)} />
+          <Card>
+            <Text style={styles.statement}>{t(about.commitment)}</Text>
           </Card>
 
           <SectionHeader title={t(ui.ourImpact)} />
@@ -46,19 +51,18 @@ export function HomeScreen() {
           </View>
         </View>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: colors.bg },
   body: { paddingHorizontal: spacing.lg },
-  mission: {
+  statement: {
     fontSize: 15,
     lineHeight: 24,
     color: colors.text,
   },
-  missionGap: { marginTop: spacing.md },
   statsGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',

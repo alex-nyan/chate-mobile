@@ -56,7 +56,7 @@ export function ProgramsScreen() {
 
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: colors.surface },
-  content: { padding: spacing.lg, paddingBottom: spacing.xxl },
+  content: { padding: spacing.lg, paddingBottom: 100 },
   intro: {
     fontSize: 14,
     color: colors.textMuted,

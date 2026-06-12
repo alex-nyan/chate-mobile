@@ -1,13 +1,11 @@
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { colors, spacing } from '../theme/colors';
 import { LanguageToggle } from './LanguageToggle';
 
-/**
- * Compact top bar used on non-home screens.
- * Optional back button on the left, title in the middle, language toggle on the right.
- */
+const mark = require('../../assets/brand/icon-logo-500.png');
+
 export function AppBar({
   title,
   onBack,
@@ -28,7 +26,14 @@ export function AppBar({
           >
             <Ionicons name="chevron-back" size={26} color={colors.primaryDark} />
           </Pressable>
-        ) : null}
+        ) : (
+          <Image
+            source={mark}
+            style={styles.mark}
+            resizeMode="contain"
+            accessibilityLabel="Chate — The Hook"
+          />
+        )}
       </View>
 
       <Text style={styles.title} numberOfLines={1}>
@@ -55,6 +60,7 @@ const styles = StyleSheet.create({
   side: { minWidth: 92, justifyContent: 'center' },
   right: { alignItems: 'flex-end' },
   pressed: { opacity: 0.6 },
+  mark: { width: 40, height: 40 },
   title: {
     flex: 1,
     textAlign: 'center',

@@ -12,6 +12,7 @@ export function tr(value: Localized | string, lang: Lang): string {
 /** Static UI chrome strings (tab labels, buttons, section headers). */
 export const ui = {
   appName: { en: 'Chate — The Hook', my: 'ချိတ် — The Hook' },
+  slogan: { en: 'Chate your dreams', my: 'Chate your dreams' },
   tagline: { en: 'Guided by Peers, Admitted Worldwide', my: 'အတွေ့အကြုံရှိသူများ၏ လမ်းညွှန်မှုဖြင့် ကမ္ဘာအနှံ့ဝင်ခွင့်ရ' },
 
   tabHome: { en: 'Home', my: 'ပင်မ' },
@@ -22,6 +23,8 @@ export const ui = {
   readMore: { en: 'Read', my: 'ဖတ်ရန်' },
   ourImpact: { en: 'Our Impact', my: 'ကျွန်ုပ်တို့၏ အကျိုးသက်ရောက်မှု' },
   ourMission: { en: 'Our Mission', my: 'ကျွန်ုပ်တို့၏ ရည်မှန်းချက်' },
+  ourVision: { en: 'Our Vision', my: 'ကျွန်ုပ်တို့၏ မျှော်မှန်းချက်' },
+  ourCommitment: { en: 'Our Commitment', my: 'ကျွန်ုပ်တို့၏ ကတိကဝတ်' },
   whatWeOffer: { en: 'What We Offer', my: 'ကျွန်ုပ်တို့ ပံ့ပိုးပေးသည်များ' },
   exploreGuides: { en: 'Explore Guides', my: 'လမ်းညွှန်များ ကြည့်ရှုရန်' },
   countriesCovered: { en: 'Countries we guide you to', my: 'ဝင်ခွင့်လျှောက်ထားနိုင်သော နိုင်ငံများ' },
@@ -30,6 +33,7 @@ export const ui = {
   getInTouch: { en: 'Get in Touch', my: 'ဆက်သွယ်ရန်' },
   joinUs: { en: 'Join the Community', my: 'အသိုင်းအဝိုင်းတွင် ပါဝင်ရန်' },
   webinars: { en: 'Webinar Series', my: 'Webinar အစီအစဉ်' },
+  ourSeries: { en: 'Our series', my: 'ကျွန်ုပ်တို့၏ အစီအစဉ်များ' },
   language: { en: 'မြန်မာ', my: 'EN' }, // toggle shows the OTHER language
   langSwitchHint: { en: 'Switch language', my: 'ဘာသာစကား ပြောင်းရန်' },
 
@@ -39,6 +43,8 @@ export const ui = {
   applyNow: { en: 'Apply / Request advising', my: 'လျှောက်လွှာ တင်ရန်' },
   qaGroup: { en: 'Q&A Facebook Group', my: 'မေး/ဖြေ Facebook အုပ်စု' },
   followUs: { en: 'Follow us', my: 'ကျွန်ုပ်တို့ကို Follow လုပ်ပါ' },
+  readConstitution: { en: 'Read our Constitution', my: 'ကျွန်ုပ်တို့၏ ဖွဲ့စည်းပုံ ဖတ်ရန်' },
+  watchVoa: { en: 'Watch: VOA interview (2024)', my: 'VOA အင်တာဗျူး (၂၀၂၄) ကြည့်ရန်' },
   freeNote: {
     en: 'Everything we offer is 100% free — run by volunteers and admitted students.',
     my: 'ကျွန်ုပ်တို့၏ ဝန်ဆောင်မှုအားလုံးသည် လုံးဝအခမဲ့ဖြစ်ပြီး စေတနာ့ဝန်ထမ်းများနှင့် ဝင်ခွင့်ရထားသူ ကျောင်းသားများက လုပ်ဆောင်ပေးပါသည်။',
