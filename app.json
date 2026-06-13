@@ -25,13 +25,13 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "owner": "alexnyans-team",
+    "owner": "alex-nyans-organization",
     "plugins": [
       "expo-font"
     ],
     "extra": {
       "eas": {
-        "projectId": "cd9c26e0-d059-428f-a98b-258879b69a5e"
+        "projectId": "252b5a61-1a82-4968-a428-7ade62bdef99"
       }
     }
   }
