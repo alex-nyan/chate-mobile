@@ -115,7 +115,7 @@ export function ArticleDetailScreen({ route, navigation }: ArticleDetailProps) {
 const createStyles = (colors: Palette) =>
   StyleSheet.create({
     root: { flex: 1, backgroundColor: colors.bg },
-    content: { padding: spacing.lg, paddingBottom: spacing.xxl },
+    content: { padding: spacing.lg, paddingBottom: 100 },
     iconBadge: {
       width: 52,
       height: 52,
