@@ -24,7 +24,12 @@ export const linking: LinkingOptions<RootTabParamList> = {
           ArticleDetail: 'article/:articleId',
         },
       },
-      Connect: 'connect',
+      Settings: {
+        screens: {
+          SettingsHome: 'settings',
+          SavedArticles: 'settings/saved',
+        },
+      },
     },
   },
 };

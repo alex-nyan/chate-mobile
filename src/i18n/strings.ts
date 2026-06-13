@@ -18,7 +18,6 @@ export const ui = {
   tabHome: { en: 'Home', my: 'ပင်မ' },
   tabPrograms: { en: 'Programs', my: 'ပရိုဂရမ်' },
   tabArticles: { en: 'Guides', my: 'လမ်းညွှန်' },
-  tabConnect: { en: 'Connect', my: 'ဆက်သွယ်ရန်' },
 
   readMore: { en: 'Read', my: 'ဖတ်ရန်' },
   ourImpact: { en: 'Our Impact', my: 'ကျွန်ုပ်တို့၏ အကျိုးသက်ရောက်မှု' },
@@ -93,4 +92,22 @@ export const ui = {
     en: "You're offline — some content may not load",
     my: 'အင်တာနက် မရှိပါ — အချို့ အကြောင်းအရာများ ပြသနိုင်မည် မဟုတ်ပါ',
   },
+
+  // Settings screen
+  tabSettings: { en: 'Settings', my: 'ဆက်တင်' },
+  appearance: { en: 'Appearance', my: 'အသွင်အပြင်' },
+  themeSystem: { en: 'System', my: 'စနစ်' },
+  themeLight: { en: 'Light', my: 'အလင်း' },
+  themeDark: { en: 'Dark', my: 'အမှောင်' },
+  languageHeader: { en: 'Language', my: 'ဘာသာစကား' },
+  textSize: { en: 'Text size', my: 'စာလုံးအရွယ်အစား' },
+  textSmall: { en: 'Small', my: 'သေး' },
+  textDefault: { en: 'Default', my: 'ပုံမှန်' },
+  textLarge: { en: 'Large', my: 'ကြီး' },
+  textXL: { en: 'XL', my: 'အကြီးဆုံး' },
+  savedArticles: { en: 'Saved articles', my: 'သိမ်းထားသော ဆောင်းပါးများ' },
+  noSavedArticles: { en: 'No saved articles yet', my: 'သိမ်းထားသော ဆောင်းပါး မရှိသေးပါ' },
+  about: { en: 'About', my: 'အကြောင်း' },
+  version: { en: 'Version', my: 'ဗားရှင်း' },
+  buildNumber: { en: 'Build', my: 'Build' },
 } as const;

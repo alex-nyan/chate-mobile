@@ -26,6 +26,7 @@ import { initErrorReporting } from './src/lib/errorReporting';
 import { RootNavigator } from './src/navigation';
 import { linking } from './src/navigation/linking';
 import { BookmarksProvider } from './src/state/BookmarksContext';
+import { TextScaleProvider } from './src/state/TextScaleContext';
 import { ThemeProvider, useTheme } from './src/theme/ThemeContext';
 
 // Funnel uncaught errors + unhandled rejections into one reporter (see the file
@@ -94,11 +95,13 @@ export default function App() {
     <SafeAreaProvider>
       <ThemeProvider>
         <LanguageProvider>
-          <BookmarksProvider>
-            <ErrorBoundary>
-              <ThemedNavigation />
-            </ErrorBoundary>
-          </BookmarksProvider>
+          <TextScaleProvider>
+            <BookmarksProvider>
+              <ErrorBoundary>
+                <ThemedNavigation />
+              </ErrorBoundary>
+            </BookmarksProvider>
+          </TextScaleProvider>
         </LanguageProvider>
       </ThemeProvider>
     </SafeAreaProvider>

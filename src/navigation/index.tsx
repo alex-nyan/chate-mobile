@@ -6,15 +6,17 @@ import { LiquidGlassTabBar } from '../components/LiquidGlassTabBar';
 import { useLang } from '../i18n/LanguageContext';
 import { ui } from '../i18n/strings';
 import { ArticleDetailScreen } from '../screens/ArticleDetailScreen';
-import { ConnectScreen } from '../screens/ConnectScreen';
 import { GuidesScreen } from '../screens/GuidesScreen';
 import { HomeScreen } from '../screens/HomeScreen';
 import { ProgramsScreen } from '../screens/ProgramsScreen';
+import { SavedArticlesScreen } from '../screens/SavedArticlesScreen';
+import { SettingsScreen } from '../screens/SettingsScreen';
 import { useTheme } from '../theme/ThemeContext';
-import type { GuidesStackParamList } from './types';
+import type { GuidesStackParamList, SettingsStackParamList } from './types';
 
 const Tab = createBottomTabNavigator();
 const GuidesStack = createNativeStackNavigator<GuidesStackParamList>();
+const SettingsStack = createNativeStackNavigator<SettingsStackParamList>();
 
 function GuidesNavigator() {
   return (
@@ -25,13 +27,22 @@ function GuidesNavigator() {
   );
 }
 
+function SettingsNavigator() {
+  return (
+    <SettingsStack.Navigator screenOptions={{ headerShown: false }}>
+      <SettingsStack.Screen name="SettingsHome" component={SettingsScreen} />
+      <SettingsStack.Screen name="SavedArticles" component={SavedArticlesScreen} />
+    </SettingsStack.Navigator>
+  );
+}
+
 type IconName = keyof typeof Ionicons.glyphMap;
 
 const ICONS: Record<string, { active: IconName; inactive: IconName }> = {
   Home: { active: 'home', inactive: 'home-outline' },
   Programs: { active: 'compass', inactive: 'compass-outline' },
   Guides: { active: 'book', inactive: 'book-outline' },
-  Connect: { active: 'people', inactive: 'people-outline' },
+  Settings: { active: 'settings', inactive: 'settings-outline' },
 };
 
 export function RootNavigator() {
@@ -69,9 +80,9 @@ export function RootNavigator() {
         options={{ tabBarLabel: t(ui.tabArticles) }}
       />
       <Tab.Screen
-        name="Connect"
-        component={ConnectScreen}
-        options={{ tabBarLabel: t(ui.tabConnect) }}
+        name="Settings"
+        component={SettingsNavigator}
+        options={{ tabBarLabel: t(ui.tabSettings) }}
       />
     </Tab.Navigator>
   );

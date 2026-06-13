@@ -4,9 +4,7 @@ import { Image, Linking, Pressable, StyleSheet, View } from 'react-native';
 import { haptics } from '../lib/haptics';
 import { radius, spacing, type Palette } from '../theme/colors';
 import { useTheme, useThemedStyles } from '../theme/ThemeContext';
-import { LanguageToggle } from './LanguageToggle';
 import { Text } from './Text';
-import { ThemeToggle } from './ThemeToggle';
 
 const mark = require('../../assets/brand/icon-logo-500.png');
 // Dark-mode variant: the black ချိတ် strokes recolored to white (teal circle kept).
@@ -52,7 +50,6 @@ export function AppBar({
             accessibilityLabel="Chate — The Hook"
           />
         )}
-        <ThemeToggle />
       </View>
 
       <Text style={styles.title} numberOfLines={1}>
@@ -70,7 +67,6 @@ export function AppBar({
           <Text style={styles.mextText}>MEXT</Text>
           <Ionicons name="open-outline" size={12} color={colors.primaryDark} />
         </Pressable>
-        <LanguageToggle tint="light" />
       </View>
     </View>
   );
