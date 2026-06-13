@@ -5,13 +5,17 @@ import { useLang } from '../i18n/LanguageContext';
 import { ui } from '../i18n/strings';
 import { spacing, type Palette } from '../theme/colors';
 import { useTheme, useThemedStyles } from '../theme/ThemeContext';
-import { LanguageToggle } from './LanguageToggle';
 import { Text } from './Text';
 
-// The real "Chate your dreams" logo, pulled from chatethehook.com.
-const logo = require('../../assets/brand/logo.png');
+// The "Chate the Hook" wordmark (distinct from the small icon mark in the AppBar).
+const wordmark = require('../../assets/brand/wordmark-stars.png');
 
-export function Hero({ topInset }: { topInset: number }) {
+/**
+ * Branded hero band at the top of Home: a teal gradient with the wordmark,
+ * slogan, and tagline. (Language/theme controls live in Settings, so the hero
+ * carries no toggles.)
+ */
+export function HomeHero() {
   const { t } = useLang();
   const { colors } = useTheme();
   const styles = useThemedStyles(createStyles);
@@ -21,20 +25,14 @@ export function Hero({ topInset }: { topInset: number }) {
       colors={[colors.primaryTint, colors.bg]}
       start={{ x: 0.5, y: 0 }}
       end={{ x: 0.5, y: 1 }}
-      style={[styles.hero, { paddingTop: topInset + spacing.sm }]}
+      style={styles.hero}
     >
-      <View style={styles.topRow}>
-        <View style={styles.spacer} />
-        <LanguageToggle tint="light" />
-      </View>
-
       <Image
-        source={logo}
-        style={styles.logo}
+        source={wordmark}
+        style={styles.wordmark}
         resizeMode="contain"
-        accessibilityLabel="Chate your dreams"
+        accessibilityLabel="Chate — The Hook · Chate your dreams"
       />
-
       <View style={styles.taglineRow}>
         <View style={styles.accentDot} />
         <Text style={styles.tagline}>{t(ui.tagline)}</Text>
@@ -48,28 +46,24 @@ const createStyles = (colors: Palette) =>
   StyleSheet.create({
     hero: {
       paddingHorizontal: spacing.lg,
+      paddingTop: spacing.md,
       paddingBottom: spacing.lg,
       alignItems: 'center',
       borderBottomWidth: 1,
       borderBottomColor: colors.border,
     },
-    topRow: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      alignSelf: 'stretch',
-    },
-    spacer: { width: 40 },
-    logo: {
-      width: '72%',
-      aspectRatio: 1000 / 562,
-      marginTop: spacing.xs,
+    // Explicit width/height (web ignores aspectRatio on Image, leaving the full
+    // 711px natural height). 230×129 keeps the 1265:711 ratio with no letterbox.
+    wordmark: {
+      width: 230,
+      height: 129,
     },
     taglineRow: {
       flexDirection: 'row',
       alignItems: 'center',
       gap: spacing.sm,
-      marginTop: spacing.xs,
+      marginTop: spacing.sm,
+      paddingHorizontal: spacing.md,
     },
     accentDot: {
       width: 6,
@@ -78,10 +72,11 @@ const createStyles = (colors: Palette) =>
       backgroundColor: colors.accent,
     },
     tagline: {
-      color: colors.primaryDark,
-      fontSize: 14,
-      lineHeight: 20,
-      fontWeight: '700',
+      flexShrink: 1,
+      color: colors.textMuted,
+      fontSize: 13.5,
+      lineHeight: 19,
+      fontWeight: '600',
       textAlign: 'center',
     },
   });

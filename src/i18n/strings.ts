@@ -25,6 +25,7 @@ export const ui = {
   ourVision: { en: 'Our Vision', my: 'ကျွန်ုပ်တို့၏ မျှော်မှန်းချက်' },
   ourCommitment: { en: 'Our Commitment', my: 'ကျွန်ုပ်တို့၏ ကတိကဝတ်' },
   whatWeOffer: { en: 'What We Offer', my: 'ကျွန်ုပ်တို့ ပံ့ပိုးပေးသည်များ' },
+  featuredPrograms: { en: 'Featured Programs', my: 'အထူးပြု ပရိုဂရမ်များ' },
   exploreGuides: { en: 'Explore Guides', my: 'လမ်းညွှန်များ ကြည့်ရှုရန်' },
   countriesCovered: { en: 'Countries we guide you to', my: 'ဝင်ခွင့်လျှောက်ထားနိုင်သော နိုင်ငံများ' },
   topics: { en: 'Topics covered', my: 'ပါဝင်သော အကြောင်းအရာများ' },
@@ -92,6 +93,11 @@ export const ui = {
     en: "You're offline — some content may not load",
     my: 'အင်တာနက် မရှိပါ — အချို့ အကြောင်းအရာများ ပြသနိုင်မည် မဟုတ်ပါ',
   },
+
+  // Home screen
+  featuredGuides: { en: 'Featured Guides', my: 'အထူးပြု လမ်းညွှန်များ' },
+  latestWebinar: { en: 'Latest Webinar', my: 'နောက်ဆုံး Webinar' },
+  watchOnYoutube: { en: 'Watch on YouTube', my: 'YouTube တွင် ကြည့်ရန်' },
 
   // Settings screen
   tabSettings: { en: 'Settings', my: 'ဆက်တင်' },
