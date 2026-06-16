@@ -1,14 +1,14 @@
 import { Ionicons } from '@expo/vector-icons';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AppBar } from '../components/AppBar';
+import { ShareSheet } from '../components/ShareSheet';
 import { Text } from '../components/Text';
 import { articles, contact } from '../data/content';
 import { useLang } from '../i18n/LanguageContext';
 import { ui } from '../i18n/strings';
 import { haptics } from '../lib/haptics';
-import { share } from '../lib/share';
 import { radius, spacing, type Palette } from '../theme/colors';
 import { useTheme, useThemedStyles } from '../theme/ThemeContext';
 import { useBookmarks } from '../state/BookmarksContext';
@@ -19,6 +19,7 @@ export function ArticleDetailScreen({ route, navigation }: ArticleDetailProps) {
   const { colors } = useTheme();
   const styles = useThemedStyles(createStyles);
   const { isBookmarked, toggleBookmark, setLastRead } = useBookmarks();
+  const [shareOpen, setShareOpen] = useState(false);
   const article = articles.find((a) => a.id === route.params.articleId);
 
   // Remember this as the article to "continue reading" from the Guides tab.
@@ -44,12 +45,14 @@ export function ArticleDetailScreen({ route, navigation }: ArticleDetailProps) {
     toggleBookmark(article.id);
   };
 
+  // Canonical, deep-linkable URL for this article (matches the linking config's
+  // `article/:articleId` route) so a shared link opens straight to it.
+  const shareUrl = `${contact.website}/article/${article.id}`;
+  const shareText = `${t(article.title)} — ${t(article.summary)}`;
+
   const onShare = () => {
-    share({
-      title: t(article.title),
-      message: `${t(article.title)} — ${t(article.summary)}`,
-      url: contact.website,
-    });
+    haptics.light();
+    setShareOpen(true);
   };
 
   return (
@@ -108,6 +111,13 @@ export function ArticleDetailScreen({ route, navigation }: ArticleDetailProps) {
           </View>
         ))}
       </ScrollView>
+
+      <ShareSheet
+        visible={shareOpen}
+        onClose={() => setShareOpen(false)}
+        url={shareUrl}
+        text={shareText}
+      />
     </SafeAreaView>
   );
 }

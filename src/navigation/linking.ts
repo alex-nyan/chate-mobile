@@ -22,6 +22,7 @@ export const linking: LinkingOptions<RootTabParamList> = {
         screens: {
           GuidesList: 'guides',
           ArticleDetail: 'article/:articleId',
+          BlogPost: 'blog/:postId',
         },
       },
       Settings: {

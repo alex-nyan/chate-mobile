@@ -6,6 +6,7 @@ import { LiquidGlassTabBar } from '../components/LiquidGlassTabBar';
 import { useLang } from '../i18n/LanguageContext';
 import { ui } from '../i18n/strings';
 import { ArticleDetailScreen } from '../screens/ArticleDetailScreen';
+import { BlogPostScreen } from '../screens/BlogPostScreen';
 import { GuidesScreen } from '../screens/GuidesScreen';
 import { HomeScreen } from '../screens/HomeScreen';
 import { ProgramsScreen } from '../screens/ProgramsScreen';
@@ -23,6 +24,7 @@ function GuidesNavigator() {
     <GuidesStack.Navigator screenOptions={{ headerShown: false }}>
       <GuidesStack.Screen name="GuidesList" component={GuidesScreen} />
       <GuidesStack.Screen name="ArticleDetail" component={ArticleDetailScreen} />
+      <GuidesStack.Screen name="BlogPost" component={BlogPostScreen} />
     </GuidesStack.Navigator>
   );
 }

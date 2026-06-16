@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
+  ActivityIndicator,
   Linking,
   Pressable,
   ScrollView,
@@ -15,7 +16,6 @@ import { VideoCard } from '../components/VideoCard';
 import {
   type Article,
   type BlogCategory,
-  type BlogPost,
   type VideoEpisode,
   type VideoSeries,
   articles,
@@ -24,8 +24,10 @@ import {
 } from '../data/content';
 import { useLang } from '../i18n/LanguageContext';
 import { ui, type Localized } from '../i18n/strings';
+import { fetchBloggerPosts, getCachedPosts, type BloggerPost } from '../lib/blogger';
 import { haptics } from '../lib/haptics';
 import { share } from '../lib/share';
+import { useIsOffline } from '../lib/useIsOffline';
 import { useBookmarks } from '../state/BookmarksContext';
 import { radius, shadow, spacing, type Palette } from '../theme/colors';
 import { useTheme, useThemedStyles } from '../theme/ThemeContext';
@@ -84,7 +86,7 @@ function videoMatches(ep: VideoEpisode, series: VideoSeries, q: string): boolean
     series.name.toLowerCase().includes(q)
   );
 }
-function blogMatches(p: BlogPost, q: string): boolean {
+function blogMatches(p: { title: string; category: string }, q: string): boolean {
   return p.title.toLowerCase().includes(q) || p.category.toLowerCase().includes(q);
 }
 
@@ -160,7 +162,16 @@ function ContinueCard({ article, onPress }: { article: Article; onPress: () => v
   );
 }
 
-function BlogCard({ post }: { post: BlogPost }) {
+/** Shared by the live feed (BloggerPost) and the hardcoded offline fallback. */
+type BlogCardPost = {
+  id: string;
+  title: string;
+  date: string;
+  category: BlogCategory;
+  url: string;
+};
+
+function BlogCard({ post, onPress }: { post: BlogCardPost; onPress: () => void }) {
   const { t } = useLang();
   const { colors, isDark } = useTheme();
   const styles = useThemedStyles(createStyles);
@@ -168,9 +179,9 @@ function BlogCard({ post }: { post: BlogPost }) {
 
   return (
     <Pressable
-      onPress={() => openURL(post.url)}
+      onPress={onPress}
       style={({ pressed }) => [styles.blogCard, pressed && styles.pressed]}
-      accessibilityRole="link"
+      accessibilityRole="button"
       accessibilityLabel={post.title}
     >
       <View style={[styles.blogCatChip, { backgroundColor: accent + '22' }]}>
@@ -189,7 +200,7 @@ function BlogCard({ post }: { post: BlogPost }) {
           >
             <Ionicons name="share-outline" size={15} color={colors.textMuted} />
           </Pressable>
-          <Ionicons name="open-outline" size={13} color={colors.textMuted} />
+          <Ionicons name="chevron-forward" size={15} color={colors.textMuted} />
         </View>
       </View>
     </Pressable>
@@ -201,21 +212,52 @@ export function GuidesScreen({ navigation }: GuidesListProps) {
   const { colors } = useTheme();
   const styles = useThemedStyles(createStyles);
   const { bookmarks, lastRead } = useBookmarks();
+  const offline = useIsOffline();
 
   const [tab, setTab] = useState<Tab>('guides');
   const [blogCat, setBlogCat] = useState<BlogCategory | 'all'>('all');
   const [query, setQuery] = useState('');
 
+  // Live blog feed — seeded from the in-memory cache so revisits are instant.
+  const [livePosts, setLivePosts] = useState<BloggerPost[] | null>(() => getCachedPosts());
+  const [blogStatus, setBlogStatus] = useState<'idle' | 'loading' | 'error'>('idle');
+
   const q = query.trim().toLowerCase();
   const searching = q.length > 0;
+
+  // Fetch the blog feed once; the hardcoded list is the offline fallback.
+  useEffect(() => {
+    if (livePosts) return;
+    let active = true;
+    setBlogStatus('loading');
+    fetchBloggerPosts()
+      .then((posts) => {
+        if (!active) return;
+        setLivePosts(posts);
+        setBlogStatus('idle');
+      })
+      .catch(() => active && setBlogStatus('error'));
+    return () => {
+      active = false;
+    };
+  }, [livePosts]);
 
   const openArticle = (id: string) => {
     haptics.light();
     navigation.navigate('ArticleDetail', { articleId: id });
   };
 
+  // Live posts open in the in-app reader; the hardcoded fallback (label URLs
+  // only) opens on the blog.
+  const openBlogPost = (post: BlogCardPost) => {
+    haptics.light();
+    if (livePosts) navigation.navigate('BlogPost', { postId: post.id });
+    else openURL(post.url);
+  };
+
+  const blogSource: BlogCardPost[] = livePosts ?? blogPosts;
   const filteredPosts =
-    blogCat === 'all' ? blogPosts : blogPosts.filter((p) => p.category === blogCat);
+    blogCat === 'all' ? blogSource : blogSource.filter((p) => p.category === blogCat);
 
   const continueArticle = lastRead ? articles.find((a) => a.id === lastRead) : undefined;
   const savedArticles = bookmarks
@@ -229,14 +271,14 @@ export function GuidesScreen({ navigation }: GuidesListProps) {
     const matchedVideos = videoSeries.flatMap((s) =>
       s.episodes.filter((ep) => videoMatches(ep, s, q)).map((ep) => ({ ep, series: s })),
     );
-    const matchedPosts = blogPosts.filter((p) => blogMatches(p, q));
+    const matchedPosts = blogSource.filter((p) => blogMatches(p, q));
     return {
       articles: matchedArticles,
       videos: matchedVideos,
       posts: matchedPosts,
       total: matchedArticles.length + matchedVideos.length + matchedPosts.length,
     };
-  }, [q, searching]);
+  }, [q, searching, blogSource]);
 
   return (
     <SafeAreaView style={styles.root} edges={['top']}>
@@ -254,6 +296,7 @@ export function GuidesScreen({ navigation }: GuidesListProps) {
             style={styles.searchInput}
             returnKeyType="search"
             autoCorrect={false}
+            underlineColorAndroid="transparent"
             accessibilityLabel={t(ui.searchPlaceholder)}
           />
           {searching && (
@@ -342,7 +385,7 @@ export function GuidesScreen({ navigation }: GuidesListProps) {
                 <>
                   <Text style={styles.resultGroup}>{t(ui.segBlog)}</Text>
                   {results.posts.map((post) => (
-                    <BlogCard key={post.id} post={post} />
+                    <BlogCard key={post.id} post={post} onPress={() => openBlogPost(post)} />
                   ))}
                 </>
               )}
@@ -421,13 +464,28 @@ export function GuidesScreen({ navigation }: GuidesListProps) {
                   })}
                 </ScrollView>
 
-                <Text style={styles.sectionNote}>
-                  {t(ui.blogCountNote).replace('{count}', String(filteredPosts.length))}
-                </Text>
+                {blogStatus === 'loading' && !livePosts ? (
+                  <View style={styles.blogStateWrap}>
+                    <ActivityIndicator color={colors.primary} />
+                    <Text style={styles.blogStateText}>{t(ui.blogLoading)}</Text>
+                  </View>
+                ) : (
+                  <>
+                    {(offline || (blogStatus === 'error' && !livePosts)) && (
+                      <Text style={styles.blogStateNote}>
+                        {t(offline ? ui.offline : ui.blogLoadError)}
+                      </Text>
+                    )}
 
-                {filteredPosts.map((post) => (
-                  <BlogCard key={post.id} post={post} />
-                ))}
+                    <Text style={styles.sectionNote}>
+                      {t(ui.blogCountNote).replace('{count}', String(filteredPosts.length))}
+                    </Text>
+
+                    {filteredPosts.map((post) => (
+                      <BlogCard key={post.id} post={post} onPress={() => openBlogPost(post)} />
+                    ))}
+                  </>
+                )}
               </>
             )}
           </>
@@ -468,6 +526,9 @@ const createStyles = (colors: Palette) =>
       fontSize: 14.5,
       color: colors.text,
       paddingVertical: 9,
+      // react-native-web: remove the default browser focus ring shown while
+      // typing (`outlineStyle` isn't in RN's TextStyle type, hence the cast).
+      ...({ outlineStyle: 'none' } as object),
     },
 
     // Segment control
@@ -639,15 +700,31 @@ const createStyles = (colors: Palette) =>
       marginBottom: spacing.md,
     },
     // Blog tab
+    blogStateWrap: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingVertical: spacing.xxl,
+      gap: spacing.sm,
+    },
+    blogStateText: { fontSize: 13.5, color: colors.textMuted },
+    blogStateNote: {
+      fontSize: 12.5,
+      color: colors.textMuted,
+      marginBottom: spacing.md,
+      fontStyle: 'italic',
+    },
     catFilterScroll: { marginBottom: spacing.sm, marginHorizontal: -spacing.lg },
     catFilterRow: { paddingHorizontal: spacing.lg, gap: spacing.sm },
     catChip: {
       paddingHorizontal: spacing.md,
       paddingVertical: 6,
+      minHeight: 34,
       borderRadius: radius.pill,
       backgroundColor: colors.bg,
       borderWidth: 1,
       borderColor: colors.border,
+      alignItems: 'center',
+      justifyContent: 'center',
     },
     catChipActive: {
       backgroundColor: colors.primaryTint,
@@ -655,8 +732,12 @@ const createStyles = (colors: Palette) =>
     },
     catChipLabel: {
       fontSize: 13,
+      lineHeight: 18,
       fontWeight: '600',
       color: colors.textMuted,
+      textAlign: 'center',
+      textAlignVertical: 'center',
+      includeFontPadding: false,
     },
     catChipLabelActive: {
       color: colors.primaryDark,

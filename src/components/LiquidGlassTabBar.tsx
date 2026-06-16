@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import { haptics } from '../lib/haptics';
 import { useReduceMotion } from '../lib/useReduceMotion';
-import { colors } from '../theme/colors';
+import { withAlpha } from '../theme/colors';
 import { useTheme } from '../theme/ThemeContext';
 import { Text } from './Text';
 
@@ -37,15 +37,18 @@ export function LiquidGlassTabBar({ state, descriptors, navigation, insets }: Bo
   const ACTIVE = theme.primary;
   const INACTIVE = theme.textMuted;
 
-  // Glass reads as frosted white in light mode and a teal-tinted dark drop in
-  // dark mode, so it stays legible against either background.
+  // Glass reads as frosted white in light mode and a dark drop in dark mode, so
+  // it stays legible against either background. The dark values derive from the
+  // active palette (rather than hard-coded rgba) so the bar follows whichever
+  // dark variant — blue or black — is in use; only the highlight keeps the teal
+  // brand accent.
   const blurTint = isDark ? 'dark' : 'light';
-  const barBg = isDark ? 'rgba(22,35,42,0.82)' : 'rgba(255,255,255,0.82)';
-  const barBorder = isDark ? 'rgba(60,80,86,0.7)' : 'rgba(220,235,237,0.9)';
-  const glassBg = isDark ? 'rgba(43,82,90,0.5)' : 'rgba(255,255,255,0.5)';
-  const glassBorder = isDark ? 'rgba(127,230,235,0.5)' : 'rgba(255,255,255,0.85)';
+  const barBg = isDark ? withAlpha(theme.bg, 0.82) : 'rgba(255,255,255,0.82)';
+  const barBorder = isDark ? withAlpha(theme.border, 0.7) : 'rgba(220,235,237,0.9)';
+  const glassBg = isDark ? withAlpha(theme.surfaceAlt, 0.5) : 'rgba(255,255,255,0.5)';
+  const glassBorder = isDark ? withAlpha(theme.primaryDark, 0.5) : 'rgba(255,255,255,0.85)';
   const glassGradient: readonly [string, string, string] = isDark
-    ? ['rgba(127,230,235,0.5)', 'rgba(43,82,90,0.32)', 'rgba(31,194,201,0.3)']
+    ? [withAlpha(theme.primaryDark, 0.5), withAlpha(theme.surfaceAlt, 0.32), withAlpha(theme.primary, 0.3)]
     : ['rgba(255,255,255,0.9)', 'rgba(255,255,255,0.28)', 'rgba(92,225,230,0.22)'];
 
   // Inner glow that makes the highlight read as a raised drop of glass. Shadows
@@ -120,7 +123,9 @@ export function LiquidGlassTabBar({ state, descriptors, navigation, insets }: Bo
 
   return (
     <View pointerEvents="box-none" style={[styles.wrap, { bottom }]}>
-      <View style={[styles.bar, { backgroundColor: barBg, borderColor: barBorder }]}>
+      <View
+        style={[styles.bar, { backgroundColor: barBg, borderColor: barBorder, shadowColor: theme.shadow }]}
+      >
         <BlurView tint={blurTint} intensity={72} style={[StyleSheet.absoluteFill, styles.barBlur]} />
 
         {/* The animated liquid-glass highlight, sitting behind the tabs. */}
@@ -234,8 +239,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     paddingHorizontal: PAD_H,
     paddingVertical: PAD_V,
-    // Soft float shadow.
-    shadowColor: colors.shadow,
+    // Soft float shadow (shadowColor is applied inline from the active palette).
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.16,
     shadowRadius: 16,

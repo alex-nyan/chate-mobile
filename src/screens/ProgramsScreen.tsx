@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { AppBar } from '../components/AppBar';
 import { Card } from '../components/Card';
 import { Chip } from '../components/Chip';
+import { Row } from '../components/Row';
 import { SectionHeader } from '../components/SectionHeader';
 import { Text } from '../components/Text';
 import { countries, programs } from '../data/content';
@@ -12,6 +13,11 @@ import { useLang } from '../i18n/LanguageContext';
 import { ui } from '../i18n/strings';
 import { radius, spacing, type Palette } from '../theme/colors';
 import { useTheme, useThemedStyles } from '../theme/ThemeContext';
+
+// Scholarship application forms — pinned to the top of the Programs tab.
+const MEXT_FORM = 'https://forms.gle/72JWLVBTUHxNnoDj9';
+const GLOBAL_FORM =
+  'https://docs.google.com/forms/d/e/1FAIpQLSf4pknYO2KCBWIgbzz2FowlWdgTNbnplDcVZgvetM3VgDMKvQ/viewform';
 
 export function ProgramsScreen() {
   const { t } = useLang();
@@ -25,6 +31,24 @@ export function ProgramsScreen() {
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
       >
+        <SectionHeader title={t(ui.scholarships)} />
+        <View style={styles.ctas}>
+          <Row
+            variant="card"
+            icon="school-outline"
+            label="MEXT"
+            sublabel={t(ui.applyHint)}
+            url={MEXT_FORM}
+          />
+          <Row
+            variant="card"
+            icon="globe-outline"
+            label="Global"
+            sublabel={t(ui.applyHint)}
+            url={GLOBAL_FORM}
+          />
+        </View>
+
         <Text style={styles.intro}>{t(ui.whatWeOffer)}</Text>
 
         {programs.map((p) => (
@@ -62,9 +86,11 @@ const createStyles = (colors: Palette) =>
   StyleSheet.create({
     root: { flex: 1, backgroundColor: colors.surface },
     content: { padding: spacing.lg, paddingBottom: 100 },
+    ctas: { gap: spacing.sm },
     intro: {
       fontSize: 14,
       color: colors.textMuted,
+      marginTop: spacing.xl,
       marginBottom: spacing.md,
       fontWeight: '600',
       textTransform: 'uppercase',

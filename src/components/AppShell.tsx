@@ -17,7 +17,14 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <View style={[styles.backdrop, { backgroundColor: isDark ? '#05090B' : '#DDE5E8' }]}>
+    <View
+      style={[
+        styles.backdrop,
+        // A touch darker than the framed surface so the centered phone reads as
+        // raised; derived from the active palette so it follows the dark variant.
+        { backgroundColor: isDark ? colors.shadow : '#DDE5E8' },
+      ]}
+    >
       <View style={[styles.frame, { backgroundColor: colors.surface }]}>{children}</View>
     </View>
   );

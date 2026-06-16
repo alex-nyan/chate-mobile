@@ -4,6 +4,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 export type GuidesStackParamList = {
   GuidesList: undefined;
   ArticleDetail: { articleId: string };
+  BlogPost: { postId: string };
 };
 
 export type SettingsStackParamList = {
@@ -21,5 +22,6 @@ export type RootTabParamList = {
 
 export type GuidesListProps = NativeStackScreenProps<GuidesStackParamList, 'GuidesList'>;
 export type ArticleDetailProps = NativeStackScreenProps<GuidesStackParamList, 'ArticleDetail'>;
+export type BlogPostProps = NativeStackScreenProps<GuidesStackParamList, 'BlogPost'>;
 export type SettingsHomeProps = NativeStackScreenProps<SettingsStackParamList, 'SettingsHome'>;
 export type SavedArticlesProps = NativeStackScreenProps<SettingsStackParamList, 'SavedArticles'>;

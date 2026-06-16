@@ -8,13 +8,16 @@ import React, {
   useState,
 } from 'react';
 import { useColorScheme } from 'react-native';
-import { darkColors, lightColors, type Palette } from './colors';
+import { blackColors, darkColors, lightColors, type Palette } from './colors';
 
 /** 'system' follows the OS setting; 'light'/'dark' are explicit overrides. */
 export type ThemeMode = 'light' | 'dark' | 'system';
 export type Scheme = 'light' | 'dark';
+/** Which palette to use when the resolved scheme is dark. */
+export type DarkVariant = 'blue' | 'black';
 
 const STORAGE_KEY = 'chate.theme';
+const VARIANT_KEY = 'chate.darkVariant';
 
 type ThemeContextValue = {
   /** The user's preference (may be 'system'). */
@@ -24,14 +27,17 @@ type ThemeContextValue = {
   isDark: boolean;
   colors: Palette;
   setMode: (mode: ThemeMode) => void;
+  /** Which dark palette to use ('blue' = original tinted, 'black' = neutral OLED). */
+  darkVariant: DarkVariant;
+  setDarkVariant: (variant: DarkVariant) => void;
   /** Flip between explicit light/dark, seeded from the current resolved scheme. */
   toggle: () => void;
 };
 
 const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
 
-function persist(mode: ThemeMode) {
-  AsyncStorage.setItem(STORAGE_KEY, mode).catch(() => {
+function persist(key: string, value: string) {
+  AsyncStorage.setItem(key, value).catch(() => {
     /* Best-effort — a failed write just means the choice isn't remembered. */
   });
 }
@@ -39,17 +45,23 @@ function persist(mode: ThemeMode) {
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const system = useColorScheme(); // 'light' | 'dark' | null
   const [mode, setModeState] = useState<ThemeMode>('system');
+  // Defaults to 'blue' (the original dark palette) so existing dark-mode users
+  // see no change unless they opt into the black variant.
+  const [darkVariant, setDarkVariantState] = useState<DarkVariant>('blue');
   // Wait for the stored choice before rendering so a returning dark-mode user
   // never sees a flash of light on cold start.
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
     let active = true;
-    AsyncStorage.getItem(STORAGE_KEY)
-      .then((stored) => {
-        if (active && (stored === 'light' || stored === 'dark' || stored === 'system')) {
-          setModeState(stored);
-        }
+    AsyncStorage.multiGet([STORAGE_KEY, VARIANT_KEY])
+      .then((entries) => {
+        if (!active) return;
+        const stored = Object.fromEntries(entries);
+        const m = stored[STORAGE_KEY];
+        const v = stored[VARIANT_KEY];
+        if (m === 'light' || m === 'dark' || m === 'system') setModeState(m);
+        if (v === 'blue' || v === 'black') setDarkVariantState(v);
       })
       .catch(() => {})
       .finally(() => {
@@ -62,7 +74,12 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   const setMode = useCallback((next: ThemeMode) => {
     setModeState(next);
-    persist(next);
+    persist(STORAGE_KEY, next);
+  }, []);
+
+  const setDarkVariant = useCallback((next: DarkVariant) => {
+    setDarkVariantState(next);
+    persist(VARIANT_KEY, next);
   }, []);
 
   const scheme: Scheme = mode === 'system' ? (system === 'dark' ? 'dark' : 'light') : mode;
@@ -70,14 +87,24 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const toggle = useCallback(() => {
     const next: ThemeMode = scheme === 'dark' ? 'light' : 'dark';
     setModeState(next);
-    persist(next);
+    persist(STORAGE_KEY, next);
   }, [scheme]);
 
-  const colors = scheme === 'dark' ? darkColors : lightColors;
+  const colors =
+    scheme === 'dark' ? (darkVariant === 'black' ? blackColors : darkColors) : lightColors;
 
   const value = useMemo(
-    () => ({ mode, scheme, isDark: scheme === 'dark', colors, setMode, toggle }),
-    [mode, scheme, colors, setMode, toggle],
+    () => ({
+      mode,
+      scheme,
+      isDark: scheme === 'dark',
+      colors,
+      setMode,
+      darkVariant,
+      setDarkVariant,
+      toggle,
+    }),
+    [mode, scheme, colors, setMode, darkVariant, setDarkVariant, toggle],
   );
 
   if (!hydrated) return null;

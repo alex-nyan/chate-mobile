@@ -41,6 +41,8 @@ export const ui = {
   messageFacebook: { en: 'Message on Facebook', my: 'Facebook မှ စာပို့ရန်' },
   visitWebsite: { en: 'Visit our website', my: 'ဝက်ဘ်ဆိုဒ် ကြည့်ရန်' },
   applyNow: { en: 'Apply / Request advising', my: 'လျှောက်လွှာ တင်ရန်' },
+  applyHint: { en: 'Open application form', my: 'လျှောက်လွှာ ဖောင် ဖွင့်ရန်' },
+  scholarships: { en: 'Scholarship Applications', my: 'ပညာသင်ဆု လျှောက်လွှာများ' },
   qaGroup: { en: 'Q&A Facebook Group', my: 'မေး/ဖြေ Facebook အုပ်စု' },
   followUs: { en: 'Follow us', my: 'ကျွန်ုပ်တို့ကို Follow လုပ်ပါ' },
   readConstitution: { en: 'Read our Constitution', my: 'ကျွန်ုပ်တို့၏ ဖွဲ့စည်းပုံ ဖတ်ရန်' },
@@ -59,9 +61,16 @@ export const ui = {
   blogTesting: { en: 'Testing', my: 'စာမေးပွဲ' },
   blogAbout: { en: 'About ချိတ်', my: 'ချိတ် အကြောင်း' },
   blogCountNote: {
-    en: '{count} articles — tap to read on the blog',
+    en: '{count} articles — tap to read',
     my: 'ဆောင်းပါး {count} ပုဒ် — ဖတ်ရန် နှိပ်ပါ',
   },
+  blogLoading: { en: 'Loading posts…', my: 'ပို့စ်များ ဖွင့်နေသည်…' },
+  blogLoadError: {
+    en: "Couldn't load the latest posts",
+    my: 'နောက်ဆုံး ပို့စ်များကို ဖွင့်၍ မရပါ',
+  },
+  blogNotFound: { en: 'Post not found', my: 'ပို့စ် ရှာမတွေ့ပါ' },
+  readOnBlog: { en: 'Read on the blog →', my: 'ဘလော့တွင် ဖတ်ရန် →' },
 
   // Search
   searchPlaceholder: { en: 'Search guides, webinars, blog…', my: 'လမ်းညွှန်၊ webinar၊ ဘလော့ ရှာရန်…' },
@@ -81,6 +90,8 @@ export const ui = {
   save: { en: 'Save', my: 'သိမ်းရန်' },
   saved: { en: 'Saved', my: 'သိမ်းပြီး' },
   share: { en: 'Share', my: 'မျှဝေရန်' },
+  shareVia: { en: 'Share via', my: 'မျှဝေရန်' },
+  shareMore: { en: 'More…', my: 'နောက်ထပ်…' },
 
   // Robustness — error boundary + offline state
   errorTitle: { en: 'Something went wrong', my: 'တစ်ခုခု မှားယွင်းသွားပါသည်' },
@@ -105,6 +116,9 @@ export const ui = {
   themeSystem: { en: 'System', my: 'စနစ်' },
   themeLight: { en: 'Light', my: 'အလင်း' },
   themeDark: { en: 'Dark', my: 'အမှောင်' },
+  darkStyle: { en: 'Dark style', my: 'အမှောင် ပုံစံ' },
+  darkBlue: { en: 'Blue', my: 'အပြာ' },
+  darkBlack: { en: 'Black', my: 'အနက်' },
   languageHeader: { en: 'Language', my: 'ဘာသာစကား' },
   textSize: { en: 'Text size', my: 'စာလုံးအရွယ်အစား' },
   textSmall: { en: 'Small', my: 'သေး' },

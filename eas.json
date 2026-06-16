@@ -29,19 +29,19 @@
   "submit": {
     "production": {
       "ios": {
-        // Apple ID email used to sign in to App Store Connect.
-        // Tip: omit this and set the EXPO_APPLE_ID env var instead to keep it out of git.
-        "appleId": "YOUR_APPLE_ID_EMAIL",
-        // Numeric App Store Connect app ID (App Store Connect > your app > App Information > "Apple ID").
-        "ascAppId": "YOUR_ASC_APP_ID",
-        // Apple Developer Team ID (developer.apple.com/account > Membership details).
-        "appleTeamId": "YOUR_APPLE_TEAM_ID"
-
-        // --- CI / non-interactive alternative (recommended for automation) ---
-        // Replace appleId above with an App Store Connect API key so EAS never prompts for a password:
-        // "ascApiKeyPath": "./credentials/asc-api-key.p8",
-        // "ascApiKeyId": "YOUR_KEY_ID",
-        // "ascApiKeyIssuerId": "YOUR_ISSUER_ID"
+        // Left empty on purpose: `eas submit -p ios --profile production` prompts
+        // for your Apple ID interactively and matches the app by bundle id
+        // (com.chatethehook.app), so no credentials are stored in git.
+        //
+        // To skip the prompts later, fill these in:
+        //   "appleId": "you@example.com",            // App Store Connect login email
+        //   "ascAppId": "1234567890",                // App Store Connect > App Information > "Apple ID"
+        //   "appleTeamId": "XXXXXXXXXX"              // developer.apple.com > Membership
+        //
+        // Or use an App Store Connect API key (best for CI — no password prompt):
+        //   "ascApiKeyPath": "./credentials/asc-api-key.p8",
+        //   "ascApiKeyId": "YOUR_KEY_ID",
+        //   "ascApiKeyIssuerId": "YOUR_ISSUER_ID"
       },
       "android": {
         // Path to the Google Play service account JSON key. Keep this file OUT of git.
