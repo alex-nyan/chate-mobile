@@ -16,6 +16,7 @@
     "expo-application": "~55.0.15",
     "expo-blur": "~55.0.14",
     "expo-font": "~55.0.8",
+    "expo-glass-effect": "~55.0.11",
     "expo-haptics": "~55.0.14",
     "expo-linear-gradient": "~55.0.14",
     "expo-linking": "~55.0.15",

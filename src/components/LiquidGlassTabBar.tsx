@@ -1,5 +1,6 @@
 import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { BlurView } from 'expo-blur';
+import { GlassView, isLiquidGlassAvailable } from 'expo-glass-effect';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useRef, useState } from 'react';
 import { Animated, LayoutChangeEvent, Platform, Pressable, StyleSheet, View } from 'react-native';
@@ -13,14 +14,27 @@ import { Text } from './Text';
 // has no native driver, so fall back to the JS driver there.
 const NATIVE = Platform.OS !== 'web';
 
+// True iOS 26 "Liquid Glass" (UIGlassEffect, like the Reddit tab bar) when the OS
+// supports it; everywhere else we fall back to the layered BlurView below. Guarded
+// so a missing native module (web / Expo Go without it) can never crash on load.
+const LIQUID_GLASS = (() => {
+  try {
+    return isLiquidGlassAvailable();
+  } catch {
+    return false;
+  }
+})();
+
 const BAR_HEIGHT = 62;
 const PAD_H = 8;
 const PAD_V = 7;
+const PILL_RADIUS = (BAR_HEIGHT - PAD_V * 2) / 2;
 
 /**
- * Floating, blurred pill tab bar with a "liquid glass" highlight that springs
- * between tabs and stretches (gooey) in the direction of travel on touch.
- * Each tab also squishes slightly while pressed for a tactile feel.
+ * Floating pill tab bar. On iOS 26 it uses the system Liquid Glass material
+ * (`expo-glass-effect`) for the bar, the active-tab highlight and the held-tab
+ * blob; elsewhere it renders a layered BlurView + gradient that approximates it.
+ * The highlight springs/stretches between tabs and each tab squishes on press.
  */
 export function LiquidGlassTabBar({ state, descriptors, navigation, insets }: BottomTabBarProps) {
   const routes = state.routes;
@@ -29,12 +43,11 @@ export function LiquidGlassTabBar({ state, descriptors, navigation, insets }: Bo
   const { colors: theme, isDark } = useTheme();
   const ACTIVE = theme.primary;
   const INACTIVE = theme.textMuted;
+  const glassScheme = isDark ? 'dark' : 'light';
 
-  // Glass reads as frosted white in light mode and a dark drop in dark mode, so
-  // it stays legible against either background. The dark values derive from the
-  // active palette (rather than hard-coded rgba) so the bar follows whichever
-  // dark variant — blue or black — is in use; only the highlight keeps the teal
-  // brand accent.
+  // Fallback (BlurView) glass tones. The dark values derive from the active
+  // palette so the bar follows whichever dark variant is in use; only the
+  // highlight keeps the teal brand accent.
   const blurTint = isDark ? 'dark' : 'light';
   const barBg = isDark ? withAlpha(theme.bg, 0.82) : 'rgba(255,255,255,0.82)';
   const barBorder = isDark ? withAlpha(theme.border, 0.7) : 'rgba(220,235,237,0.9)';
@@ -48,9 +61,8 @@ export function LiquidGlassTabBar({ state, descriptors, navigation, insets }: Bo
       ]
     : ['rgba(255,255,255,0.9)', 'rgba(255,255,255,0.28)', 'rgba(92,225,230,0.22)'];
 
-  // Inner glow that makes the highlight read as a raised drop of glass. Shadows
-  // aren't clipped by the bar's overflow, so on dark this teal halo bleeds past
-  // the pill — invisible on light, glaring on dark. Keep it light-mode only.
+  // Inner glow that makes the fallback highlight read as a raised drop of glass.
+  // Keep it light-mode only (on dark the teal halo bleeds past the clipped pill).
   const glassGlow = isDark
     ? null
     : {
@@ -74,8 +86,9 @@ export function LiquidGlassTabBar({ state, descriptors, navigation, insets }: Bo
   const stretchX = useRef(new Animated.Value(1)).current;
   const placed = useRef(false);
 
-  // Per-tab press feedback: a squish + a "liquid glass" blob that wells up under
-  // the finger while the tab is held (0 = hidden, 1 = fully raised).
+  // Per-tab press feedback: a squish + a glass blob that wells up under the
+  // finger while the tab is held (0 = hidden/zero-scale, 1 = fully raised). Scale
+  // only — animating a GlassView's opacity to 0 stops it rendering entirely.
   const pressScales = useRef(routes.map(() => new Animated.Value(1))).current;
   const holdGlass = useRef(routes.map(() => new Animated.Value(0))).current;
 
@@ -125,14 +138,27 @@ export function LiquidGlassTabBar({ state, descriptors, navigation, insets }: Bo
       <View
         style={[
           styles.bar,
-          { backgroundColor: barBg, borderColor: barBorder, shadowColor: theme.shadow },
+          {
+            backgroundColor: LIQUID_GLASS ? 'transparent' : barBg,
+            borderColor: LIQUID_GLASS ? 'transparent' : barBorder,
+            shadowColor: theme.shadow,
+          },
         ]}
       >
-        <BlurView
-          tint={blurTint}
-          intensity={72}
-          style={[StyleSheet.absoluteFill, styles.barBlur]}
-        />
+        {/* Bar material. */}
+        {LIQUID_GLASS ? (
+          <GlassView
+            glassEffectStyle="regular"
+            colorScheme={glassScheme}
+            style={[StyleSheet.absoluteFill, styles.barBlur]}
+          />
+        ) : (
+          <BlurView
+            tint={blurTint}
+            intensity={72}
+            style={[StyleSheet.absoluteFill, styles.barBlur]}
+          />
+        )}
 
         {/* The animated liquid-glass highlight, sitting behind the tabs. */}
         {tabWidth > 0 && (
@@ -140,31 +166,38 @@ export function LiquidGlassTabBar({ state, descriptors, navigation, insets }: Bo
             pointerEvents="none"
             style={[
               styles.highlight,
-              {
-                width: tabWidth,
-                transform: [{ translateX }, { scaleX: stretchX }],
-              },
+              { width: tabWidth, transform: [{ translateX }, { scaleX: stretchX }] },
             ]}
           >
-            <View
-              style={[
-                styles.glass,
-                { backgroundColor: glassBg, borderColor: glassBorder },
-                glassGlow,
-              ]}
-            >
-              <BlurView
-                tint={blurTint}
-                intensity={42}
-                style={[StyleSheet.absoluteFill, styles.glassBlur]}
+            {LIQUID_GLASS ? (
+              <GlassView
+                glassEffectStyle="clear"
+                isInteractive
+                tintColor={withAlpha(theme.primary, 0.3)}
+                colorScheme={glassScheme}
+                style={styles.glassNative}
               />
-              <LinearGradient
-                colors={glassGradient}
-                start={{ x: 0.2, y: 0 }}
-                end={{ x: 0.8, y: 1 }}
-                style={StyleSheet.absoluteFill}
-              />
-            </View>
+            ) : (
+              <View
+                style={[
+                  styles.glass,
+                  { backgroundColor: glassBg, borderColor: glassBorder },
+                  glassGlow,
+                ]}
+              >
+                <BlurView
+                  tint={blurTint}
+                  intensity={42}
+                  style={[StyleSheet.absoluteFill, styles.glassBlur]}
+                />
+                <LinearGradient
+                  colors={glassGradient}
+                  start={{ x: 0.2, y: 0 }}
+                  end={{ x: 0.8, y: 1 }}
+                  style={StyleSheet.absoluteFill}
+                />
+              </View>
+            )}
           </Animated.View>
         )}
 
@@ -248,40 +281,37 @@ export function LiquidGlassTabBar({ state, descriptors, navigation, insets }: Bo
               >
                 <Animated.View
                   pointerEvents="none"
-                  style={[
-                    styles.holdGlass,
-                    {
-                      opacity: holdGlass[index],
-                      transform: [
-                        {
-                          scale: holdGlass[index].interpolate({
-                            inputRange: [0, 1],
-                            outputRange: [0.7, 1],
-                          }),
-                        },
-                      ],
-                    },
-                  ]}
+                  style={[styles.holdGlass, { transform: [{ scale: holdGlass[index] }] }]}
                 >
-                  <View
-                    style={[
-                      styles.holdGlassInner,
-                      { backgroundColor: glassBg, borderColor: glassBorder },
-                      glassGlow,
-                    ]}
-                  >
-                    <BlurView
-                      tint={blurTint}
-                      intensity={36}
-                      style={[StyleSheet.absoluteFill, styles.holdGlassBlur]}
+                  {LIQUID_GLASS ? (
+                    <GlassView
+                      glassEffectStyle="clear"
+                      isInteractive
+                      tintColor={withAlpha(theme.primary, 0.22)}
+                      colorScheme={glassScheme}
+                      style={styles.holdGlassNative}
                     />
-                    <LinearGradient
-                      colors={glassGradient}
-                      start={{ x: 0.2, y: 0 }}
-                      end={{ x: 0.8, y: 1 }}
-                      style={StyleSheet.absoluteFill}
-                    />
-                  </View>
+                  ) : (
+                    <View
+                      style={[
+                        styles.holdGlassInner,
+                        { backgroundColor: glassBg, borderColor: glassBorder },
+                        glassGlow,
+                      ]}
+                    >
+                      <BlurView
+                        tint={blurTint}
+                        intensity={36}
+                        style={[StyleSheet.absoluteFill, styles.holdGlassBlur]}
+                      />
+                      <LinearGradient
+                        colors={glassGradient}
+                        start={{ x: 0.2, y: 0 }}
+                        end={{ x: 0.8, y: 1 }}
+                        style={StyleSheet.absoluteFill}
+                      />
+                    </View>
+                  )}
                 </Animated.View>
                 <Animated.View
                   style={[styles.tabInner, { transform: [{ scale: pressScales[index] }] }]}
@@ -336,14 +366,21 @@ const styles = StyleSheet.create({
   glass: {
     flex: 1,
     marginHorizontal: 5,
-    borderRadius: (BAR_HEIGHT - PAD_V * 2) / 2,
+    borderRadius: PILL_RADIUS,
     overflow: 'hidden',
     borderWidth: 1,
+  },
+  // Native Liquid Glass pill — the material supplies its own edge/highlight, so
+  // no border or inner blur/gradient layers are needed.
+  glassNative: {
+    flex: 1,
+    marginHorizontal: 5,
+    borderRadius: PILL_RADIUS,
   },
   // Same radius on the blur layer itself so its `backdrop-filter` is rounded
   // (the cause of the out-of-bounds rectangle behind the active tab).
   glassBlur: {
-    borderRadius: (BAR_HEIGHT - PAD_V * 2) / 2,
+    borderRadius: PILL_RADIUS,
   },
   row: {
     flex: 1,
@@ -355,8 +392,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  // The held-tab "liquid glass" blob — sits behind the icon/label, inset within
-  // the tab so it reads as a rounded drop welling up under the finger.
+  // The held-tab glass blob — sits behind the icon/label, inset within the tab
+  // so it reads as a rounded drop welling up under the finger.
   holdGlass: {
     position: 'absolute',
     top: 2,
@@ -369,6 +406,10 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     overflow: 'hidden',
     borderWidth: 1,
+  },
+  holdGlassNative: {
+    flex: 1,
+    borderRadius: 18,
   },
   holdGlassBlur: {
     borderRadius: 18,
