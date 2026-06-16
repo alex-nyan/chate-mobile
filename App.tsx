@@ -7,12 +7,7 @@ import {
   Lexend_900Black,
   useFonts,
 } from '@expo-google-fonts/lexend';
-import {
-  DarkTheme,
-  DefaultTheme,
-  NavigationContainer,
-  type Theme,
-} from '@react-navigation/native';
+import { DarkTheme, DefaultTheme, NavigationContainer, type Theme } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from 'expo-splash-screen';
 import React, { useEffect } from 'react';

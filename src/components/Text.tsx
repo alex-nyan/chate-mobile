@@ -36,7 +36,5 @@ export function Text({ style, allowFontScaling, ...rest }: TextProps) {
   if (typeof fontSize === 'number') scaled.fontSize = fontSize * factor;
   if (typeof lineHeight === 'number') scaled.lineHeight = lineHeight * factor;
 
-  return (
-    <RNText {...rest} allowFontScaling={allowFontScaling ?? false} style={[scaled, others]} />
-  );
+  return <RNText {...rest} allowFontScaling={allowFontScaling ?? false} style={[scaled, others]} />;
 }

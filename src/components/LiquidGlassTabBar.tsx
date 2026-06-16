@@ -2,14 +2,7 @@ import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { BlurView } from 'expo-blur';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useRef, useState } from 'react';
-import {
-  Animated,
-  LayoutChangeEvent,
-  Platform,
-  Pressable,
-  StyleSheet,
-  View,
-} from 'react-native';
+import { Animated, LayoutChangeEvent, Platform, Pressable, StyleSheet, View } from 'react-native';
 import { haptics } from '../lib/haptics';
 import { useReduceMotion } from '../lib/useReduceMotion';
 import { withAlpha } from '../theme/colors';
@@ -48,7 +41,11 @@ export function LiquidGlassTabBar({ state, descriptors, navigation, insets }: Bo
   const glassBg = isDark ? withAlpha(theme.surfaceAlt, 0.5) : 'rgba(255,255,255,0.5)';
   const glassBorder = isDark ? withAlpha(theme.primaryDark, 0.5) : 'rgba(255,255,255,0.85)';
   const glassGradient: readonly [string, string, string] = isDark
-    ? [withAlpha(theme.primaryDark, 0.5), withAlpha(theme.surfaceAlt, 0.32), withAlpha(theme.primary, 0.3)]
+    ? [
+        withAlpha(theme.primaryDark, 0.5),
+        withAlpha(theme.surfaceAlt, 0.32),
+        withAlpha(theme.primary, 0.3),
+      ]
     : ['rgba(255,255,255,0.9)', 'rgba(255,255,255,0.28)', 'rgba(92,225,230,0.22)'];
 
   // Inner glow that makes the highlight read as a raised drop of glass. Shadows
@@ -124,9 +121,16 @@ export function LiquidGlassTabBar({ state, descriptors, navigation, insets }: Bo
   return (
     <View pointerEvents="box-none" style={[styles.wrap, { bottom }]}>
       <View
-        style={[styles.bar, { backgroundColor: barBg, borderColor: barBorder, shadowColor: theme.shadow }]}
+        style={[
+          styles.bar,
+          { backgroundColor: barBg, borderColor: barBorder, shadowColor: theme.shadow },
+        ]}
       >
-        <BlurView tint={blurTint} intensity={72} style={[StyleSheet.absoluteFill, styles.barBlur]} />
+        <BlurView
+          tint={blurTint}
+          intensity={72}
+          style={[StyleSheet.absoluteFill, styles.barBlur]}
+        />
 
         {/* The animated liquid-glass highlight, sitting behind the tabs. */}
         {tabWidth > 0 && (
@@ -140,8 +144,18 @@ export function LiquidGlassTabBar({ state, descriptors, navigation, insets }: Bo
               },
             ]}
           >
-            <View style={[styles.glass, { backgroundColor: glassBg, borderColor: glassBorder }, glassGlow]}>
-              <BlurView tint={blurTint} intensity={42} style={[StyleSheet.absoluteFill, styles.glassBlur]} />
+            <View
+              style={[
+                styles.glass,
+                { backgroundColor: glassBg, borderColor: glassBorder },
+                glassGlow,
+              ]}
+            >
+              <BlurView
+                tint={blurTint}
+                intensity={42}
+                style={[StyleSheet.absoluteFill, styles.glassBlur]}
+              />
               <LinearGradient
                 colors={glassGradient}
                 start={{ x: 0.2, y: 0 }}

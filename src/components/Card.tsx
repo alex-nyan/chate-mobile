@@ -3,13 +3,7 @@ import { StyleSheet, View, ViewStyle } from 'react-native';
 import { radius, shadow, spacing, type Palette } from '../theme/colors';
 import { useThemedStyles } from '../theme/ThemeContext';
 
-export function Card({
-  children,
-  style,
-}: {
-  children: React.ReactNode;
-  style?: ViewStyle;
-}) {
+export function Card({ children, style }: { children: React.ReactNode; style?: ViewStyle }) {
   const styles = useThemedStyles(createStyles);
   return <View style={[styles.card, style]}>{children}</View>;
 }

@@ -60,9 +60,7 @@ export function BookmarksProvider({ children }: { children: React.ReactNode }) {
   const isBookmarked = useCallback((id: string) => bookmarks.includes(id), [bookmarks]);
 
   const toggleBookmark = useCallback((id: string) => {
-    setBookmarks((prev) =>
-      prev.includes(id) ? prev.filter((b) => b !== id) : [id, ...prev],
-    );
+    setBookmarks((prev) => (prev.includes(id) ? prev.filter((b) => b !== id) : [id, ...prev]));
   }, []);
 
   const setLastRead = useCallback((id: string) => setLastReadState(id), []);

@@ -61,11 +61,7 @@ export function RootNavigator() {
         tabBarIcon: ({ focused, color, size }) => {
           const pair = ICONS[route.name] ?? ICONS.Home;
           return (
-            <Ionicons
-              name={focused ? pair.active : pair.inactive}
-              size={size - 2}
-              color={color}
-            />
+            <Ionicons name={focused ? pair.active : pair.inactive} size={size - 2} color={color} />
           );
         },
       })}

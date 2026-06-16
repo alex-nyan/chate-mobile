@@ -48,11 +48,17 @@ export function VideoCard({ ep, series }: { ep: VideoEpisode; series: VideoSerie
       </View>
       <View style={styles.videoMeta}>
         <View style={styles.seriesChip}>
-          <Text style={styles.seriesChipText} numberOfLines={1}>{series.name}</Text>
+          <Text style={styles.seriesChipText} numberOfLines={1}>
+            {series.name}
+          </Text>
         </View>
-        <Text style={styles.videoTitle} numberOfLines={2}>{ep.title}</Text>
+        <Text style={styles.videoTitle} numberOfLines={2}>
+          {ep.title}
+        </Text>
         <View style={styles.videoFooter}>
-          <Text style={styles.videoSpeaker} numberOfLines={1}>{ep.speaker ?? ''}</Text>
+          <Text style={styles.videoSpeaker} numberOfLines={1}>
+            {ep.speaker ?? ''}
+          </Text>
           <Text style={styles.videoDate}>{ep.date}</Text>
         </View>
       </View>

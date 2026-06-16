@@ -54,10 +54,7 @@ export function TextScaleProvider({ children }: { children: React.ReactNode }) {
     persist(next);
   }, []);
 
-  const value = useMemo(
-    () => ({ scale, factor: FACTORS[scale], setScale }),
-    [scale, setScale],
-  );
+  const value = useMemo(() => ({ scale, factor: FACTORS[scale], setScale }), [scale, setScale]);
 
   if (!hydrated) return null;
 

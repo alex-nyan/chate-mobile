@@ -9,11 +9,7 @@ import type { RootTabParamList } from './types';
  * back/forward and link-sharing work.
  */
 export const linking: LinkingOptions<RootTabParamList> = {
-  prefixes: [
-    Linking.createURL('/'),
-    'https://chatethehook.com',
-    'https://www.chatethehook.com',
-  ],
+  prefixes: [Linking.createURL('/'), 'https://chatethehook.com', 'https://www.chatethehook.com'],
   config: {
     screens: {
       Home: 'home',

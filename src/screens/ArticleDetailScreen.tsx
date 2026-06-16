@@ -58,10 +58,7 @@ export function ArticleDetailScreen({ route, navigation }: ArticleDetailProps) {
   return (
     <SafeAreaView style={styles.root} edges={['top']}>
       <AppBar title={t(article.category)} onBack={() => navigation.goBack()} />
-      <ScrollView
-        contentContainerStyle={styles.content}
-        showsVerticalScrollIndicator={false}
-      >
+      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <View style={styles.iconBadge}>
           <Ionicons name={article.icon as any} size={26} color={colors.primary} />
         </View>
