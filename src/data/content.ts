@@ -320,6 +320,171 @@ export const articles: Article[] = [
       },
     ],
   },
+  {
+    id: 'recommendation-letters',
+    category: { en: 'Applications', my: 'လျှောက်လွှာ' },
+    icon: 'mail-outline',
+    title: { en: 'Recommendation Letters', my: 'ထောက်ခံစာများ' },
+    summary: {
+      en: 'Who to ask, how to ask, and how to help your recommenders write a letter that stands out.',
+      my: 'မေးရမည့်သူ၊ မည်သို့ မေးရမည်နှင့် ထောက်ခံသူများ ထူးခြားသော စာတစ်စောင် ရေးနိုင်ရန် မည်သို့ ကူညီရမည်။',
+    },
+    body: [
+      {
+        heading: { en: 'Who to ask', my: 'မည်သူ့ကို မေးမလဲ' },
+        text: {
+          en: 'Choose teachers who know you well — not just the one who gave the highest grade. A core-subject teacher who can speak to your growth, curiosity, and character carries far more weight than a senior name who barely knows you.',
+          my: 'အမှတ်အမြင့်ဆုံးပေးခဲ့သူသာမက သင့်ကို ကောင်းစွာသိသော ဆရာ/ဆရာမများကို ရွေးချယ်ပါ။ သင်၏ တိုးတက်မှု၊ သိချင်စိတ်နှင့် စရိုက်ကို ပြောပြနိုင်သော အဓိကဘာသာရပ် ဆရာတစ်ဦးသည် သင့်ကို သိပ်မသိသော ဂုဏ်သိက္ခာရှိ အမည်တစ်ခုထက် များစွာ အလေးသာပါသည်။',
+        },
+      },
+      {
+        heading: { en: 'How to ask', my: 'မည်သို့ မေးမလဲ' },
+        text: {
+          en: 'Ask in person and early — a month or more before the deadline. Be clear about the deadline, how to submit, and which schools are involved. Phrasing it as "would you be able to write me a strong letter?" gives them room to say yes wholeheartedly.',
+          my: 'လူကိုယ်တိုင်တွေ့၍ စောစောမေးပါ — သတ်မှတ်ရက်မတိုင်မီ တစ်လ သို့မဟုတ် ထို့ထက်ပိုစောစွာ။ သတ်မှတ်ရက်၊ မည်သို့တင်ရမည်နှင့် မည်သည့်ကျောင်းများ ပါဝင်သည်ကို ရှင်းရှင်းလင်းလင်း ပြောပါ။ “ကျွန်တော့်အတွက် ကောင်းမွန်သော ထောက်ခံစာတစ်စောင် ရေးပေးနိုင်ပါမလား” ဟု မေးခြင်းက သူတို့ စိတ်ရင်းမှန်ဖြင့် သဘောတူနိုင်ရန် နေရာပေးပါသည်။',
+        },
+      },
+      {
+        heading: { en: 'Help them help you', my: 'သင့်ကို ကူညီနိုင်ရန် ကူညီပါ' },
+        text: {
+          en: 'Give each recommender a short brag sheet: your goals, the programs you are applying to, and two or three moments from their class that show who you are. The easier you make it, the more personal and specific their letter becomes.',
+          my: 'ထောက်ခံသူတစ်ဦးစီကို အကျဉ်းချုပ်စာရွက်တစ်ခု ပေးပါ — သင်၏ ရည်မှန်းချက်များ၊ လျှောက်ထားမည့် ပရိုဂရမ်များနှင့် သင်ဘယ်သူဖြစ်ကြောင်း ပြသသော သူတို့၏ အတန်းထဲမှ အခိုက်အတန့် နှစ်ခုသုံးခု။ သင် လွယ်ကူအောင် ပြုလုပ်လေ သူတို့၏ စာသည် ပိုမို ကိုယ်ရေးကိုယ်တာဆန်ပြီး တိကျလေဖြစ်သည်။',
+        },
+      },
+    ],
+  },
+  {
+    id: 'interviews',
+    category: { en: 'Applications', my: 'လျှောက်လွှာ' },
+    icon: 'chatbubbles-outline',
+    title: { en: 'Admissions Interviews', my: 'ဝင်ခွင့် အင်တာဗျူးများ' },
+    summary: {
+      en: 'Interviews are a conversation, not a test. How to prepare and show up as yourself.',
+      my: 'အင်တာဗျူးသည် စာမေးပွဲမဟုတ်ဘဲ စကားဝိုင်းတစ်ခုဖြစ်သည်။ မည်သို့ ပြင်ဆင်ပြီး သင့်ပုံစံအတိုင်း ဖြစ်နေမည်နည်း။',
+    },
+    body: [
+      {
+        heading: { en: 'What it is for', my: 'ဘာအတွက်လဲ' },
+        text: {
+          en: 'Most undergraduate interviews are informational and evaluative in a gentle way — the school wants to see your interest and how you think, and you get to ask real questions. It is rarely make-or-break; treat it as a two-way conversation.',
+          my: 'ဘွဲ့ကြိုအင်တာဗျူးအများစုသည် သတင်းအချက်အလက်ပေးခြင်းနှင့် နူးညံ့သော အကဲဖြတ်မှုဖြစ်သည် — ကျောင်းက သင်၏ စိတ်ဝင်စားမှုနှင့် သင် မည်သို့ တွေးခေါ်သည်ကို ကြည့်လိုပြီး သင်လည်း စစ်မှန်သော မေးခွန်းများ မေးနိုင်သည်။ အဆုံးအဖြတ်ဖြစ်သည်မှာ ရှားသည်; နှစ်ဖက်စကားဝိုင်းတစ်ခုအဖြစ် သဘောထားပါ။',
+        },
+      },
+      {
+        heading: { en: 'How to prepare', my: 'မည်သို့ ပြင်ဆင်မလဲ' },
+        text: {
+          en: 'Be ready to talk about why this school, what you want to study, and a few things you care about outside class. Prepare two or three genuine questions of your own. Practice out loud once or twice — not to memorise, but to feel comfortable.',
+          my: 'ဤကျောင်းကို ဘာကြောင့်ရွေးသည်၊ ဘာကို လေ့လာလိုသည်နှင့် အတန်းပြင်ပတွင် သင် ဂရုစိုက်သော အရာအနည်းငယ်အကြောင်း ပြောဆိုနိုင်ရန် အသင့်ရှိပါ။ ကိုယ်ပိုင် စစ်မှန်သော မေးခွန်း နှစ်ခုသုံးခု ပြင်ဆင်ပါ။ အလွတ်ကျက်ရန်မဟုတ်ဘဲ သက်တောင့်သက်သာဖြစ်ရန် တစ်ကြိမ်နှစ်ကြိမ် အသံထွက် လေ့ကျင့်ပါ။',
+        },
+      },
+      {
+        heading: { en: 'On the day', my: 'အင်တာဗျူးနေ့တွင်' },
+        text: {
+          en: 'Join a few minutes early, dress neatly, and look at the camera (for video calls). It is fine to pause and think before answering. End by thanking your interviewer — and a short thank-you note afterward leaves a good impression.',
+          my: 'မိနစ်အနည်းငယ် စောဝင်ပါ၊ သပ်သပ်ရပ်ရပ်ဝတ်ဆင်ပါ၊ (ဗီဒီယိုခေါ်ဆိုမှုများအတွက်) ကင်မရာကို ကြည့်ပါ။ မဖြေမီ ခဏရပ်၍ စဉ်းစားခြင်းသည် ရပါသည်။ အင်တာဗျူးသူကို ကျေးဇူးတင်ကြောင်း ပြောကာ အဆုံးသတ်ပါ — ပြီးနောက် ကျေးဇူးတင်စာ တိုတိုလေး ပို့ခြင်းက ကောင်းသော အထင်ကို ချန်ထားခဲ့ပါသည်။',
+        },
+      },
+    ],
+  },
+  {
+    id: 'timeline',
+    category: { en: 'Planning', my: 'အစီအစဉ်ဆွဲခြင်း' },
+    icon: 'calendar-outline',
+    title: { en: 'Your Application Timeline', my: 'သင်၏ လျှောက်လွှာ အချိန်ဇယား' },
+    summary: {
+      en: 'A bird’s-eye view of the months ahead, from building your profile to hitting submit.',
+      my: 'သင်၏ ကိုယ်ရေးအကျဉ်း တည်ဆောက်ခြင်းမှ တင်သွင်းခြင်းအထိ ရှေ့လများ၏ ခြုံငုံမြင်ကွင်း။',
+    },
+    body: [
+      {
+        heading: { en: '12–18 months out', my: 'လ ၁၂–၁၈ ကြိုတင်၍' },
+        text: {
+          en: 'Shortlist countries and schools, sketch a budget, and register for the tests you need (SAT/ACT, IELTS/TOEFL). This is also the time to deepen one or two activities you genuinely care about — depth beats a long, shallow list.',
+          my: 'နိုင်ငံနှင့် ကျောင်းများကို ရွေးချယ်ပါ၊ ဘတ်ဂျက်တစ်ခု ရေးဆွဲပါ၊ လိုအပ်သော စာမေးပွဲများ (SAT/ACT, IELTS/TOEFL) အတွက် စာရင်းသွင်းပါ။ ဤအချိန်သည် သင် တကယ်စိတ်ဝင်စားသော လှုပ်ရှားမှုတစ်ခုနှစ်ခုကို နက်ရှိုင်းစေရန်လည်း အချိန်ဖြစ်သည် — ရှည်လျားသော်လည်း ပေါ့ပါးသည့်စာရင်းထက် နက်ရှိုင်းမှုက သာသည်။',
+        },
+      },
+      {
+        heading: { en: 'The application year', my: 'လျှောက်လွှာ နှစ်' },
+        text: {
+          en: 'Over the summer, draft your main essay and request recommendation letters. In autumn, finalise your school list, write supplements, and prepare financial-aid documents. Most deadlines fall between November and January.',
+          my: 'နွေရာသီတွင် သင်၏ အဓိက Essay ကို မူကြမ်းရေးပြီး ထောက်ခံစာများ တောင်းခံပါ။ ဆောင်းဦးတွင် ကျောင်းစာရင်းကို အပြီးသတ်ပါ၊ ဖြည့်စွက် Essay များ ရေးပါ၊ ငွေကြေးအထောက်အပံ့ စာရွက်စာတမ်းများ ပြင်ဆင်ပါ။ သတ်မှတ်ရက်အများစုသည် နိုဝင်ဘာနှင့် ဇန်နဝါရီကြားတွင် ကျရောက်သည်။',
+        },
+      },
+      {
+        heading: { en: 'Early vs Regular', my: 'Early နှင့် Regular' },
+        text: {
+          en: 'Early Decision is binding — you must enrol if admitted — while Early Action and Regular Decision are not. Applying early can help, but only if your application is genuinely ready. Never rush a weaker application just to meet an early date.',
+          my: 'Early Decision သည် ကတိအာမခံပါသည် — ဝင်ခွင့်ရပါက တက်ရောက်ရမည် — Early Action နှင့် Regular Decision တို့မှာမူ မဟုတ်ပါ။ စောစောလျှောက်ခြင်းက အထောက်အကူဖြစ်နိုင်သော်လည်း သင်၏ လျှောက်လွှာ တကယ်အသင့်ဖြစ်မှသာ။ စောသောရက်ကို မီရန်အတွက်သာ အားနည်းသော လျှောက်လွှာတစ်ခုကို မလောပါနှင့်။',
+        },
+      },
+    ],
+  },
+  {
+    id: 'financial-aid',
+    category: { en: 'Funding', my: 'ရန်ပုံငွေ' },
+    icon: 'cash-outline',
+    title: { en: 'Understanding Financial Aid', my: 'ငွေကြေး အထောက်အပံ့ နားလည်ခြင်း' },
+    summary: {
+      en: 'Need-based aid, merit scholarships, and how to build a plan that makes a degree affordable.',
+      my: 'လိုအပ်ချက်အခြေခံ အထောက်အပံ့၊ ထူးချွန်ဆုနှင့် ဘွဲ့တစ်ခုကို တတ်နိုင်စေမည့် အစီအစဉ် တည်ဆောက်ပုံ။',
+    },
+    body: [
+      {
+        heading: { en: 'Need-based vs merit', my: 'လိုအပ်ချက်အခြေခံ နှင့် ထူးချွန်မှုအခြေခံ' },
+        text: {
+          en: 'Need-based aid is awarded according to your family’s financial situation; merit aid rewards academics, talent, or leadership regardless of need. Some schools are "need-blind" for internationals, but many are not — so the cost can depend on where you apply.',
+          my: 'လိုအပ်ချက်အခြေခံ အထောက်အပံ့ကို သင့်မိသားစု၏ ငွေကြေးအခြေအနေအရ ပေးအပ်သည်; ထူးချွန်မှုအခြေခံ အထောက်အပံ့က လိုအပ်ချက်မရှိစေကာမူ ပညာရေး၊ အရည်အချင်း သို့မဟုတ် ဦးဆောင်မှုကို ဆုချသည်။ အချို့ကျောင်းများသည် နိုင်ငံတကာကျောင်းသားများအတွက် “need-blind” ဖြစ်သော်လည်း အများစုမှာ မဟုတ်ပါ — ထို့ကြောင့် ကုန်ကျစရိတ်သည် သင် မည်သည့်ကျောင်းကို လျှောက်သည်အပေါ် မူတည်နိုင်သည်။',
+        },
+      },
+      {
+        heading: { en: 'The key forms', my: 'အဓိက ဖောင်များ' },
+        text: {
+          en: 'Most US schools ask international applicants for the CSS Profile or their own ISFAA/financial statement; the UK, Germany, and others have their own systems. Read each school’s aid page carefully and note exactly which documents and deadlines apply to internationals.',
+          my: 'US ကျောင်းအများစုသည် နိုင်ငံတကာ လျှောက်ထားသူများထံမှ CSS Profile သို့မဟုတ် ၎င်းတို့၏ ကိုယ်ပိုင် ISFAA/ငွေကြေးရှင်းတမ်းကို တောင်းခံသည်; UK, Germany နှင့် အခြားနိုင်ငံများတွင် ကိုယ်ပိုင်စနစ်များ ရှိသည်။ ကျောင်းတစ်ခုစီ၏ အထောက်အပံ့စာမျက်နှာကို သေချာဖတ်ပြီး နိုင်ငံတကာကျောင်းသားများအတွက် မည်သည့်စာရွက်စာတမ်းနှင့် သတ်မှတ်ရက်များ သက်ဆိုင်သည်ကို မှတ်သားပါ။',
+        },
+      },
+      {
+        heading: { en: 'Build a funding plan', my: 'ရန်ပုံငွေ အစီအစဉ်တစ်ခု တည်ဆောက်ပါ' },
+        text: {
+          en: 'Apply to a balanced list that includes a few generous-aid schools, and stack sources: institutional aid, external scholarships, and family contribution. Track each deadline — many scholarships close earlier than admissions. Our mentors and the Scholarships blog can help.',
+          my: 'အထောက်အပံ့ ရက်ရောသော ကျောင်းအချို့ ပါဝင်သည့် မျှတသောစာရင်းသို့ လျှောက်ပါ၊ အရင်းအမြစ်များကို ပေါင်းစပ်ပါ — ကျောင်း၏အထောက်အပံ့၊ ပြင်ပပညာသင်ဆုနှင့် မိသားစုထည့်ဝင်ငွေ။ သတ်မှတ်ရက်တစ်ခုစီကို ခြေရာခံပါ — ပညာသင်ဆုများစွာသည် ဝင်ခွင့်ထက် စောစွာပိတ်သည်။ ကျွန်ုပ်တို့၏ mentor များနှင့် Scholarships ဘလော့က ကူညီနိုင်ပါသည်။',
+        },
+      },
+    ],
+  },
+  {
+    id: 'visas',
+    category: { en: 'Logistics', my: 'ထောက်ပံ့ပို့ဆောင်ရေး' },
+    icon: 'airplane-outline',
+    title: { en: 'Student Visas & Getting Ready', my: 'ကျောင်းသား ဗီဇာနှင့် ပြင်ဆင်ခြင်း' },
+    summary: {
+      en: 'What happens after you’re admitted — the visa process and getting ready to go.',
+      my: 'ဝင်ခွင့်ရပြီးနောက် ဖြစ်ပျက်သည်များ — ဗီဇာလုပ်ငန်းစဉ်နှင့် ထွက်ခွာရန် ပြင်ဆင်ခြင်း။',
+    },
+    body: [
+      {
+        heading: { en: 'After you’re admitted', my: 'ဝင်ခွင့်ရပြီးနောက်' },
+        text: {
+          en: 'Accept your offer and pay any deposit, then the school issues the document your visa is built on (an I-20 for the US, a CAS for the UK, and so on). Start this early — visa appointment slots fill up fast in peak season.',
+          my: 'သင်၏ကမ်းလှမ်းချက်ကို လက်ခံပြီး စရံငွေ ပေးချေပါ၊ ထို့နောက် ကျောင်းက သင်၏ဗီဇာ အခြေခံသည့် စာရွက်စာတမ်း (US အတွက် I-20၊ UK အတွက် CAS စသည်) ကို ထုတ်ပေးသည်။ ဤအဆင့်ကို စောစောစတင်ပါ — ဗီဇာ ချိန်းဆိုမှုနေရာများသည် အလုပ်များသည့်ရာသီတွင် မြန်မြန်ပြည့်သွားသည်။',
+        },
+      },
+      {
+        heading: { en: 'The visa interview', my: 'ဗီဇာ အင်တာဗျူး' },
+        text: {
+          en: 'Prepare your financial proof, admission documents, and a clear, honest answer to "why this school and this course." Officers mainly want to see that you are a genuine student with the means to study and a plan to return. Be calm, concise, and truthful.',
+          my: 'သင်၏ ငွေကြေးအထောက်အထား၊ ဝင်ခွင့်စာရွက်စာတမ်းများနှင့် “ဤကျောင်းနှင့် ဤသင်တန်းကို ဘာကြောင့်ရွေးသည်” ဟူသော ရှင်းလင်း၍ ရိုးသားသော အဖြေကို ပြင်ဆင်ပါ။ အရာရှိများသည် သင်သည် လေ့လာရန် အရင်းအမြစ်ရှိပြီး ပြန်လာရန် အစီအစဉ်ရှိသော စစ်မှန်သည့် ကျောင်းသားဖြစ်ကြောင်း မြင်လိုသည်။ တည်ငြိမ်စွာ၊ တိုတိုနှင့် မှန်ကန်စွာ ဖြေပါ။',
+        },
+      },
+      {
+        heading: { en: 'Before you fly', my: 'မထွက်ခွာမီ' },
+        text: {
+          en: 'Sort out housing, health insurance, and a first month’s budget. Pack key documents in your carry-on, look into airport pickup and orientation, and connect with other students heading the same way. A little planning makes the first weeks far less stressful.',
+          my: 'အိမ်ရာ၊ ကျန်းမာရေးအာမခံနှင့် ပထမလ ဘတ်ဂျက်ကို စီစဉ်ပါ။ အဓိကစာရွက်စာတမ်းများကို လက်ဆွဲအိတ်ထဲ ထည့်ပါ၊ လေဆိပ်ကြိုဆိုမှုနှင့် orientation အကြောင်း လေ့လာပါ၊ တူညီသောလမ်းကြောင်းသွားမည့် အခြားကျောင်းသားများနှင့် ဆက်သွယ်ပါ။ အနည်းငယ် စီစဉ်ထားခြင်းက ပထမအပတ်များကို စိတ်ဖိစီးမှု များစွာ လျှော့ချပေးသည်။',
+        },
+      },
+    ],
+  },
 ];
 
 // ---------------------------------------------------------------------------
