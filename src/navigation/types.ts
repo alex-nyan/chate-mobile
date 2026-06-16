@@ -17,6 +17,7 @@ export type RootTabParamList = {
   Home: undefined;
   Programs: undefined;
   Guides: NavigatorScreenParams<GuidesStackParamList>;
+  Deadlines: undefined;
   Settings: NavigatorScreenParams<SettingsStackParamList>;
 };
 

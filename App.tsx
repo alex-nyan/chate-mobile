@@ -20,6 +20,7 @@ import { LanguageProvider } from './src/i18n/LanguageContext';
 import { initErrorReporting } from './src/lib/errorReporting';
 import { RootNavigator } from './src/navigation';
 import { linking } from './src/navigation/linking';
+import { ApplicationsProvider } from './src/state/ApplicationsContext';
 import { BookmarksProvider } from './src/state/BookmarksContext';
 import { HapticsProvider } from './src/state/HapticsContext';
 import { TextScaleProvider } from './src/state/TextScaleContext';
@@ -94,9 +95,11 @@ export default function App() {
           <TextScaleProvider>
             <HapticsProvider>
               <BookmarksProvider>
-                <ErrorBoundary>
-                  <ThemedNavigation />
-                </ErrorBoundary>
+                <ApplicationsProvider>
+                  <ErrorBoundary>
+                    <ThemedNavigation />
+                  </ErrorBoundary>
+                </ApplicationsProvider>
               </BookmarksProvider>
             </HapticsProvider>
           </TextScaleProvider>

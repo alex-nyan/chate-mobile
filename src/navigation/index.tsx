@@ -7,6 +7,7 @@ import { useLang } from '../i18n/LanguageContext';
 import { ui } from '../i18n/strings';
 import { ArticleDetailScreen } from '../screens/ArticleDetailScreen';
 import { BlogPostScreen } from '../screens/BlogPostScreen';
+import { DeadlinesScreen } from '../screens/DeadlinesScreen';
 import { GuidesScreen } from '../screens/GuidesScreen';
 import { HomeScreen } from '../screens/HomeScreen';
 import { ProgramsScreen } from '../screens/ProgramsScreen';
@@ -44,6 +45,7 @@ const ICONS: Record<string, { active: IconName; inactive: IconName }> = {
   Home: { active: 'home', inactive: 'home-outline' },
   Programs: { active: 'compass', inactive: 'compass-outline' },
   Guides: { active: 'book', inactive: 'book-outline' },
+  Deadlines: { active: 'calendar', inactive: 'calendar-outline' },
   Settings: { active: 'settings', inactive: 'settings-outline' },
 };
 
@@ -76,6 +78,11 @@ export function RootNavigator() {
         name="Guides"
         component={GuidesNavigator}
         options={{ tabBarLabel: t(ui.tabArticles) }}
+      />
+      <Tab.Screen
+        name="Deadlines"
+        component={DeadlinesScreen}
+        options={{ tabBarLabel: t(ui.tabDeadlines) }}
       />
       <Tab.Screen
         name="Settings"

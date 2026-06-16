@@ -29,7 +29,7 @@
       "favicon": "./assets/favicon.png"
     },
     "owner": "alex-nyans-organization",
-    "plugins": ["expo-font"],
+    "plugins": ["expo-font", "@react-native-community/datetimepicker"],
     "extra": {
       "eas": {
         "projectId": "252b5a61-1a82-4968-a428-7ade62bdef99"
