@@ -1,7 +1,10 @@
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
-import { Linking, Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
+import { useLang } from '../i18n/LanguageContext';
+import { ui } from '../i18n/strings';
 import { haptics } from '../lib/haptics';
+import { openExternal } from '../lib/openExternal';
 import { radius, shadow, spacing, type Palette } from '../theme/colors';
 import { useTheme, useThemedStyles } from '../theme/ThemeContext';
 import { Text } from './Text';
@@ -46,6 +49,7 @@ export function Row({
   trailing = 'auto',
   variant = 'list',
 }: RowProps) {
+  const { t } = useLang();
   const { colors } = useTheme();
   const styles = useThemedStyles(createStyles);
   const isCard = variant === 'card';
@@ -58,9 +62,7 @@ export function Row({
   const handlePress = () => {
     haptics.light();
     if (url) {
-      Linking.openURL(url).catch(() => {
-        /* No-op: e.g. no email client / browser available. */
-      });
+      void openExternal(url, t(ui.linkFailed));
     } else {
       onPress?.();
     }

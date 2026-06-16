@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AppBar } from '../components/AppBar';
+import { IconBadge } from '../components/IconBadge';
 import { ShareSheet } from '../components/ShareSheet';
 import { Text } from '../components/Text';
 import { articles, contact } from '../data/content';
@@ -59,9 +60,7 @@ export function ArticleDetailScreen({ route, navigation }: ArticleDetailProps) {
     <SafeAreaView style={styles.root} edges={['top']}>
       <AppBar title={t(article.category)} onBack={() => navigation.goBack()} />
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-        <View style={styles.iconBadge}>
-          <Ionicons name={article.icon as any} size={26} color={colors.primary} />
-        </View>
+        <IconBadge name={article.icon as any} size={52} iconSize={26} style={styles.iconBadge} />
         <Text style={styles.category}>{t(article.category)}</Text>
         <Text style={styles.title}>{t(article.title)}</Text>
         <Text style={styles.summary}>{t(article.summary)}</Text>
@@ -123,15 +122,7 @@ const createStyles = (colors: Palette) =>
   StyleSheet.create({
     root: { flex: 1, backgroundColor: colors.bg },
     content: { padding: spacing.lg, paddingBottom: 100 },
-    iconBadge: {
-      width: 52,
-      height: 52,
-      borderRadius: radius.md,
-      backgroundColor: colors.primaryTint,
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginBottom: spacing.md,
-    },
+    iconBadge: { marginBottom: spacing.md },
     category: {
       fontSize: 12,
       fontWeight: '800',

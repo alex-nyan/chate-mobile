@@ -7,6 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { AppBar } from '../components/AppBar';
 import { Card } from '../components/Card';
 import { HomeHero } from '../components/HomeHero';
+import { IconBadge } from '../components/IconBadge';
 import { SectionHeader } from '../components/SectionHeader';
 import { StatCard } from '../components/StatCard';
 import { Text } from '../components/Text';
@@ -57,9 +58,7 @@ export function HomeScreen() {
                 accessibilityLabel={t(a.title)}
                 style={({ pressed }) => [styles.guideCard, pressed && styles.pressed]}
               >
-                <View style={styles.iconBadge}>
-                  <Ionicons name={a.icon as any} size={22} color={colors.primary} />
-                </View>
+                <IconBadge name={a.icon as any} size={46} iconSize={22} style={styles.iconBadge} />
                 <Text style={styles.guideCategory}>{t(a.category)}</Text>
                 <Text style={styles.guideTitle} numberOfLines={3}>
                   {t(a.title)}
@@ -76,9 +75,7 @@ export function HomeScreen() {
           <SectionHeader title={t(ui.ourMission)} />
           <Card>
             <View style={styles.statementRow}>
-              <View style={styles.statementBadge}>
-                <Ionicons name="rocket-outline" size={20} color={colors.primary} />
-              </View>
+              <IconBadge name="rocket-outline" size={40} iconSize={20} />
               <Text style={styles.statement}>{t(about.mission)}</Text>
             </View>
           </Card>
@@ -86,9 +83,7 @@ export function HomeScreen() {
           <SectionHeader title={t(ui.ourVision)} />
           <Card>
             <View style={styles.statementRow}>
-              <View style={styles.statementBadge}>
-                <Ionicons name="eye-outline" size={20} color={colors.primary} />
-              </View>
+              <IconBadge name="eye-outline" size={40} iconSize={20} />
               <Text style={styles.statement}>{t(about.vision)}</Text>
             </View>
           </Card>
@@ -96,9 +91,7 @@ export function HomeScreen() {
           <SectionHeader title={t(ui.ourCommitment)} />
           <Card>
             <View style={styles.statementRow}>
-              <View style={styles.statementBadge}>
-                <Ionicons name="heart-outline" size={20} color={colors.primary} />
-              </View>
+              <IconBadge name="heart-outline" size={40} iconSize={20} />
               <Text style={styles.statement}>{t(about.commitment)}</Text>
             </View>
           </Card>
@@ -140,15 +133,7 @@ const createStyles = (colors: Palette) =>
       ...shadow.card,
     },
     pressed: { opacity: 0.7 },
-    iconBadge: {
-      width: 46,
-      height: 46,
-      borderRadius: radius.md,
-      backgroundColor: colors.primaryTint,
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginBottom: spacing.sm,
-    },
+    iconBadge: { marginBottom: spacing.sm },
     guideCategory: {
       fontSize: 11.5,
       fontWeight: '800',
@@ -174,14 +159,6 @@ const createStyles = (colors: Palette) =>
       flexDirection: 'row',
       gap: spacing.md,
       alignItems: 'flex-start',
-    },
-    statementBadge: {
-      width: 40,
-      height: 40,
-      borderRadius: radius.md,
-      backgroundColor: colors.primaryTint,
-      alignItems: 'center',
-      justifyContent: 'center',
     },
     statsGrid: {
       flexDirection: 'row',

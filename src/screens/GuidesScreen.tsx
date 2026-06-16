@@ -2,7 +2,6 @@ import { Ionicons } from '@expo/vector-icons';
 import React, { useEffect, useMemo, useState } from 'react';
 import {
   ActivityIndicator,
-  Linking,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -11,6 +10,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AppBar } from '../components/AppBar';
+import { IconBadge } from '../components/IconBadge';
 import { Text } from '../components/Text';
 import { VideoCard } from '../components/VideoCard';
 import {
@@ -31,6 +31,7 @@ import {
   type BloggerPost,
 } from '../lib/blogger';
 import { haptics } from '../lib/haptics';
+import { openExternal } from '../lib/openExternal';
 import { share } from '../lib/share';
 import { useIsOffline } from '../lib/useIsOffline';
 import { useBookmarks } from '../state/BookmarksContext';
@@ -78,7 +79,7 @@ function catColor(category: BlogCategory, isDark: boolean, colors: Palette): str
 
 function openURL(url: string) {
   haptics.light();
-  Linking.openURL(url).catch(() => {});
+  void openExternal(url);
 }
 
 // ── Search matching (searches both languages so a Burmese query hits English
@@ -112,9 +113,7 @@ function ArticleRow({ article, onPress }: { article: Article; onPress: () => voi
       accessibilityRole="button"
       style={({ pressed }) => [styles.articleCard, pressed && styles.pressed]}
     >
-      <View style={styles.iconBadge}>
-        <Ionicons name={article.icon as any} size={22} color={colors.primary} />
-      </View>
+      <IconBadge name={article.icon as any} size={46} iconSize={22} />
       <View style={styles.articleText}>
         <Text style={styles.articleCategory}>{t(article.category)}</Text>
         <Text style={styles.articleTitle}>{t(article.title)}</Text>
@@ -674,14 +673,6 @@ const createStyles = (colors: Palette) =>
       ...shadow.card,
     },
     pressed: { opacity: 0.7, transform: [{ scale: 0.99 }] },
-    iconBadge: {
-      width: 46,
-      height: 46,
-      borderRadius: radius.md,
-      backgroundColor: colors.primaryTint,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
     articleText: { flex: 1 },
     articleCategory: {
       fontSize: 11.5,

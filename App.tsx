@@ -21,6 +21,7 @@ import { initErrorReporting } from './src/lib/errorReporting';
 import { RootNavigator } from './src/navigation';
 import { linking } from './src/navigation/linking';
 import { BookmarksProvider } from './src/state/BookmarksContext';
+import { HapticsProvider } from './src/state/HapticsContext';
 import { TextScaleProvider } from './src/state/TextScaleContext';
 import { ThemeProvider, useTheme } from './src/theme/ThemeContext';
 
@@ -91,11 +92,13 @@ export default function App() {
       <ThemeProvider>
         <LanguageProvider>
           <TextScaleProvider>
-            <BookmarksProvider>
-              <ErrorBoundary>
-                <ThemedNavigation />
-              </ErrorBoundary>
-            </BookmarksProvider>
+            <HapticsProvider>
+              <BookmarksProvider>
+                <ErrorBoundary>
+                  <ThemedNavigation />
+                </ErrorBoundary>
+              </BookmarksProvider>
+            </HapticsProvider>
           </TextScaleProvider>
         </LanguageProvider>
       </ThemeProvider>

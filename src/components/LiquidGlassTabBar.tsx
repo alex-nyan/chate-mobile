@@ -74,8 +74,10 @@ export function LiquidGlassTabBar({ state, descriptors, navigation, insets }: Bo
   const stretchX = useRef(new Animated.Value(1)).current;
   const placed = useRef(false);
 
-  // Per-tab press feedback.
+  // Per-tab press feedback: a squish + a "liquid glass" blob that wells up under
+  // the finger while the tab is held (0 = hidden, 1 = fully raised).
   const pressScales = useRef(routes.map(() => new Animated.Value(1))).current;
+  const holdGlass = useRef(routes.map(() => new Animated.Value(0))).current;
 
   useEffect(() => {
     if (!tabWidth) return;
@@ -208,6 +210,30 @@ export function LiquidGlassTabBar({ state, descriptors, navigation, insets }: Bo
               }).start();
             };
 
+            // Raise / drop the held-tab glass blob. Reduce-motion just snaps it.
+            const holdTo = (to: number) => {
+              if (reduceMotion) {
+                holdGlass[index].setValue(to);
+                return;
+              }
+              Animated.spring(holdGlass[index], {
+                toValue: to,
+                useNativeDriver: NATIVE,
+                friction: 7,
+                tension: 120,
+              }).start();
+            };
+
+            const onPressIn = () => {
+              haptics.light(); // tactile "grab" as the glass wells up under the finger
+              pressTo(0.9);
+              holdTo(1);
+            };
+            const onPressOut = () => {
+              pressTo(1);
+              holdTo(0);
+            };
+
             return (
               <Pressable
                 key={route.key}
@@ -216,10 +242,47 @@ export function LiquidGlassTabBar({ state, descriptors, navigation, insets }: Bo
                 accessibilityLabel={options.tabBarAccessibilityLabel ?? String(rawLabel)}
                 onPress={onPress}
                 onLongPress={onLongPress}
-                onPressIn={() => pressTo(0.85)}
-                onPressOut={() => pressTo(1)}
+                onPressIn={onPressIn}
+                onPressOut={onPressOut}
                 style={styles.tab}
               >
+                <Animated.View
+                  pointerEvents="none"
+                  style={[
+                    styles.holdGlass,
+                    {
+                      opacity: holdGlass[index],
+                      transform: [
+                        {
+                          scale: holdGlass[index].interpolate({
+                            inputRange: [0, 1],
+                            outputRange: [0.7, 1],
+                          }),
+                        },
+                      ],
+                    },
+                  ]}
+                >
+                  <View
+                    style={[
+                      styles.holdGlassInner,
+                      { backgroundColor: glassBg, borderColor: glassBorder },
+                      glassGlow,
+                    ]}
+                  >
+                    <BlurView
+                      tint={blurTint}
+                      intensity={36}
+                      style={[StyleSheet.absoluteFill, styles.holdGlassBlur]}
+                    />
+                    <LinearGradient
+                      colors={glassGradient}
+                      start={{ x: 0.2, y: 0 }}
+                      end={{ x: 0.8, y: 1 }}
+                      style={StyleSheet.absoluteFill}
+                    />
+                  </View>
+                </Animated.View>
                 <Animated.View
                   style={[styles.tabInner, { transform: [{ scale: pressScales[index] }] }]}
                 >
@@ -291,6 +354,24 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  // The held-tab "liquid glass" blob — sits behind the icon/label, inset within
+  // the tab so it reads as a rounded drop welling up under the finger.
+  holdGlass: {
+    position: 'absolute',
+    top: 2,
+    bottom: 2,
+    left: 6,
+    right: 6,
+  },
+  holdGlassInner: {
+    flex: 1,
+    borderRadius: 18,
+    overflow: 'hidden',
+    borderWidth: 1,
+  },
+  holdGlassBlur: {
+    borderRadius: 18,
   },
   tabInner: {
     alignItems: 'center',

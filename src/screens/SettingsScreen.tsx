@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import * as Application from 'expo-application';
 import React from 'react';
-import { Linking, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import appJson from '../../app.json';
 import { AppBar } from '../components/AppBar';
@@ -13,7 +13,9 @@ import { contact, socials } from '../data/content';
 import { useLang } from '../i18n/LanguageContext';
 import { ui, type Lang } from '../i18n/strings';
 import { haptics } from '../lib/haptics';
+import { openExternal } from '../lib/openExternal';
 import { useBookmarks } from '../state/BookmarksContext';
+import { useHaptics } from '../state/HapticsContext';
 import { type TextScale, useTextScale } from '../state/TextScaleContext';
 import { radius, spacing, type Palette } from '../theme/colors';
 import { type DarkVariant, type ThemeMode, useTheme, useThemedStyles } from '../theme/ThemeContext';
@@ -24,6 +26,7 @@ export function SettingsScreen({ navigation }: SettingsHomeProps) {
   const { colors, mode, setMode, isDark, darkVariant, setDarkVariant } = useTheme();
   const { lang, setLang } = useLang();
   const { scale, setScale } = useTextScale();
+  const { hapticsEnabled, setHaptics } = useHaptics();
   const { bookmarks } = useBookmarks();
   const styles = useThemedStyles(createStyles);
 
@@ -45,6 +48,10 @@ export function SettingsScreen({ navigation }: SettingsHomeProps) {
     { value: 'default', label: t(ui.textDefault) },
     { value: 'large', label: t(ui.textLarge) },
     { value: 'xl', label: t(ui.textXL) },
+  ];
+  const hapticsSegments: Segment<boolean>[] = [
+    { value: true, label: t(ui.hapticsOn) },
+    { value: false, label: t(ui.hapticsOff) },
   ];
 
   // Native build shows the EAS-injected build number; web/Expo Go has none.
@@ -75,6 +82,16 @@ export function SettingsScreen({ navigation }: SettingsHomeProps) {
         <SectionHeader title={t(ui.textSize)} />
         <SegmentedControl segments={sizeSegments} value={scale} onChange={setScale} />
 
+        <SectionHeader title={t(ui.accessibility)} />
+        <Row icon="pulse-outline" label={t(ui.haptics)} trailing="none" />
+        <View style={styles.accessibilityControl}>
+          <SegmentedControl
+            segments={hapticsSegments}
+            value={hapticsEnabled}
+            onChange={setHaptics}
+          />
+        </View>
+
         <SectionHeader title={t(ui.savedArticles)} />
         <Row
           icon="bookmark-outline"
@@ -104,7 +121,7 @@ export function SettingsScreen({ navigation }: SettingsHomeProps) {
               key={s.id}
               onPress={() => {
                 haptics.light();
-                Linking.openURL(s.url).catch(() => {});
+                void openExternal(s.url, t(ui.linkFailed));
               }}
               accessibilityRole="link"
               accessibilityLabel={s.label}
@@ -134,6 +151,7 @@ const createStyles = (colors: Palette) =>
     root: { flex: 1, backgroundColor: colors.surface },
     content: { padding: spacing.lg, paddingBottom: 100 },
     links: { gap: spacing.sm },
+    accessibilityControl: { marginTop: spacing.sm },
     socialRow: {
       flexDirection: 'row',
       flexWrap: 'wrap',

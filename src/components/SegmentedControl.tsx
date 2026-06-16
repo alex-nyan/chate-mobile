@@ -5,13 +5,13 @@ import { radius, spacing, type Palette } from '../theme/colors';
 import { useThemedStyles } from '../theme/ThemeContext';
 import { Text } from './Text';
 
-export type Segment<T extends string> = { value: T; label: string };
+export type Segment<T extends string | number | boolean> = { value: T; label: string };
 
 /**
- * A pill segmented control (used in Settings for Appearance / Language / Text size).
- * Generic over the value union so each use stays type-safe.
+ * A pill segmented control (used in Settings for Appearance / Language / Text
+ * size / Haptics). Generic over the value union so each use stays type-safe.
  */
-export function SegmentedControl<T extends string>({
+export function SegmentedControl<T extends string | number | boolean>({
   segments,
   value,
   onChange,
@@ -28,7 +28,7 @@ export function SegmentedControl<T extends string>({
         const active = seg.value === value;
         return (
           <Pressable
-            key={seg.value}
+            key={String(seg.value)}
             onPress={() => {
               if (!active) {
                 haptics.selection();

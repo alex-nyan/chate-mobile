@@ -5,13 +5,14 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { AppBar } from '../components/AppBar';
 import { Card } from '../components/Card';
 import { Chip } from '../components/Chip';
+import { IconBadge } from '../components/IconBadge';
 import { Row } from '../components/Row';
 import { SectionHeader } from '../components/SectionHeader';
 import { Text } from '../components/Text';
 import { countries, programs } from '../data/content';
 import { useLang } from '../i18n/LanguageContext';
 import { ui } from '../i18n/strings';
-import { radius, spacing, type Palette } from '../theme/colors';
+import { spacing, type Palette } from '../theme/colors';
 import { useTheme, useThemedStyles } from '../theme/ThemeContext';
 
 // Scholarship application forms — pinned to the top of the Programs tab.
@@ -51,9 +52,7 @@ export function ProgramsScreen() {
         {programs.map((p) => (
           <Card key={p.id} style={styles.card}>
             <View style={styles.cardHead}>
-              <View style={styles.iconBadge}>
-                <Ionicons name={p.icon as any} size={22} color={colors.primary} />
-              </View>
+              <IconBadge name={p.icon as any} size={44} iconSize={22} />
               <Text style={styles.title}>{t(p.title)}</Text>
             </View>
             <Text style={styles.summary}>{t(p.summary)}</Text>
@@ -99,14 +98,6 @@ const createStyles = (colors: Palette) =>
       alignItems: 'center',
       gap: spacing.md,
       marginBottom: spacing.sm,
-    },
-    iconBadge: {
-      width: 44,
-      height: 44,
-      borderRadius: radius.md,
-      backgroundColor: colors.primaryTint,
-      alignItems: 'center',
-      justifyContent: 'center',
     },
     title: {
       flex: 1,
