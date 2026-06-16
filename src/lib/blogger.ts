@@ -1,150 +1,100 @@
-import type { BlogCategory } from '../data/content';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { parseFeed, stripEmoji, type BloggerFeedJson, type BloggerPost } from './bloggerParse';
 
 /**
  * Live blog client for chatethehook.blogspot.com.
  *
- * Blogger exposes a public Atom-as-JSON feed (no API key needed) that gives us
- * each post's real per-post URL and full HTML body, so we can render posts
- * *inside* the app instead of bouncing the user out to Blogger.
- *
- * The bodies are mostly Facebook-pasted markup peppered with decorative emojis
- * (🎓🇩🇪📌🪝 …). `stripEmoji` removes those at fetch time so neither the list
- * titles nor the in-app reader render them.
+ * Pure feed parsing lives in `bloggerParse.ts`; this module adds the network
+ * fetch and a two-level cache:
+ *   1. an in-memory cache so revisiting the tab / opening a post is instant, and
+ *   2. an AsyncStorage snapshot so a previously-loaded feed is available offline
+ *      and shows immediately on the next cold start (stale-while-revalidate).
  */
+
+export { stripEmoji };
+export type { BloggerPost };
 
 const BLOG_BASE = 'https://chatethehook.blogspot.com';
 // 83 posts today — ask for more than that so a single request covers them all.
 const FEED_URL = `${BLOG_BASE}/feeds/posts/default?alt=json&max-results=200`;
 const FETCH_TIMEOUT_MS = 12000;
+// Bump the version suffix if the persisted shape ever changes.
+const STORAGE_KEY = 'chate.blogger.posts.v1';
 
-export type BloggerPost = {
-  /** Stable id derived from the Blogger entry id, e.g. `post-6662662995099891060`. */
-  id: string;
-  /** Emoji-stripped plain-text title. */
-  title: string;
-  /** The real per-post URL (used for sharing / "read on the blog"). */
-  url: string;
-  /** Human date, e.g. `Apr 2026`. */
-  date: string;
-  /** ISO publish timestamp (used for sorting). */
-  published: string;
-  /** Mapped to one of the app's five filter buckets. */
-  category: BlogCategory;
-  /** Emoji-stripped HTML body, ready to drop into the reader's WebView. */
-  contentHtml: string;
-};
-
-// ── Emoji stripping ────────────────────────────────────────────────────────
-// Match an emoji "core" glyph (pictographs, dingbats, misc symbols/technical),
-// an optional variation selector, then any number of ZWJ-joined cores. ZWJ
-// (U+200D) is only consumed when it glues two emoji together — a bare ZWJ is
-// left alone because Burmese uses it for ligature shaping.
-const EMOJI_CORE = '[\\u2300-\\u23FF\\u2600-\\u27BF\\u2B00-\\u2BFF\\u{1F000}-\\u{1FAFF}]\\uFE0F?';
-const EMOJI_SEQUENCE = new RegExp(`${EMOJI_CORE}(?:\\u200D${EMOJI_CORE})*`, 'gu');
-
-/** Remove decorative emojis (and their joiners) while leaving real text intact. */
-export function stripEmoji(input: string): string {
-  return input.replace(EMOJI_SEQUENCE, '');
-}
-
-function cleanTitle(raw: string): string {
-  // Collapse the whitespace left behind by removed emojis and trim.
-  return stripEmoji(raw).replace(/\s{2,}/g, ' ').trim();
-}
-
-// ── Category mapping ───────────────────────────────────────────────────────
-// Feed posts carry free-form labels (US, UK, Scholarships, Testing & Curriculum,
-// About …, plus country tags). Collapse them into the app's five buckets by
-// priority so a post like ['Germany','Scholarships'] lands under Scholarships.
-function mapCategory(terms: string[]): BlogCategory {
-  const has = (needle: string) => terms.some((t) => t.includes(needle));
-  if (has('UK')) return 'UK';
-  if (terms.some((t) => t.startsWith('About'))) return 'About';
-  if (has('Testing')) return 'Testing';
-  if (has('Scholarships')) return 'Scholarships';
-  if (has('US')) return 'US';
-  return 'US';
-}
-
-function formatDate(iso: string): string {
-  const d = new Date(iso);
-  if (Number.isNaN(d.getTime())) return '';
-  return d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
-}
-
-function entryId(rawId: string): string {
-  // `tag:blogger.com,1999:blog-…​.post-6662662995099891060` → `post-6662662995099891060`
-  const idx = rawId.lastIndexOf('.');
-  return idx >= 0 ? rawId.slice(idx + 1) : rawId;
-}
-
-// ── Feed shape (only the fields we read) ───────────────────────────────────
-type FeedEntry = {
-  id?: { $t?: string };
-  published?: { $t?: string };
-  title?: { $t?: string };
-  content?: { $t?: string };
-  category?: Array<{ term?: string }>;
-  link?: Array<{ rel?: string; type?: string; href?: string }>;
-};
-
-function parseEntry(entry: FeedEntry): BloggerPost | null {
-  const rawId = entry.id?.$t;
-  const published = entry.published?.$t;
-  const contentHtml = entry.content?.$t;
-  if (!rawId || !published || !contentHtml) return null;
-
-  const alternate = entry.link?.find((l) => l.rel === 'alternate' && l.type === 'text/html');
-  const terms = (entry.category ?? []).map((c) => c.term ?? '').filter(Boolean);
-
-  return {
-    id: entryId(rawId),
-    title: cleanTitle(entry.title?.$t ?? ''),
-    url: alternate?.href ?? BLOG_BASE,
-    date: formatDate(published),
-    published,
-    category: mapCategory(terms),
-    contentHtml: stripEmoji(contentHtml),
-  };
-}
-
-// ── Fetch + in-memory cache ────────────────────────────────────────────────
+// ── In-memory cache ────────────────────────────────────────────────────────
 let cache: BloggerPost[] | null = null;
 const byId = new Map<string, BloggerPost>();
+// True once a network fetch has succeeded this session. A disk-hydrated cache
+// is considered *stale*, so `fetchBloggerPosts` still revalidates over the wire.
+let fetchedFromNetwork = false;
 
-/** Synchronously read already-fetched posts (null until the first fetch lands). */
+function setCache(posts: BloggerPost[]): void {
+  cache = posts;
+  byId.clear();
+  for (const p of posts) byId.set(p.id, p);
+}
+
+/** Synchronously read already-cached posts (null until the first hydrate/fetch). */
 export function getCachedPosts(): BloggerPost[] | null {
   return cache;
 }
 
-/** Synchronously read a single already-fetched post by id. */
+/** Synchronously read a single already-cached post by id. */
 export function getCachedPostById(id: string): BloggerPost | undefined {
   return byId.get(id);
 }
 
+// ── Persistence ────────────────────────────────────────────────────────────
+async function persist(posts: BloggerPost[]): Promise<void> {
+  try {
+    await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
+  } catch {
+    /* Best-effort: a failed write just means no offline snapshot this time. */
+  }
+}
+
 /**
- * Fetch + parse the blog feed (newest first). Resolves from cache on repeat
- * calls so revisiting the tab or opening a post is instant.
+ * Seed the in-memory cache from the persisted snapshot (if any). Returns the
+ * posts so a screen can render them instantly on cold start while the network
+ * revalidation runs. No-op (returns the live cache) once anything is cached.
+ */
+export async function hydrateFromStorage(): Promise<BloggerPost[] | null> {
+  if (cache) return cache;
+  try {
+    const raw = await AsyncStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    const posts = JSON.parse(raw) as BloggerPost[];
+    if (!Array.isArray(posts) || posts.length === 0) return null;
+    // Hydrate the cache but leave `fetchedFromNetwork` false so we still revalidate.
+    setCache(posts);
+    return posts;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Fetch + parse the blog feed (newest first). Returns the in-memory cache once
+ * a network fetch has succeeded this session; a disk-hydrated cache does not
+ * short-circuit it, so the feed is always revalidated at least once per launch.
+ * Throws on network/parse failure — callers fall back to the hydrated snapshot
+ * or the bundled list.
  */
 export async function fetchBloggerPosts(): Promise<BloggerPost[]> {
-  if (cache) return cache;
+  if (fetchedFromNetwork && cache) return cache;
 
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
   try {
     const res = await fetch(FEED_URL, { signal: controller.signal });
     if (!res.ok) throw new Error(`Blogger feed responded ${res.status}`);
-    const json = (await res.json()) as { feed?: { entry?: FeedEntry[] } };
-    const entries = json.feed?.entry ?? [];
+    const json = (await res.json()) as BloggerFeedJson;
 
-    const posts = entries
-      .map(parseEntry)
-      .filter((p): p is BloggerPost => p !== null)
-      .sort((a, b) => b.published.localeCompare(a.published));
+    const posts = parseFeed(json);
 
-    cache = posts;
-    byId.clear();
-    for (const p of posts) byId.set(p.id, p);
+    setCache(posts);
+    fetchedFromNetwork = true;
+    void persist(posts);
     return posts;
   } finally {
     clearTimeout(timer);

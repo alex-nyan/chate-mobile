@@ -24,7 +24,12 @@ import {
 } from '../data/content';
 import { useLang } from '../i18n/LanguageContext';
 import { ui, type Localized } from '../i18n/strings';
-import { fetchBloggerPosts, getCachedPosts, type BloggerPost } from '../lib/blogger';
+import {
+  fetchBloggerPosts,
+  getCachedPosts,
+  hydrateFromStorage,
+  type BloggerPost,
+} from '../lib/blogger';
 import { haptics } from '../lib/haptics';
 import { share } from '../lib/share';
 import { useIsOffline } from '../lib/useIsOffline';
@@ -35,14 +40,18 @@ import type { GuidesListProps } from '../navigation/types';
 
 type Tab = 'guides' | 'webinars' | 'blog';
 
-const TABS: { id: Tab; label: Localized; icon: 'book-outline' | 'play-circle-outline' | 'newspaper-outline' }[] = [
+const TABS: {
+  id: Tab;
+  label: Localized;
+  icon: 'book-outline' | 'play-circle-outline' | 'newspaper-outline';
+}[] = [
   { id: 'guides', label: ui.segGuides, icon: 'book-outline' },
   { id: 'webinars', label: ui.segWebinars, icon: 'play-circle-outline' },
   { id: 'blog', label: ui.segBlog, icon: 'newspaper-outline' },
 ];
 
 // US / UK stay as-is (proper-noun abbreviations); the rest are localized.
-const BLOG_CATS: Array<{ id: BlogCategory | 'all'; label: Localized | string }> = [
+const BLOG_CATS: { id: BlogCategory | 'all'; label: Localized | string }[] = [
   { id: 'all', label: ui.blogAll },
   { id: 'US', label: 'US' },
   { id: 'UK', label: 'UK' },
@@ -225,18 +234,30 @@ export function GuidesScreen({ navigation }: GuidesListProps) {
   const q = query.trim().toLowerCase();
   const searching = q.length > 0;
 
-  // Fetch the blog feed once; the hardcoded list is the offline fallback.
+  // Load the blog feed (stale-while-revalidate): show the persisted snapshot
+  // instantly, then refresh from the network. The bundled list is the fallback
+  // when there's no snapshot and we're offline.
   useEffect(() => {
     if (livePosts) return;
     let active = true;
     setBlogStatus('loading');
-    fetchBloggerPosts()
-      .then((posts) => {
-        if (!active) return;
-        setLivePosts(posts);
+    (async () => {
+      const persisted = await hydrateFromStorage();
+      if (active && persisted?.length) {
+        setLivePosts(persisted);
         setBlogStatus('idle');
-      })
-      .catch(() => active && setBlogStatus('error'));
+      }
+      try {
+        const fresh = await fetchBloggerPosts();
+        if (active) {
+          setLivePosts(fresh);
+          setBlogStatus('idle');
+        }
+      } catch {
+        // Keep the persisted/bundled list; only surface an error with nothing to show.
+        if (active && !persisted?.length) setBlogStatus('error');
+      }
+    })();
     return () => {
       active = false;
     };
@@ -333,9 +354,7 @@ export function GuidesScreen({ navigation }: GuidesListProps) {
                   size={15}
                   color={active ? colors.primaryDark : colors.textMuted}
                 />
-                <Text style={[styles.segLabel, active && styles.segLabelActive]}>
-                  {t(label)}
-                </Text>
+                <Text style={[styles.segLabel, active && styles.segLabelActive]}>{t(label)}</Text>
               </Pressable>
             );
           })}
@@ -407,7 +426,11 @@ export function GuidesScreen({ navigation }: GuidesListProps) {
                   <>
                     <Text style={styles.sectionNote}>{t(ui.savedHeader)}</Text>
                     {savedArticles.map((a) => (
-                      <ArticleRow key={`saved-${a.id}`} article={a} onPress={() => openArticle(a.id)} />
+                      <ArticleRow
+                        key={`saved-${a.id}`}
+                        article={a}
+                        onPress={() => openArticle(a.id)}
+                      />
                     ))}
                   </>
                 )}

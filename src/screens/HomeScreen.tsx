@@ -36,7 +36,7 @@ export function HomeScreen() {
 
   return (
     <SafeAreaView style={styles.root} edges={['top']}>
-      <AppBar title={t(ui.appName)} />
+      <AppBar title={t(ui.tabHome)} />
       <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
         <HomeHero />
 

@@ -27,10 +27,7 @@ export function ProgramsScreen() {
   return (
     <SafeAreaView style={styles.root} edges={['top']}>
       <AppBar title={t(ui.tabPrograms)} />
-      <ScrollView
-        contentContainerStyle={styles.content}
-        showsVerticalScrollIndicator={false}
-      >
+      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <SectionHeader title={t(ui.scholarships)} />
         <View style={styles.ctas}>
           <Row

@@ -25,12 +25,12 @@ Install the free **Expo Go** app on your phone to preview without any build step
 
 ## What's inside
 
-| Tab | Screen | Content |
-| --- | --- | --- |
-| Home | `HomeScreen` | Mission / Vision / Commitment, featured guides carousel, latest webinar, impact stats ($4M+, 32K+, 60+, 40+) |
-| Programs | `ProgramsScreen` | MEXT & Global scholarship application links, advising, essay review (စုတုပြု), scholarships + countries |
-| Guides | `GuidesScreen` → `ArticleDetailScreen` | Three sub-tabs — **Guides** (curriculum, SAT/ACT, IELTS/TOEFL, extracurriculars, essays), **Webinars** (video series), **Blog** (live feed with category filter) — plus full-text search |
-| Settings | `SettingsScreen` → `SavedArticlesScreen` | Appearance (System/Light/Dark + Blue/Black dark styles), language, text size, saved articles, contact + socials, app version |
+| Tab      | Screen                                   | Content                                                                                                                                                                                  |
+| -------- | ---------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Home     | `HomeScreen`                             | Mission / Vision / Commitment, featured guides carousel, latest webinar, impact stats ($4M+, 32K+, 60+, 40+)                                                                             |
+| Programs | `ProgramsScreen`                         | MEXT & Global scholarship application links, advising, essay review (စုတုပြု), scholarships + countries                                                                                  |
+| Guides   | `GuidesScreen` → `ArticleDetailScreen`   | Three sub-tabs — **Guides** (curriculum, SAT/ACT, IELTS/TOEFL, extracurriculars, essays), **Webinars** (video series), **Blog** (live feed with category filter) — plus full-text search |
+| Settings | `SettingsScreen` → `SavedArticlesScreen` | Appearance (System/Light/Dark + Blue/Black dark styles), language, text size, saved articles, contact + socials, app version                                                             |
 
 Bookmark any guide to read it later (saved under Settings → Saved articles), and the Guides
 tab surfaces a "Continue reading" card for the last article you opened. Language is switched

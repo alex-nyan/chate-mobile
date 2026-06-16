@@ -7,10 +7,13 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
     "scheme": "chate",
-    "primaryColor": "#1D6FE0",
+    "primaryColor": "#0CB4BB",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.chatethehook.app"
+      "bundleIdentifier": "com.chatethehook.app",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "package": "com.chatethehook.app",
@@ -26,13 +29,17 @@
       "favicon": "./assets/favicon.png"
     },
     "owner": "alex-nyans-organization",
-    "plugins": [
-      "expo-font"
-    ],
+    "plugins": ["expo-font"],
     "extra": {
       "eas": {
         "projectId": "252b5a61-1a82-4968-a428-7ade62bdef99"
       }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/252b5a61-1a82-4968-a428-7ade62bdef99"
     }
   }
 }

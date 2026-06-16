@@ -13,7 +13,10 @@ export function tr(value: Localized | string, lang: Lang): string {
 export const ui = {
   appName: { en: 'Chate — The Hook', my: 'ချိတ် — The Hook' },
   slogan: { en: 'Chate your dreams', my: 'Chate your dreams' },
-  tagline: { en: 'Guided by Peers, Admitted Worldwide', my: 'အတွေ့အကြုံရှိသူများ၏ လမ်းညွှန်မှုဖြင့် ကမ္ဘာအနှံ့ဝင်ခွင့်ရ' },
+  tagline: {
+    en: 'Guided by Peers, Admitted Worldwide',
+    my: 'အတွေ့အကြုံရှိသူများ၏ လမ်းညွှန်မှုဖြင့် ကမ္ဘာအနှံ့ဝင်ခွင့်ရ',
+  },
 
   tabHome: { en: 'Home', my: 'ပင်မ' },
   tabPrograms: { en: 'Programs', my: 'ပရိုဂရမ်' },
@@ -27,7 +30,10 @@ export const ui = {
   whatWeOffer: { en: 'What We Offer', my: 'ကျွန်ုပ်တို့ ပံ့ပိုးပေးသည်များ' },
   featuredPrograms: { en: 'Featured Programs', my: 'အထူးပြု ပရိုဂရမ်များ' },
   exploreGuides: { en: 'Explore Guides', my: 'လမ်းညွှန်များ ကြည့်ရှုရန်' },
-  countriesCovered: { en: 'Countries we guide you to', my: 'ဝင်ခွင့်လျှောက်ထားနိုင်သော နိုင်ငံများ' },
+  countriesCovered: {
+    en: 'Countries we guide you to',
+    my: 'ဝင်ခွင့်လျှောက်ထားနိုင်သော နိုင်ငံများ',
+  },
   topics: { en: 'Topics covered', my: 'ပါဝင်သော အကြောင်းအရာများ' },
   upcomingTopics: { en: 'What we cover', my: 'ဆွေးနွေးသည့် အကြောင်းအရာများ' },
   getInTouch: { en: 'Get in Touch', my: 'ဆက်သွယ်ရန်' },
@@ -73,7 +79,10 @@ export const ui = {
   readOnBlog: { en: 'Read on the blog →', my: 'ဘလော့တွင် ဖတ်ရန် →' },
 
   // Search
-  searchPlaceholder: { en: 'Search guides, webinars, blog…', my: 'လမ်းညွှန်၊ webinar၊ ဘလော့ ရှာရန်…' },
+  searchPlaceholder: {
+    en: 'Search guides, webinars, blog…',
+    my: 'လမ်းညွှန်၊ webinar၊ ဘလော့ ရှာရန်…',
+  },
   searchClear: { en: 'Clear search', my: 'ရှာဖွေမှု ရှင်းရန်' },
   searchNoResults: {
     en: 'No results for “{query}”',

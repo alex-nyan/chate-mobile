@@ -9,13 +9,7 @@ const mark = require('../../assets/brand/icon-logo-500.png');
 // Dark-mode variant: the black ချိတ် strokes recolored to white (teal circle kept).
 const markDark = require('../../assets/brand/icon-logo-500-dark.png');
 
-export function AppBar({
-  title,
-  onBack,
-}: {
-  title: string;
-  onBack?: () => void;
-}) {
+export function AppBar({ title, onBack }: { title: string; onBack?: () => void }) {
   const { colors, isDark } = useTheme();
   const styles = useThemedStyles(createStyles);
 

@@ -6,7 +6,12 @@ import { AppBar } from '../components/AppBar';
 import { Text } from '../components/Text';
 import { useLang } from '../i18n/LanguageContext';
 import { ui } from '../i18n/strings';
-import { fetchBloggerPosts, getCachedPostById, type BloggerPost } from '../lib/blogger';
+import {
+  fetchBloggerPosts,
+  getCachedPostById,
+  hydrateFromStorage,
+  type BloggerPost,
+} from '../lib/blogger';
 import { spacing, type Palette } from '../theme/colors';
 import { useTheme, useThemedStyles } from '../theme/ThemeContext';
 import type { BlogPostProps } from '../navigation/types';
@@ -25,7 +30,12 @@ function escapeHtml(s: string): string {
  * Facebook-pasted markup so the post follows the app's light/dark theme, make
  * images responsive, and add a header + "read on the blog" footer link.
  */
-function buildHtml(post: BloggerPost, colors: Palette, isDark: boolean, readOnBlog: string): string {
+function buildHtml(
+  post: BloggerPost,
+  colors: Palette,
+  isDark: boolean,
+  readOnBlog: string,
+): string {
   return `<!DOCTYPE html>
 <html>
 <head>
@@ -93,22 +103,31 @@ export function BlogPostScreen({ route, navigation }: BlogPostProps) {
   // the remote images streaming in afterwards.
   const [webLoading, setWebLoading] = useState(true);
 
-  // Cache miss (e.g. a cold-start deep link) — pull the feed and find the post.
+  // Cache miss (e.g. a cold-start or offline deep link) — try the persisted
+  // snapshot first, then revalidate over the network.
   useEffect(() => {
     if (post) return;
     let active = true;
-    fetchBloggerPosts()
-      .then((posts) => {
-        if (!active) return;
+    (async () => {
+      const persisted = await hydrateFromStorage();
+      const cached = persisted?.find((p) => p.id === postId) ?? getCachedPostById(postId);
+      if (active && cached) {
+        setPost(cached);
+        setStatus('ready');
+      }
+      try {
+        const posts = await fetchBloggerPosts();
         const found = posts.find((p) => p.id === postId);
-        if (found) {
+        if (active && found) {
           setPost(found);
           setStatus('ready');
-        } else {
+        } else if (active && !cached) {
           setStatus('error');
         }
-      })
-      .catch(() => active && setStatus('error'));
+      } catch {
+        if (active && !cached) setStatus('error');
+      }
+    })();
     return () => {
       active = false;
     };
