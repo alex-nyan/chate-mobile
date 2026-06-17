@@ -6,13 +6,14 @@ import { AppBar } from '../components/AppBar';
 import { IconBadge } from '../components/IconBadge';
 import { ShareSheet } from '../components/ShareSheet';
 import { Text } from '../components/Text';
-import { articles, contact } from '../data/content';
+import { contact } from '../data/content';
 import { useLang } from '../i18n/LanguageContext';
 import { ui } from '../i18n/strings';
 import { haptics } from '../lib/haptics';
 import { radius, spacing, type Palette } from '../theme/colors';
 import { useTheme, useThemedStyles } from '../theme/ThemeContext';
 import { useBookmarks } from '../state/BookmarksContext';
+import { useContent } from '../state/ContentContext';
 import type { ArticleDetailProps } from '../navigation/types';
 
 export function ArticleDetailScreen({ route, navigation }: ArticleDetailProps) {
@@ -20,6 +21,7 @@ export function ArticleDetailScreen({ route, navigation }: ArticleDetailProps) {
   const { colors } = useTheme();
   const styles = useThemedStyles(createStyles);
   const { isBookmarked, toggleBookmark, setLastRead } = useBookmarks();
+  const { articles } = useContent();
   const [shareOpen, setShareOpen] = useState(false);
   const article = articles.find((a) => a.id === route.params.articleId);
 
@@ -100,12 +102,15 @@ export function ArticleDetailScreen({ route, navigation }: ArticleDetailProps) {
 
         <View style={styles.divider} />
 
-        {article.body.map((section, i) => (
-          <View key={i} style={styles.section}>
-            <Text style={styles.heading}>{t(section.heading)}</Text>
-            <Text style={styles.paragraph}>{t(section.text)}</Text>
-          </View>
-        ))}
+        {article.body.map((section, i) => {
+          const heading = t(section.heading);
+          return (
+            <View key={i} style={styles.section}>
+              {heading ? <Text style={styles.heading}>{heading}</Text> : null}
+              <Text style={styles.paragraph}>{t(section.text)}</Text>
+            </View>
+          );
+        })}
       </ScrollView>
 
       <ShareSheet
@@ -126,7 +131,7 @@ const createStyles = (colors: Palette) =>
     category: {
       fontSize: 12,
       fontWeight: '800',
-      color: colors.primary,
+      color: colors.primaryDark,
       textTransform: 'uppercase',
       letterSpacing: 0.8,
       marginBottom: spacing.xs,

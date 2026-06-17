@@ -6,11 +6,11 @@ import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AppBar } from '../components/AppBar';
 import { Text } from '../components/Text';
-import { articles } from '../data/content';
 import { useLang } from '../i18n/LanguageContext';
 import { ui } from '../i18n/strings';
 import { haptics } from '../lib/haptics';
 import { useBookmarks } from '../state/BookmarksContext';
+import { useContent } from '../state/ContentContext';
 import { radius, shadow, spacing, type Palette } from '../theme/colors';
 import { useTheme, useThemedStyles } from '../theme/ThemeContext';
 import type { RootTabParamList, SavedArticlesProps } from '../navigation/types';
@@ -20,6 +20,7 @@ export function SavedArticlesScreen({ navigation }: SavedArticlesProps) {
   const { colors } = useTheme();
   const styles = useThemedStyles(createStyles);
   const { bookmarks } = useBookmarks();
+  const { articles } = useContent();
   // The article list (and ArticleDetail) live in the Guides tab — hop there.
   const tabNav = useNavigation<BottomTabNavigationProp<RootTabParamList>>();
 

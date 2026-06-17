@@ -24,12 +24,12 @@ export const about: {
     my: 'အခမဲ့ အကြံပေးမှု၊ webinar၊ ဆောင်းပါးနှင့် အရင်းအမြစ်များ ပေးအပ်ခြင်းဖြင့် မြန်မာကျောင်းသားများ တက္ကသိုလ်ဝင်ခွင့် လုပ်ငန်းစဉ်ကို ဖြတ်သန်းနိုင်ရန် ကူညီကာ အခွင့်အလမ်းများ ဖန်တီးပေးရန် ကျွန်ုပ်တို့ ရည်မှန်းပါသည်။',
   },
   commitment: {
-    en: '“ချိတ်” is the fastest-growing Burmese youth organization — operating under its own constitution and powered by dedicated volunteers who take pride in the platform they have built.',
-    my: '“ချိတ်” သည် မိမိကိုယ်ပိုင် ဖွဲ့စည်းပုံအခြေခံဥပဒေဖြင့် လည်ပတ်ပြီး မိမိတို့ တည်ဆောက်ထားသော ပလက်ဖောင်းကို ဂုဏ်ယူသော စေတနာ့ဝန်ထမ်းများက အားဖြည့်ထားသည့် အမြန်ဆုံးကြီးထွားနေသော မြန်မာလူငယ်အဖွဲ့အစည်း ဖြစ်ပါသည်။',
+    en: '“ချိတ်” is one of the fastest-growing Burmese youth organizations — operating under its own constitution and powered by dedicated volunteers who take pride in the platform they have built.',
+    my: '“ချိတ်” သည် မိမိကိုယ်ပိုင် ဖွဲ့စည်းပုံအခြေခံဥပဒေဖြင့် လည်ပတ်ပြီး မိမိတို့ တည်ဆောက်ထားသော ပလက်ဖောင်းကို ဂုဏ်ယူသော စေတနာ့ဝန်ထမ်းများက အားဖြည့်ထားသည့် အမြန်ဆုံး ကြီးထွားနေသော မြန်မာလူငယ် အဖွဲ့အစည်းများထဲမှ တစ်ခု ဖြစ်ပါသည်။',
   },
   stats: [
     { value: '$4M+', label: { en: 'in scholarships', my: 'ပညာသင်ဆု' } },
-    { value: '32K+', label: { en: 'followers', my: 'Follower' } },
+    { value: '34K+', label: { en: 'followers', my: 'Follower' } },
     { value: '60+', label: { en: 'volunteers', my: 'စေတနာ့ဝန်ထမ်း' } },
     { value: '40+', label: { en: 'webinars hosted', my: 'Webinar ကျင်းပပြီး' } },
   ],

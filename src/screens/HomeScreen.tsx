@@ -12,23 +12,25 @@ import { SectionHeader } from '../components/SectionHeader';
 import { StatCard } from '../components/StatCard';
 import { Text } from '../components/Text';
 import { VideoCard } from '../components/VideoCard';
-import { about, articles, videoSeries } from '../data/content';
+import { about } from '../data/content';
 import { useLang } from '../i18n/LanguageContext';
 import { ui } from '../i18n/strings';
 import { haptics } from '../lib/haptics';
 import { radius, shadow, spacing, type Palette } from '../theme/colors';
 import { useTheme, useThemedStyles } from '../theme/ThemeContext';
+import { useContent } from '../state/ContentContext';
 import type { RootTabParamList } from '../navigation/types';
-
-// The data is authored newest-first, so the first series' first episode is "latest".
-const latestSeries = videoSeries[0];
-const latestEpisode = latestSeries.episodes[0];
 
 export function HomeScreen() {
   const { t } = useLang();
   const { colors } = useTheme();
   const styles = useThemedStyles(createStyles);
   const nav = useNavigation<BottomTabNavigationProp<RootTabParamList>>();
+  const { articles, videoSeries } = useContent();
+
+  // The data is authored newest-first, so the first series' first episode is "latest".
+  const latestSeries = videoSeries[0];
+  const latestEpisode = latestSeries.episodes[0];
 
   const openArticle = (articleId: string) => {
     haptics.light();
@@ -42,8 +44,8 @@ export function HomeScreen() {
         <HomeHero />
 
         <View style={styles.body}>
-          {/* Featured guides — horizontal launchpad into the Guides tab */}
-          <SectionHeader title={t(ui.featuredGuides)} />
+          {/* Guides carousel — horizontal launchpad into the Guides tab */}
+          <SectionHeader title={t(ui.exploreGuides)} />
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -103,6 +105,7 @@ export function HomeScreen() {
               <StatCard key={s.value} value={s.value} label={t(s.label)} animate index={i} />
             ))}
           </View>
+          <Text style={styles.statsAsOf}>{t(ui.statsAsOf)}</Text>
 
           <View style={styles.freeNote}>
             <Ionicons name="heart" size={16} color={colors.accentDark} />
@@ -137,7 +140,7 @@ const createStyles = (colors: Palette) =>
     guideCategory: {
       fontSize: 11.5,
       fontWeight: '800',
-      color: colors.primary,
+      color: colors.primaryDark,
       textTransform: 'uppercase',
       letterSpacing: 0.6,
       marginBottom: 2,
@@ -164,6 +167,11 @@ const createStyles = (colors: Palette) =>
       flexDirection: 'row',
       flexWrap: 'wrap',
       gap: spacing.md,
+    },
+    statsAsOf: {
+      fontSize: 12,
+      color: colors.textMuted,
+      marginTop: spacing.sm,
     },
     freeNote: {
       flexDirection: 'row',

@@ -22,6 +22,7 @@ import { RootNavigator } from './src/navigation';
 import { linking } from './src/navigation/linking';
 import { ApplicationsProvider } from './src/state/ApplicationsContext';
 import { BookmarksProvider } from './src/state/BookmarksContext';
+import { RemoteContentProvider } from './src/state/ContentContext';
 import { HapticsProvider } from './src/state/HapticsContext';
 import { TextScaleProvider } from './src/state/TextScaleContext';
 import { ThemeProvider, useTheme } from './src/theme/ThemeContext';
@@ -96,9 +97,11 @@ export default function App() {
             <HapticsProvider>
               <BookmarksProvider>
                 <ApplicationsProvider>
-                  <ErrorBoundary>
-                    <ThemedNavigation />
-                  </ErrorBoundary>
+                  <RemoteContentProvider>
+                    <ErrorBoundary>
+                      <ThemedNavigation />
+                    </ErrorBoundary>
+                  </RemoteContentProvider>
                 </ApplicationsProvider>
               </BookmarksProvider>
             </HapticsProvider>

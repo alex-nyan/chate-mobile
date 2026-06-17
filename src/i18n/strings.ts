@@ -24,6 +24,7 @@ export const ui = {
 
   readMore: { en: 'Read', my: 'ဖတ်ရန်' },
   ourImpact: { en: 'Our Impact', my: 'ကျွန်ုပ်တို့၏ အကျိုးသက်ရောက်မှု' },
+  statsAsOf: { en: 'As of 2026', my: '၂၀၂၆ ခုနှစ် အခြေအနေ' },
   ourMission: { en: 'Our Mission', my: 'ကျွန်ုပ်တို့၏ ရည်မှန်းချက်' },
   ourVision: { en: 'Our Vision', my: 'ကျွန်ုပ်တို့၏ မျှော်မှန်းချက်' },
   ourCommitment: { en: 'Our Commitment', my: 'ကျွန်ုပ်တို့၏ ကတိကဝတ်' },
@@ -155,6 +156,7 @@ export const ui = {
   addAction: { en: 'Add', my: 'ထည့်ရန်' },
   cancelAction: { en: 'Cancel', my: 'မလုပ်တော့ပါ' },
   deleteAction: { en: 'Delete', my: 'ဖျက်ရန်' },
+  toggleChecklistHint: { en: 'Show or hide the checklist', my: 'စစ်ဆေးရန်စာရင်း ပြ/ဖွက်ရန်' },
   noApplications: { en: 'No deadlines yet', my: 'သတ်မှတ်ရက် မရှိသေးပါ' },
   noApplicationsHint: {
     en: 'Add a school or scholarship to track its deadline and checklist — we’ll remind you before it’s due.',

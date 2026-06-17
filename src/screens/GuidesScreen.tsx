@@ -18,9 +18,7 @@ import {
   type BlogCategory,
   type VideoEpisode,
   type VideoSeries,
-  articles,
   blogPosts,
-  videoSeries,
 } from '../data/content';
 import { useLang } from '../i18n/LanguageContext';
 import { ui, type Localized } from '../i18n/strings';
@@ -35,6 +33,7 @@ import { openExternal } from '../lib/openExternal';
 import { share } from '../lib/share';
 import { useIsOffline } from '../lib/useIsOffline';
 import { useBookmarks } from '../state/BookmarksContext';
+import { useContent } from '../state/ContentContext';
 import { radius, shadow, spacing, type Palette } from '../theme/colors';
 import { useTheme, useThemedStyles } from '../theme/ThemeContext';
 import type { GuidesListProps } from '../navigation/types';
@@ -220,6 +219,7 @@ export function GuidesScreen({ navigation }: GuidesListProps) {
   const { colors } = useTheme();
   const styles = useThemedStyles(createStyles);
   const { bookmarks, lastRead } = useBookmarks();
+  const { articles, videoSeries } = useContent();
   const offline = useIsOffline();
 
   const [tab, setTab] = useState<Tab>('guides');
@@ -298,7 +298,7 @@ export function GuidesScreen({ navigation }: GuidesListProps) {
       posts: matchedPosts,
       total: matchedArticles.length + matchedVideos.length + matchedPosts.length,
     };
-  }, [q, searching, blogSource]);
+  }, [q, searching, blogSource, articles, videoSeries]);
 
   return (
     <SafeAreaView style={styles.root} edges={['top']}>
@@ -677,7 +677,7 @@ const createStyles = (colors: Palette) =>
     articleCategory: {
       fontSize: 11.5,
       fontWeight: '800',
-      color: colors.primary,
+      color: colors.primaryDark,
       textTransform: 'uppercase',
       letterSpacing: 0.6,
       marginBottom: 1,
