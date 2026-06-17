@@ -1,7 +1,17 @@
 import { Ionicons } from '@expo/vector-icons';
 import DateTimePicker, { type DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import React, { useMemo, useState } from 'react';
-import { Modal, Platform, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
+import {
+  LayoutAnimation,
+  Modal,
+  Platform,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  UIManager,
+  View,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AppBar } from '../components/AppBar';
 import { Card } from '../components/Card';
@@ -15,6 +25,11 @@ import { haptics } from '../lib/haptics';
 import { useApplications, type ApplicationKind } from '../state/ApplicationsContext';
 import { radius, spacing, type Palette } from '../theme/colors';
 import { useTheme, useThemedStyles } from '../theme/ThemeContext';
+
+// Enable the expand/collapse layout animation on Android (no-op on iOS).
+if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
 
 const DAY_MS = 86400000;
 const startOfDay = (d: Date) => {
@@ -38,6 +53,14 @@ export function DeadlinesScreen() {
     useApplications();
 
   const [adding, setAdding] = useState(false);
+  // Ids whose checklist is collapsed (cards start expanded).
+  const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
+
+  const toggleCollapsed = (id: string) => {
+    haptics.selection();
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    setCollapsed((c) => ({ ...c, [id]: !c[id] }));
+  };
 
   const sorted = useMemo(
     () =>
@@ -91,23 +114,42 @@ export function DeadlinesScreen() {
           sorted.map((app) => {
             const status = statusFor(app.deadline);
             const done = app.checklist.filter((c) => c.done).length;
+            const hasChecklist = app.checklist.length > 0;
+            const open = hasChecklist && !collapsed[app.id];
             return (
               <Card key={app.id} style={styles.card}>
                 <View style={styles.cardHead}>
-                  <IconBadge name={KIND_ICON[app.kind]} size={44} iconSize={22} />
-                  <View style={styles.cardHeadText}>
-                    <Text style={styles.cardTitle} numberOfLines={2}>
-                      {app.name}
-                    </Text>
-                    <Text
-                      style={[
-                        styles.cardStatus,
-                        { color: status.urgent ? colors.accentDark : colors.textMuted },
-                      ]}
-                    >
-                      {status.text} · {dateFmt(app.deadline)}
-                    </Text>
-                  </View>
+                  <Pressable
+                    onPress={() => hasChecklist && toggleCollapsed(app.id)}
+                    disabled={!hasChecklist}
+                    accessibilityRole="button"
+                    accessibilityState={{ expanded: open }}
+                    accessibilityLabel={app.name}
+                    accessibilityHint={hasChecklist ? t(ui.toggleChecklistHint) : undefined}
+                    style={styles.cardHeadMain}
+                  >
+                    <IconBadge name={KIND_ICON[app.kind]} size={44} iconSize={22} />
+                    <View style={styles.cardHeadText}>
+                      <Text style={styles.cardTitle} numberOfLines={2}>
+                        {app.name}
+                      </Text>
+                      <Text
+                        style={[
+                          styles.cardStatus,
+                          { color: status.urgent ? colors.accentDark : colors.textMuted },
+                        ]}
+                      >
+                        {status.text} · {dateFmt(app.deadline)}
+                      </Text>
+                    </View>
+                    {hasChecklist && (
+                      <Ionicons
+                        name={open ? 'chevron-up' : 'chevron-down'}
+                        size={18}
+                        color={colors.textMuted}
+                      />
+                    )}
+                  </Pressable>
                   <Pressable
                     onPress={() => {
                       haptics.light();
@@ -122,7 +164,7 @@ export function DeadlinesScreen() {
                   </Pressable>
                 </View>
 
-                {app.checklist.length > 0 && (
+                {open && (
                   <View style={styles.checklist}>
                     {app.checklist.map((item) => (
                       <Pressable
@@ -367,6 +409,7 @@ const createStyles = (colors: Palette) =>
 
     card: { marginBottom: spacing.md },
     cardHead: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
+    cardHeadMain: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: spacing.md },
     cardHeadText: { flex: 1 },
     cardTitle: { fontSize: 16, fontWeight: '800', color: colors.text },
     cardStatus: { fontSize: 13, fontWeight: '600', marginTop: 2 },
