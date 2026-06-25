@@ -42,3 +42,12 @@ credentials/
 # generated native folders
 /ios
 /android
+
+# personal interview prep (not for the repo)
+project_walkthrough.md
+
+# App Store / Play screenshots (large binaries, not for the repo)
+screenshots/
+
+# expo web export (build artifact)
+/dist
