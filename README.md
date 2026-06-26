@@ -13,6 +13,9 @@ above the tab bar.
 
 ## Running it
 
+Requires **Node 18+** and the **Expo CLI** (bundled — run via `npx`/`npm run`). Built on
+**Expo SDK 55** (React Native 0.83, React 19).
+
 ```bash
 npm install        # first time only
 npm start          # start the dev server, then scan the QR code with Expo Go
@@ -22,6 +25,15 @@ npm run web        # open in a browser (react-native-web)
 ```
 
 Install the free **Expo Go** app on your phone to preview without any build step.
+
+### Quality checks
+
+```bash
+npm run typecheck     # tsc --noEmit
+npm run lint          # eslint
+npm test              # jest (jest-expo)
+npm run format        # prettier --write .
+```
 
 ## What's inside
 
