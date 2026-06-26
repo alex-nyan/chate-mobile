@@ -51,3 +51,6 @@ screenshots/
 
 # expo web export (build artifact)
 /dist
+
+# Claude Code local config (not for the repo)
+.claude/
